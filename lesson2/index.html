@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS 2C_S5_Lesson 2</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    
+    <style>
+        *, body, html, button, span, h1, h2, h3, p, div, input, select, textarea { 
+            font-family: 'Quicksand', sans-serif; 
+            font-weight: 600;
+        }
+        h1, h2, h3, .font-heading {
+            font-family: 'Fredoka', sans-serif;
+        }
+        .perspective { perspective: 1000px; }
+        .backface-hidden { backface-visibility: hidden; }
+        .card-inner { transition: transform 0.5s; transform-style: preserve-3d; }
+        .card-flipped { transform: rotateY(180deg); }
+        .disabled-tab { opacity: 0.4; cursor: not-allowed !important; pointer-events: none; }
+    </style>
+</head>
+<body class="bg-[#f7f9fc] text-slate-800 min-h-screen flex flex-col selection:bg-indigo-200 pb-12">
+
+    <!-- HEADER -->
+    <header class="bg-gradient-to-r from-[#E0E7FF] via-[#EEF2FF] to-[#E0F2FE] border-b-4 border-dashed border-indigo-200 shadow-sm p-6 text-center rounded-b-3xl">
+        <h1 class="text-3xl md:text-4xl font-black tracking-wide drop-shadow-sm text-indigo-950">🛍️ IELTS 2C_S5_Lesson 2 🎓</h1>
+        <p class="text-xs md:text-sm text-indigo-700 mt-2 font-bold">Fashion & Shopping Vocabulary & Academic IELTS Skills (Target 6.5+)</p>
+    </header>
+
+    <!-- NAVIGATION TABS -->
+    <div class="max-w-4xl w-full mx-auto px-4 mt-6">
+        <div class="flex bg-indigo-100/70 p-1.5 rounded-2xl border border-indigo-200 shadow-inner overflow-x-auto">
+            <button onclick="switchTab('reference')" id="btn-reference" class="tab-btn flex-1 py-3 px-2 text-xs md:text-sm font-black rounded-xl text-center bg-white text-indigo-600 shadow-sm transition cursor-pointer whitespace-nowrap">📚 Word Bank</button>
+            <button onclick="switchTab('flashcard')" id="btn-flashcard" class="tab-btn flex-1 py-3 px-2 text-xs md:text-sm font-black rounded-xl text-center text-slate-500 transition cursor-pointer whitespace-nowrap">🎴 Flashcards</button>
+            <button onclick="switchTab('vocab-review')" id="btn-vocab-review" class="tab-btn disabled-tab flex-1 py-3 px-2 text-xs md:text-sm font-black rounded-xl text-center text-slate-500 transition whitespace-nowrap">🧩 Vocab Review</button>
+            <button onclick="switchTab('describe-objects')" id="btn-describe-objects" class="tab-btn disabled-tab flex-1 py-3 px-2 text-xs md:text-sm font-black rounded-xl text-center text-slate-500 transition whitespace-nowrap">✍️ Describing Objects</button>
+            <button onclick="switchTab('completion')" id="btn-completion" class="tab-btn disabled-tab flex-1 py-3 px-2 text-xs md:text-sm font-black rounded-xl text-center text-slate-500 transition whitespace-nowrap">🎉 Completion</button>
+        </div>
+    </div>
+
+    <main class="flex-1 max-w-4xl w-full mx-auto px-4 py-6">
+        
+        <!-- TAB 1: WORD BANK -->
+        <section id="tab-reference" class="tab-content block space-y-6">
+            <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+                <div class="flex justify-between items-center flex-wrap gap-2">
+                    <h2 class="text-2xl font-black text-indigo-900 font-heading">📖 IELTS Vocabulary List</h2>
+                    <span class="text-xs bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full font-bold">28 Core Items</span>
+                </div>
+
+                <div class="overflow-x-auto rounded-2xl border border-slate-200 max-h-[500px]">
+                    <table class="w-full text-left border-collapse bg-white">
+                        <thead class="sticky top-0 bg-indigo-50 border-b border-slate-200 text-indigo-900 text-xs uppercase tracking-wider font-black z-10">
+                            <tr>
+                                <th class="p-3.5">Vocabulary</th>
+                                <th class="p-3.5">IPA</th>
+                                <th class="p-3.5">Meaning</th>
+                                <th class="p-3.5">Example Sentence</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reference-table-body" class="divide-y divide-slate-100 text-xs md:text-sm">
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="text-center pt-2">
+                    <button onclick="switchTab('flashcard')" class="px-8 py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-black rounded-xl text-sm shadow-sm transition cursor-pointer">Start Flashcards Practice ➔</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: FLASHCARDS -->
+        <section id="tab-flashcard" class="tab-content hidden space-y-6">
+            <div class="bg-white p-4 rounded-2xl border-2 border-dashed border-indigo-300 shadow-sm flex justify-between items-center flex-wrap gap-2">
+                <div class="text-sm font-black text-slate-600">Remaining Queue: <span id="queue-text" class="text-indigo-600 font-extrabold">0 cards</span></div>
+                <div class="w-full sm:w-1/3 bg-slate-100 h-4 rounded-full overflow-hidden p-0.5 border border-slate-200">
+                    <div id="progress-bar" class="bg-gradient-to-r from-emerald-400 to-teal-500 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+                </div>
+                <button onclick="resetProgress()" class="text-xs text-rose-500 hover:underline font-black cursor-pointer">🔄 Reset Session</button>
+            </div>
+            
+            <div id="flashcard-container" class="space-y-6">
+                <div id="card-arena" class="perspective w-full max-w-md mx-auto h-[420px] cursor-pointer">
+                    <div id="flashcard-inner" onclick="flipCard()" class="card-inner w-full h-full relative border-4 border-indigo-400 rounded-3xl shadow-md bg-white">
+                        
+                        <!-- FRONT SIDE -->
+                        <div class="backface-hidden absolute inset-0 p-6 flex flex-col justify-between items-center text-center bg-indigo-50/40 rounded-[20px]">
+                            <span id="f-badge" class="text-xs font-black text-indigo-700 uppercase tracking-widest bg-indigo-100 px-4 py-1.5 rounded-full">Definition / Meaning</span>
+                            
+                            <div class="space-y-3 my-auto w-full">
+                                <h3 id="f-prompt" class="text-xl md:text-2xl font-black text-indigo-950 px-2"></h3>
+                                
+                                <div id="f-extra-content" class="hidden space-y-2 pt-2 border-t border-indigo-200/60">
+                                    <div class="flex justify-center items-center space-x-2">
+                                        <span id="f-ipa" class="text-indigo-600 font-bold text-sm font-mono"></span>
+                                        <button id="f-audio-btn" onclick="speakText(currentCard.word, event)" class="w-7 h-7 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full transition flex items-center justify-center text-xs cursor-pointer shadow-sm">🔊</button>
+                                    </div>
+                                    <p id="f-example" class="text-slate-600 text-xs px-2 font-medium leading-relaxed"></p>
+                                </div>
+                            </div>
+
+                            <p class="text-xs text-indigo-600 font-black">👉 Tap card to reveal word 👈</p>
+                        </div>
+
+                        <!-- BACK SIDE -->
+                        <div class="backface-hidden w-full h-full absolute inset-0 p-6 flex flex-col justify-between bg-slate-900 text-white rounded-[22px]" style="transform: rotateY(180deg);">
+                            <span id="b-badge" class="text-xs font-black text-indigo-400 uppercase tracking-widest bg-slate-800 px-4 py-1.5 rounded-full w-max mx-auto">IELTS Vocabulary</span>
+                            
+                            <div class="my-auto space-y-3 text-center">
+                                <h2 id="b-answer" class="text-2xl md:text-3xl font-black text-amber-300"></h2>
+                                
+                                <div id="b-extra-content" class="space-y-2 border-t border-slate-800 pt-3">
+                                    <div class="flex justify-center items-center space-x-2">
+                                        <span id="b-ipa" class="text-indigo-300 font-bold text-sm font-mono"></span>
+                                        <button id="b-audio-btn" onclick="speakText(currentCard.word, event)" class="w-7 h-7 bg-indigo-900 hover:bg-indigo-800 text-indigo-200 rounded-full transition flex items-center justify-center text-xs cursor-pointer shadow-sm">🔊</button>
+                                    </div>
+                                    <p id="b-example" class="text-slate-300 text-xs px-2 font-medium leading-relaxed"></p>
+                                </div>
+                            </div>
+
+                            <p class="text-xs text-center text-slate-500 font-bold">Rate how well you recalled this 👇</p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="w-full max-w-md mx-auto bg-white p-4 rounded-2xl border border-slate-200 shadow-sm grid grid-cols-4 gap-2">
+                    <button onclick="handleAnkiAction('again')" class="p-2 bg-rose-50 hover:bg-rose-100 border border-rose-200 rounded-xl text-center transition cursor-pointer">
+                        <span class="block text-xs font-black text-rose-600">Again</span>
+                        <span class="text-[10px] text-rose-400 font-bold block mt-0.5">&lt; 1m</span>
+                    </button>
+                    <button onclick="handleAnkiAction('hard')" class="p-2 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded-xl text-center transition cursor-pointer">
+                        <span class="block text-xs font-black text-amber-600">Hard</span>
+                        <span class="text-[10px] text-amber-400 font-bold block mt-0.5">2m</span>
+                    </button>
+                    <button onclick="handleAnkiAction('good')" class="p-2 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 rounded-xl text-center transition cursor-pointer">
+                        <span class="block text-xs font-black text-indigo-600">Good</span>
+                        <span class="text-[10px] text-indigo-400 font-bold block mt-0.5">1d</span>
+                    </button>
+                    <button onclick="handleAnkiAction('easy')" class="p-2 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 rounded-xl text-center transition shadow-sm cursor-pointer">
+                        <span class="block text-xs font-black text-emerald-600">Easy</span>
+                        <span class="text-[10px] text-emerald-400 font-bold block mt-0.5">4d</span>
+                    </button>
+                </div>
+            </div>
+
+            <div id="flashcard-success-box" class="max-w-md mx-auto bg-emerald-50 border-4 border-emerald-300 p-6 rounded-3xl text-center space-y-4 hidden shadow-sm">
+                <span class="text-5xl block animate-bounce">🌟🛍️🎉</span>
+                <h4 class="text-2xl font-heading font-black text-emerald-900">Flashcards Completed!</h4>
+                <p class="text-sm text-slate-700 font-medium leading-relaxed">Excellent effort! You have reviewed all 28 core words for Lesson 2.</p>
+                <button onclick="unlockAndGoToVocabReview()" class="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-black rounded-xl shadow-md transition cursor-pointer text-sm tracking-wide">Start Vocab Review ➔</button>
+            </div>
+        </section>
+
+        <!-- TAB 3: VOCAB REVIEW (15 ITEMS - MANDATORY INPUT) -->
+        <section id="tab-vocab-review" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+                <div class="text-center space-y-2">
+                    <span class="text-xs uppercase bg-amber-100 text-amber-800 font-black px-4 py-1.5 rounded-full tracking-wide">Task 1: Vocabulary Recall</span>
+                    <h3 class="text-2xl font-black text-indigo-950 font-heading">Fill in the Missing Target Words</h3>
+                    <p class="text-xs text-slate-600 font-bold max-w-xl mx-auto">
+                        <b>Instructions:</b> Type the exact target vocabulary matching the definition/example. Use the letter count hint provided.<br>
+                        <span class="text-rose-600 font-black">* All 15 fields are mandatory. No blank submissions allowed.</span>
+                    </p>
+                </div>
+
+                <div id="vr-items-container" class="space-y-6 max-w-2xl mx-auto">
+                    <!-- JS dynamic render -->
+                </div>
+
+                <div class="text-center pt-4 border-t border-slate-100">
+                    <button onclick="checkVocabReview()" class="px-8 py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-black rounded-xl text-sm shadow-md transition cursor-pointer">Submit & Check Answers ➔</button>
+                </div>
+            </div>
+
+            <div id="vr-success-box" class="max-w-md mx-auto bg-emerald-50 border-4 border-emerald-300 p-6 rounded-3xl text-center space-y-4 hidden shadow-sm">
+                <span class="text-5xl block animate-bounce">🧩💯✨</span>
+                <h4 class="text-2xl font-heading font-black text-emerald-900">Vocab Review Passed!</h4>
+                <p class="text-sm text-slate-700 font-medium">You have correctly identified all target words!</p>
+                <button onclick="unlockAndGoToDescribeObjects()" class="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-black rounded-xl shadow-md transition cursor-pointer text-sm tracking-wide">Go to Describing Objects ➔</button>
+            </div>
+        </section>
+
+        <!-- TAB 4: DESCRIBING OBJECTS (5 ITEMS - 3 SENTENCES EACH) -->
+        <section id="tab-describe-objects" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-6">
+                <div class="text-center space-y-2">
+                    <span class="text-xs uppercase bg-purple-100 text-purple-800 font-black px-4 py-1.5 rounded-full tracking-wide">Task 2: Speaking & Writing Practice</span>
+                    <h3 class="text-2xl font-black text-indigo-950 font-heading">Describing Everyday Objects</h3>
+                    <p class="text-xs text-slate-600 font-bold max-w-2xl mx-auto">
+                        <b>Instructions:</b> Write exactly <b>3 full sentences</b> for each item using today's lesson vocabulary (e.g., appearance, features, price range, function).<br>
+                        <span class="text-rose-600 font-black">* All fields are required. Submit to reveal sample Band 6.5+ responses.</span>
+                    </p>
+                </div>
+
+                <div id="do-items-container" class="space-y-8 max-w-2xl mx-auto">
+                    <!-- JS dynamic render -->
+                </div>
+
+                <div class="text-center pt-4 border-t border-slate-100">
+                    <button onclick="submitDescribingObjects()" class="px-8 py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-black rounded-xl text-sm shadow-md transition cursor-pointer">Submit & Reveal Model Answers ➔</button>
+                </div>
+            </div>
+
+            <div id="do-success-box" class="max-w-md mx-auto bg-emerald-50 border-4 border-emerald-300 p-6 rounded-3xl text-center space-y-4 hidden shadow-sm">
+                <span class="text-5xl block animate-bounce">✍️🌟🏆</span>
+                <h4 class="text-2xl font-heading font-black text-emerald-900">Task Completed!</h4>
+                <p class="text-sm text-slate-700 font-medium">Great job practicing object descriptions using high-level vocabulary!</p>
+                <button onclick="unlockAndGoToCompletion()" class="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-black rounded-xl shadow-md transition cursor-pointer text-sm tracking-wide">Go to Summary & Completion ➔</button>
+            </div>
+        </section>
+
+        <!-- TAB 5: COMPLETION / SUMMARY -->
+        <section id="tab-completion" class="tab-content hidden space-y-6">
+            <div class="max-w-2xl mx-auto bg-white border-4 border-indigo-300 p-8 rounded-3xl space-y-6 shadow-xl text-center">
+                <div class="space-y-2">
+                    <span class="text-6xl block animate-bounce">🎓🎉🛍️</span>
+                    <h3 class="text-3xl font-heading font-black text-indigo-950">Congratulations!</h3>
+                    <p class="text-sm text-slate-600 font-bold">You have successfully completed <span class="text-indigo-600 font-black">IELTS 2C_S5_Lesson 2</span>.</p>
+                </div>
+
+                <div class="bg-indigo-50/50 p-5 rounded-2xl border border-indigo-200 space-y-3 text-left">
+                    <h4 class="text-base font-black text-indigo-900 border-b border-indigo-200 pb-2">💡 Key Takeaways for IELTS Speaking Part 2 & Part 3:</h4>
+                    <ul class="space-y-2.5 text-xs md:text-sm text-slate-700 font-bold">
+                        <li class="flex items-start gap-2">
+                            <span class="text-indigo-600 font-black">1.</span> 
+                            <span><b>Describing Objects (Part 2):</b> Combine price range (<i>budget-friendly, mid-range</i>), appearance (<i>neutral colors, knee-length</i>), and utility (<i>compact, multi-functional, water-resistant</i>).</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-indigo-600 font-black">2.</span> 
+                            <span><b>Academic Discussion (Part 3):</b> Strengthen argumentations using formal academic verbs and phrases (<i>justify, assertion, back up, dissertation</i>).</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="text-center pt-2">
+                    <button onclick="location.reload()" class="px-8 py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white font-black rounded-xl shadow-md transition cursor-pointer text-sm">🔄 Restart Lesson</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // FULL VOCABULARY DATA (28 ITEMS)
+        const vocabularyData = [
+            { word: "knee-length", ipa: "/ˈniː.leŋθ/", vi: "Dài đến đầu gối", ex: "The skirt is knee-length, making it long enough to wear to formal office meetings." },
+            { word: "on the lower-end price range", ipa: "/ɒn ðə ˈləʊ.ər.end praɪs reɪndʒ/", vi: "Tầm giá rẻ/phân khúc giá thấp", ex: "These basic cotton T-shirts are on the lower-end price range, so they are very affordable for students." },
+            { word: "neutral colors", ipa: "/ˈnjuː.trəl ˈkʌl.əz/", vi: "Các gam màu trung tính (đen, trắng, xám, beige...)", ex: "I prefer buying coats in neutral colors because they easily match with almost any outfit." },
+            { word: "compact", ipa: "/kəmˈpækt/", vi: "Nhỏ gọn", ex: "The umbrella’s design is compact, making it very easy to carry around in a small bag." },
+            { word: "multi-functional", ipa: "/ˌmʌl.tiˈfʌŋk.ʃən.əl/", vi: "Đa năng, nhiều công dụng", ex: "This jacket is multi-functional because you can detach the sleeves to turn it into a lightweight vest." },
+            { word: "ideal for everyday use", ipa: "/aɪˈdɪəl fɔːr ˈev.ri.deɪ juːs/", vi: "Lý tưởng cho việc sử dụng hàng ngày", ex: "These canvas sneakers are extremely comfortable and ideal for everyday use." },
+            { word: "pastel pink", ipa: "/ˌpæs.təl ˈpɪŋk/", vi: "Màu hồng nhạt/màu hồng pastel", ex: "She bought a lovely pastel pink hoodie that looks great for casual weekend outings." },
+            { word: "medium-sized", ipa: "/ˈmiː.di.əm saɪzd/", vi: "Kích cỡ vừa", ex: "I decided to buy a medium-sized leather handbag that fits my tablet and notebook perfectly." },
+            { word: "mid-range", ipa: "/ˌmɪdˈreɪndʒ/", vi: "Phân khúc tầm trung", ex: "This brand offers great mid-range clothing, balancing good quality with a reasonable price." },
+            { word: "water-resistant", ipa: "/ˈwɔː.tər rɪˈzɪs.tənt/", vi: "Chống nước / Kháng nước", ex: "The winter jacket is completely water-resistant, so you can wear it while walking in heavy rain." },
+            { word: "reasonable", ipa: "/ˈriː.zən.ə.bəl/", vi: "Hợp lý (giá cả)", ex: "The price of this denim jacket is very reasonable given its durable material." },
+            { word: "affordable", ipa: "/əˈfɔː.də.bəl/", vi: "Giá cả phải chăng, vừa túi tiền", ex: "Fast fashion brands are popular because they offer stylish clothes at affordable prices." },
+            { word: "fashionable appearance", ipa: "/ˈfæʃ.ən.ə.bəl əˈpɪə.rəns/", vi: "Vẻ ngoài thời trang, sành điệu", ex: "Despite its simple design, the blazer gives the wearer a very fashionable appearance." },
+            { word: "high-end", ipa: "/ˌhaɪˈend/", vi: "Cao cấp, xa xỉ", ex: "Because the bag is from a high-end designer brand, it comes with a heavy price tag." },
+            { word: "budget-friendly", ipa: "/ˈbʌdʒ.ɪt ˌfrend.li/", vi: "Thân thiện với ngân sách, rẻ", ex: "This tote bag is a budget-friendly choice for university students on a tight budget." },
+            { word: "pocket-sized", ipa: "/ˈpɒk.ɪt saɪzd/", vi: "Nhỏ bằng kích thước túi áo/quần", ex: "He carries a pocket-sized folding mirror to quickly check his appearance before interviews." },
+            { word: "a smart purchase", ipa: "/ə smɑːt ˈpɜː.tʃəs/", vi: "Một quyết định mua sắm thông minh", ex: "Investing in a high-quality leather coat is a smart purchase because it lasts for years." },
+            { word: "accommodate a greater inventory", ipa: "/əˈkɒm.ə.deɪt ə ɡreɪ.tər ˈɪn.vən.trɪ/", vi: "Chứa được nhiều hàng hóa/kho bãi lớn hơn", ex: "Large shopping malls can accommodate a greater inventory than local small boutiques." },
+            { word: "peer evaluation", ipa: "/pɪər ɪˌvæl.juˈeɪ.ʃən/", vi: "Sự đánh giá từ đồng nghiệp/bạn học", ex: "During the speaking lesson, students improved their fluency through peer evaluation." },
+            { word: "extract", ipa: "/ˈek.strækt/", vi: "Đoạn trích (tài liệu, sách)", ex: "Read the following extract from the article to find the key vocabulary for the speaking task." },
+            { word: "dull", ipa: "/dʌl/", vi: "Tối màu, không tươi/nhạt nhẽo", ex: "Instead of bright shades, he chose a dull gray jacket that blends in easily at work." },
+            { word: "go down", ipa: "/ɡəʊ daʊn/", vi: "Được ai đó đón nhận/ủng hộ", ex: "The new dress code policy didn't go down well with most employees in the office." },
+            { word: "dissertation", ipa: "/ˌdɪs.əˈteɪ.ʃən/", vi: "Luận văn, luận án", ex: "She is writing her university dissertation on the environmental impact of fast fashion." },
+            { word: "retail", ipa: "/ˈriː.teɪl/", vi: "Bán lẻ (ngành bán lẻ)", ex: "Many retail stores offer massive discounts on clothing items during the holiday season." },
+            { word: "initially", ipa: "/ɪˈnɪʃ.əl.i/", vi: "Ban đầu", ex: "Initially, I didn't like the design of the jacket, but it grew on me after I tried it on." },
+            { word: "settle for", ipa: "/ˈset.əl fɔːr/", vi: "Chấp nhận/đành chịu (dù chưa tối ưu)", ex: "I couldn't find my exact size, so I had to settle for a slightly larger shirt." },
+            { word: "back up", ipa: "/bæk ʌp/", vi: "Củng cố, hỗ trợ, chứng minh", ex: "In IELTS Part 3, you should always back up your main opinion with relevant examples." },
+            { word: "assertion", ipa: "/əˈsɜː.ʃən/", vi: "Sự khẳng định, sự quả quyết", ex: "The speaker made a strong assertion that uniforms help build equality among students." },
+            { word: "justify", ipa: "/ˈdʒʌs.tɪ.faɪ/", vi: "Biện minh, chứng minh là hợp lý", ex: "It is difficult to justify spending thousands of dollars on a single luxury handbag." }
+        ];
+
+        // TASK 1 VOCAB REVIEW DATA (15 ITEMS)
+        const vocabReviewItems = [
+            {
+                meaning: "Lý tưởng cho việc sử dụng hàng ngày",
+                example: "These canvas sneakers are extremely comfortable and ____.",
+                target: "ideal for everyday use",
+                hintPattern: "i____ f__ e_______ u--"
+            },
+            {
+                meaning: "Chống nước / Kháng nước",
+                example: "The winter jacket is completely ____, so you can wear it in heavy rain.",
+                target: "water-resistant",
+                hintPattern: "w____-r________"
+            },
+            {
+                meaning: "Thân thiện với ngân sách, rẻ",
+                example: "This tote bag is a ____ choice for university students on a tight budget.",
+                target: "budget-friendly",
+                hintPattern: "b_____-f_______"
+            },
+            {
+                meaning: "Đa năng, nhiều công dụng",
+                example: "This jacket is ____ because you can detach the sleeves.",
+                target: "multi-functional",
+                hintPattern: "m____-f_________"
+            },
+            {
+                meaning: "Giá cả phải chăng, vừa túi tiền",
+                example: "Fast fashion brands offer stylish clothes at ____ prices.",
+                target: "affordable",
+                hintPattern: "a_________ "
+            },
+            {
+                meaning: "Cao cấp, xa xỉ",
+                example: "Because the bag is from a ____ designer brand, it is expensive.",
+                target: "high-end",
+                hintPattern: "h___-e--"
+            },
+            {
+                meaning: "Một quyết định mua sắm thông minh",
+                example: "Investing in a high-quality leather coat is ____.",
+                target: "a smart purchase",
+                hintPattern: "a s____ p_______"
+            },
+            {
+                meaning: "Các gam màu trung tính (đen, trắng, xám, beige...)",
+                example: "I prefer buying coats in ____ because they easily match with any outfit.",
+                target: "neutral colors",
+                hintPattern: "n______ c_____"
+            },
+            {
+                meaning: "Sự đánh giá từ đồng nghiệp/bạn học",
+                example: "Students improved their fluency through ____ in class.",
+                target: "peer evaluation",
+                hintPattern: "p___ e_________"
+            },
+            {
+                meaning: "Củng cố, hỗ trợ, chứng minh",
+                example: "You should always ____ your main opinion with relevant examples.",
+                target: "back up",
+                hintPattern: "b___ u-"
+            },
+            {
+                meaning: "Luận văn, luận án",
+                example: "She is writing her university ____ on fast fashion.",
+                target: "dissertation",
+                hintPattern: "d___________"
+            },
+            {
+                meaning: "Biện minh, chứng minh là hợp lý",
+                example: "It is difficult to ____ spending thousands of dollars on a handbag.",
+                target: "justify",
+                hintPattern: "j______"
+            },
+            {
+                meaning: "Chấp nhận/đành chịu (dù chưa tối ưu)",
+                example: "I couldn't find my size, so I had to ____ a larger shirt.",
+                target: "settle for",
+                hintPattern: "s_____ f--"
+            },
+            {
+                meaning: "Bán lẻ (ngành bán lẻ)",
+                example: "Many ____ stores offer massive discounts during the holidays.",
+                target: "retail",
+                hintPattern: "r_____"
+            },
+            {
+                meaning: "Chứa được nhiều hàng hóa/kho bãi lớn hơn",
+                example: "Large shopping malls can ____ than small local shops.",
+                target: "accommodate a greater inventory",
+                hintPattern: "a__________ a g______ i________"
+            }
+        ];
+
+        // Helper function to build accurate dash hints
+        function generateMaskedHint(target) {
+            return target.split(' ').map(word => {
+                const parts = word.split('-');
+                return parts.map(part => {
+                    if (part.length <= 1) return part;
+                    return part[0] + '_'.repeat(part.length - 1);
+                }).join('-');
+            }).join(' ');
+        }
+
+        // TASK 2 DESCRIBING OBJECTS DATA (5 ITEMS)
+        const describeObjectItems = [
+            {
+                id: "bag",
+                title: "1. Your Favorite Everyday Bag / Backpack",
+                prompts: [
+                    "Sentence 1 (Appearance/Color/Size):",
+                    "Sentence 2 (Price range/Purchase decision):",
+                    "Sentence 3 (Functionality/Utility):"
+                ],
+                placeholders: [
+                    "e.g., My backpack is medium-sized and comes in neutral colors like dark gray.",
+                    "e.g., It was on the lower-end price range, making it a very budget-friendly purchase.",
+                    "e.g., Despite its compact design, it is multi-functional and ideal for everyday use at university."
+                ],
+                models: [
+                    "It is a medium-sized backpack designed in neutral colors, which makes it easy to style with any outfit.",
+                    "Purchasing this bag was a smart purchase because it was offered at a very reasonable and budget-friendly price.",
+                    "It is water-resistant and compact, making it completely ideal for everyday use during rainy days."
+                ]
+            },
+            {
+                id: "jacket",
+                title: "2. A Jacket or Coat You Own",
+                prompts: [
+                    "Sentence 1 (Appearance/Design):",
+                    "Sentence 2 (Features/Material):",
+                    "Sentence 3 (Price & Value):"
+                ],
+                placeholders: [
+                    "e.g., I bought a knee-length jacket with a stylish pastel pink tone.",
+                    "e.g., It is completely water-resistant and has a fashionable appearance.",
+                    "e.g., Although it belongs to a mid-range brand, it offers high-end quality."
+                ],
+                models: [
+                    "I own a knee-length winter coat that features a fashionable appearance and neutral colors.",
+                    "The jacket is made from a durable water-resistant fabric, which keeps me warm and dry in bad weather.",
+                    "Even though it is from a mid-range brand rather than a high-end designer, I consider it an affordable and smart purchase."
+                ]
+            },
+            {
+                id: "phone",
+                title: "3. Your Smartphone / Electronic Device",
+                prompts: [
+                    "Sentence 1 (Size/Dimensions):",
+                    "Sentence 2 (Portability/Design):",
+                    "Sentence 3 (Utility/Usefulness):"
+                ],
+                placeholders: [
+                    "e.g., My smartphone is compact and fits easily into my pocket.",
+                    "e.g., It has a sleek design with a pocket-sized form factor.",
+                    "e.g., It is a multi-functional device ideal for daily studying and storing info."
+                ],
+                models: [
+                    "My current smartphone has a compact and lightweight design that fits comfortably in my hand.",
+                    "It is virtually pocket-sized, allowing me to carry it around conveniently wherever I go.",
+                    "This multi-functional gadget is ideal for everyday use, whether I need to read extracts or look up info online."
+                ]
+            },
+            {
+                id: "shoes",
+                title: "4. A Pair of Shoes or Sneakers",
+                prompts: [
+                    "Sentence 1 (Appearance/Color):",
+                    "Sentence 2 (Price/Affordability):",
+                    "Sentence 3 (Comfort & Function):"
+                ],
+                placeholders: [
+                    "e.g., I have a pair of canvas sneakers in dull gray.",
+                    "e.g., They were on the lower-end price range and very affordable.",
+                    "e.g., They are extremely comfortable and ideal for everyday walking."
+                ],
+                models: [
+                    "I usually wear canvas sneakers in neutral colors because they look clean and versatile.",
+                    "They were on the lower-end price range, so they were extremely budget-friendly for my wallet.",
+                    "These shoes are comfortable and durable, making them ideal for everyday use on campus."
+                ]
+            },
+            {
+                id: "accessory",
+                title: "5. A Portable Accessory (e.g., Umbrella, Wallet, or Folding Mirror)",
+                prompts: [
+                    "Sentence 1 (Size & Portability):",
+                    "Sentence 2 (Features & Purpose):",
+                    "Sentence 3 (Overall Assessment):"
+                ],
+                placeholders: [
+                    "e.g., I carry a pocket-sized folding umbrella in my bag every day.",
+                    "e.g., It has a compact structure and water-resistant canopy.",
+                    "e.g., Buying it was a smart purchase for unpredictable weather."
+                ],
+                models: [
+                    "I always carry a pocket-sized umbrella that takes up very little space in my handbag.",
+                    "It is compact yet sturdy, with a high-quality water-resistant material.",
+                    "Buying this multi-functional item was definitely a smart purchase for surviving sudden downpours."
+                ]
+            }
+        ];
+
+        // GLOBAL STATE
+        let activeTab = 'reference';
+        let flashcardQueue = [];
+        let currentCard = null;
+        let totalCards = vocabularyData.length;
+
+        // TAB NAVIGATION
+        function switchTab(tabId) {
+            const btn = document.getElementById(`btn-${tabId}`);
+            if (btn && btn.classList.contains('disabled-tab')) return;
+
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('bg-white', 'text-indigo-600', 'shadow-sm');
+                el.classList.add('text-slate-500');
+            });
+
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+            if (btn) {
+                btn.classList.add('bg-white', 'text-indigo-600', 'shadow-sm');
+                btn.classList.remove('text-slate-500');
+            }
+            activeTab = tabId;
+        }
+
+        function unlockTab(tabId) {
+            const btn = document.getElementById(`btn-${tabId}`);
+            if (btn) {
+                btn.classList.remove('disabled-tab');
+                btn.classList.add('cursor-pointer');
+            }
+        }
+
+        // TEXT TO SPEECH
+        function speakText(text, event) {
+            if (event) event.stopPropagation();
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        // INITIALIZATION
+        window.addEventListener('DOMContentLoaded', () => {
+            renderWordBank();
+            initFlashcards();
+            renderVocabReview();
+            renderDescribingObjects();
+        });
+
+        // --- TAB 1: WORD BANK ---
+        function renderWordBank() {
+            const tbody = document.getElementById('reference-table-body');
+            tbody.innerHTML = vocabularyData.map(v => `
+                <tr class="hover:bg-indigo-50/50 transition">
+                    <td class="p-3.5 font-black text-indigo-950 flex items-center gap-2">
+                        <span>${v.word}</span>
+                        <button onclick="speakText('${v.word}', event)" class="text-indigo-600 hover:text-indigo-800 text-xs p-1">🔊</button>
+                    </td>
+                    <td class="p-3.5 text-indigo-600 font-mono text-xs font-bold">${v.ipa}</td>
+                    <td class="p-3.5 text-slate-700 font-bold">${v.vi}</td>
+                    <td class="p-3.5 text-slate-600 italic font-medium">${v.ex}</td>
+                </tr>
+            `).join('');
+        }
+
+        // --- TAB 2: FLASHCARDS ---
+        function initFlashcards() {
+            flashcardQueue = [...vocabularyData.map((v, i) => ({ ...v, id: i }))];
+            totalCards = flashcardQueue.length;
+            updateFlashcardUI();
+            loadNextCard();
+        }
+
+        function loadNextCard() {
+            if (flashcardQueue.length === 0) {
+                document.getElementById('flashcard-container').classList.add('hidden');
+                document.getElementById('flashcard-success-box').classList.remove('hidden');
+                unlockTab('vocab-review');
+                return;
+            }
+
+            currentCard = flashcardQueue[0];
+            const inner = document.getElementById('flashcard-inner');
+            inner.classList.remove('card-flipped');
+
+            setTimeout(() => {
+                document.getElementById('f-prompt').textContent = currentCard.vi;
+                document.getElementById('f-ipa').textContent = currentCard.ipa;
+                document.getElementById('f-example').textContent = `"${currentCard.ex}"`;
+
+                document.getElementById('b-answer').textContent = currentCard.word;
+                document.getElementById('b-ipa').textContent = currentCard.ipa;
+                document.getElementById('b-example').textContent = `"${currentCard.ex}"`;
+            }, 150);
+
+            updateFlashcardUI();
+        }
+
+        function flipCard() {
+            document.getElementById('flashcard-inner').classList.toggle('card-flipped');
+        }
+
+        function handleAnkiAction(action) {
+            if (!currentCard) return;
+
+            if (action === 'again') {
+                const item = flashcardQueue.shift();
+                flashcardQueue.push(item);
+            } else if (action === 'hard') {
+                const item = flashcardQueue.shift();
+                const insertIndex = Math.min(3, flashcardQueue.length);
+                flashcardQueue.splice(insertIndex, 0, item);
+            } else {
+                flashcardQueue.shift();
+            }
+
+            loadNextCard();
+        }
+
+        function updateFlashcardUI() {
+            const remaining = flashcardQueue.length;
+            document.getElementById('queue-text').textContent = `${remaining} cards`;
+            const pct = Math.round(((totalCards - remaining) / totalCards) * 100);
+            document.getElementById('progress-bar').style.width = `${pct}%`;
+        }
+
+        function resetProgress() {
+            document.getElementById('flashcard-container').classList.remove('hidden');
+            document.getElementById('flashcard-success-box').classList.add('hidden');
+            initFlashcards();
+        }
+
+        function unlockAndGoToVocabReview() {
+            unlockTab('vocab-review');
+            switchTab('vocab-review');
+        }
+
+        // --- TAB 3: VOCAB REVIEW (15 ITEMS) ---
+        function renderVocabReview() {
+            const container = document.getElementById('vr-items-container');
+            container.innerHTML = vocabReviewItems.map((item, idx) => {
+                const hint = generateMaskedHint(item.target);
+                return `
+                    <div class="bg-indigo-50/40 p-4 rounded-2xl border border-indigo-100 space-y-2">
+                        <div class="flex justify-between items-start gap-2">
+                            <label class="block text-xs font-black text-indigo-950">
+                                <span class="inline-block bg-indigo-600 text-white rounded-full w-5 h-5 text-center leading-5 text-[11px] mr-1.5">${idx + 1}</span>
+                                Definition: <span class="text-slate-700">${item.meaning}</span>
+                            </label>
+                            <span class="text-[11px] font-mono font-bold text-indigo-600 bg-indigo-100 px-2 py-0.5 rounded-md whitespace-nowrap">Hint: ${hint}</span>
+                        </div>
+                        <p class="text-xs text-slate-600 italic">"${item.example}"</p>
+                        <input id="vr-input-${idx}" type="text" placeholder="Type target word..." class="w-full p-3 bg-white border-2 border-slate-200 rounded-xl text-xs md:text-sm focus:border-indigo-500 outline-none">
+                        <p id="vr-feedback-${idx}" class="text-xs font-bold hidden"></p>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function normalizeStr(str) {
+            return str.toLowerCase().replace(/[^a-z0-9]/g, "").trim();
+        }
+
+        function checkVocabReview() {
+            let allFilled = true;
+            let correctCount = 0;
+
+            vocabReviewItems.forEach((item, idx) => {
+                const inputEl = document.getElementById(`vr-input-${idx}`);
+                if (!inputEl.value.trim()) {
+                    allFilled = false;
+                }
+            });
+
+            if (!allFilled) {
+                alert("⚠️ Please answer ALL 15 vocabulary review questions before checking! Fields cannot be left blank.");
+                return;
+            }
+
+            vocabReviewItems.forEach((item, idx) => {
+                const inputEl = document.getElementById(`vr-input-${idx}`);
+                const fbEl = document.getElementById(`vr-feedback-${idx}`);
+                const userVal = normalizeStr(inputEl.value);
+                const targetVal = normalizeStr(item.target);
+
+                fbEl.classList.remove('hidden', 'text-emerald-600', 'text-rose-600');
+
+                if (userVal === targetVal) {
+                    correctCount++;
+                    fbEl.textContent = "✓ Correct!";
+                    fbEl.classList.add('text-emerald-600');
+                    inputEl.classList.remove('border-rose-300', 'bg-rose-50');
+                    inputEl.classList.add('border-emerald-400', 'bg-emerald-50');
+                } else {
+                    fbEl.textContent = `✗ Incorrect. Correct answer: "${item.target}"`;
+                    fbEl.classList.add('text-rose-600');
+                    inputEl.classList.remove('border-emerald-400', 'bg-emerald-50');
+                    inputEl.classList.add('border-rose-300', 'bg-rose-50');
+                }
+            });
+
+            if (correctCount === vocabReviewItems.length) {
+                document.getElementById('vr-success-box').classList.remove('hidden');
+                unlockTab('describe-objects');
+            }
+        }
+
+        function unlockAndGoToDescribeObjects() {
+            unlockTab('describe-objects');
+            switchTab('describe-objects');
+        }
+
+        // --- TAB 4: DESCRIBING OBJECTS ---
+        function renderDescribingObjects() {
+            const container = document.getElementById('do-items-container');
+            container.innerHTML = describeObjectItems.map((item, itemIdx) => `
+                <div class="bg-indigo-50/30 p-5 rounded-2xl border border-indigo-200 space-y-4">
+                    <h4 class="font-black text-indigo-950 text-sm md:text-base font-heading border-b border-indigo-200 pb-2">${item.title}</h4>
+                    
+                    <div class="space-y-3">
+                        ${item.prompts.map((p, sIdx) => `
+                            <div class="space-y-1">
+                                <label class="text-xs font-black text-indigo-900">${p}</label>
+                                <input id="do-input-${itemIdx}-${sIdx}" type="text" placeholder="${item.placeholders[sIdx]}" class="w-full p-3 bg-white border-2 border-slate-200 rounded-xl text-xs md:text-sm focus:border-indigo-500 outline-none">
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <div id="do-model-${itemIdx}" class="hidden bg-emerald-50 border border-emerald-200 p-4 rounded-xl space-y-2">
+                        <h5 class="text-xs font-black text-emerald-900 flex items-center gap-1"><span>💡</span> Model Band 6.5+ Sample Response:</h5>
+                        <ul class="list-disc list-inside text-xs text-slate-700 space-y-1 font-medium">
+                            ${item.models.map(m => `<li>${m}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function submitDescribingObjects() {
+            let allFilled = true;
+
+            describeObjectItems.forEach((item, itemIdx) => {
+                for (let sIdx = 0; sIdx < 3; sIdx++) {
+                    const inputEl = document.getElementById(`do-input-${itemIdx}-${sIdx}`);
+                    if (!inputEl.value.trim()) {
+                        allFilled = false;
+                    }
+                }
+            });
+
+            if (!allFilled) {
+                alert("⚠️ Please write 3 full sentences for EVERY object before submitting! Fields cannot be left blank.");
+                return;
+            }
+
+            describeObjectItems.forEach((item, itemIdx) => {
+                document.getElementById(`do-model-${itemIdx}`).classList.remove('hidden');
+            });
+
+            document.getElementById('do-success-box').classList.remove('hidden');
+            unlockTab('completion');
+        }
+
+        function unlockAndGoToCompletion() {
+            unlockTab('completion');
+            switchTab('completion');
+        }
+    </script>
+</body>
+</html>
