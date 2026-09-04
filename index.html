@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IELTS - Practice Hub</title>
+    <title>IELTS 2C - Practice Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
     <style>
@@ -14,7 +14,7 @@
 <body class="min-h-screen py-12 px-4">
     <!-- PAGE TITLE -->
     <div class="max-w-3xl mx-auto text-center space-y-3 mb-10">
-        <h1 id="course-title" class="text-4xl md:text-5xl font-bold text-slate-800 tracking-wide">IELTS Practice Hub</h1>
+        <h1 class="text-4xl md:text-5xl font-bold text-slate-800 tracking-wide">IELTS 2C</h1>
         <p class="text-slate-600 font-medium text-sm md:text-base">
             Collection of practice materials categorized by semesters and lessons.
         </p>
@@ -23,7 +23,7 @@
 
     <div class="max-w-3xl mx-auto space-y-6">
 
-        <!-- ================= SEMESTER 5 (CURRENT REPO) ================= -->
+        <!-- ================= SEMESTER 5 (CURRENT) ================= -->
         <details open class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden group">
             <summary class="flex justify-between items-center p-5 bg-amber-50/60 font-bold text-xl text-amber-900 cursor-pointer select-none">
                 <span>📚 Semester 5 <span class="text-xs bg-amber-200 text-amber-800 px-2 py-1 rounded-full ml-2">Current</span></span>
@@ -35,25 +35,23 @@
             </div>
         </details>
 
-        <!-- ================= SEMESTER 4 (LINKED TO REPO IELTS-A_S4) ================= -->
-        <details class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden group">
-            <summary class="flex justify-between items-center p-5 bg-slate-50 font-bold text-xl text-slate-700 cursor-pointer select-none">
-                <span>📚 Semester 4</span>
-                <span class="text-sm text-slate-400 group-open:rotate-180 transition-transform">▼</span>
-            </summary>
-            
-            <div id="semester4-lessons" class="p-4 space-y-2">
-                <div class="p-4 text-center text-slate-400 text-sm animate-pulse">Loading lessons...</div>
-            </div>
-        </details>
-
         <!-- ================= SEMESTER 6 (UPCOMING) ================= -->
         <details class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden group">
             <summary class="flex justify-between items-center p-5 bg-slate-50 font-bold text-xl text-slate-700 cursor-pointer select-none">
                 <span>📚 Semester 6</span>
                 <span class="text-sm text-slate-400 group-open:rotate-180 transition-transform">▼</span>
             </summary>
-            
+            <div class="p-4 space-y-2">
+                <div class="p-4 text-center text-slate-400 text-sm italic">No lessons available yet.</div>
+            </div>
+        </details>
+
+        <!-- ================= SEMESTER 7 (UPCOMING) ================= -->
+        <details class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden group">
+            <summary class="flex justify-between items-center p-5 bg-slate-50 font-bold text-xl text-slate-700 cursor-pointer select-none">
+                <span>📚 Semester 7</span>
+                <span class="text-sm text-slate-400 group-open:rotate-180 transition-transform">▼</span>
+            </summary>
             <div class="p-4 space-y-2">
                 <div class="p-4 text-center text-slate-400 text-sm italic">No lessons available yet.</div>
             </div>
@@ -62,32 +60,18 @@
     </div>
 
     <script>
-        // Lấy thông tin user và repo hiện tại từ URL (Ví dụ: thaodtp0/IELTS-2C)
-        const pathSegments = window.location.pathname.split('/').filter(Boolean);
         const username = window.location.hostname.split('.')[0] || 'thaodtp0';
-        const currentRepo = pathSegments[0] || 'IELTS-2C';
 
-        // Cập nhật tiêu đề trang
-        document.getElementById('course-title').innerText = currentRepo.replace('-', ' ').toUpperCase();
-        document.title = `${currentRepo.toUpperCase()} - Practice Hub`;
-
-        // Hàm tự động quét các folder từ GitHub API
-        async function fetchLessons(owner, repo, containerId, isExternal = false) {
+        async function fetchLessons(owner, repo, containerId) {
             const container = document.getElementById(containerId);
             try {
                 const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/`);
-                if (!response.ok) throw new Error('Repo not found or empty');
-                
+                if (!response.ok) throw new Error('Repo not found');
                 const data = await response.json();
                 
-                // Lọc ra các thư mục có tên bắt đầu bằng "lesson"
                 const lessonFolders = data
                     .filter(item => item.type === 'dir' && /^lesson\d+$/i.test(item.name))
-                    .sort((a, b) => {
-                        const numA = parseInt(a.name.replace(/\D/g, ''), 10);
-                        const numB = parseInt(b.name.replace(/\D/g, ''), 10);
-                        return numA - numB;
-                    });
+                    .sort((a, b) => parseInt(a.name.replace(/\D/g, ''), 10) - parseInt(b.name.replace(/\D/g, ''), 10));
 
                 if (lessonFolders.length === 0) {
                     container.innerHTML = `<div class="p-4 text-center text-slate-400 text-sm italic">No lessons available yet.</div>`;
@@ -99,41 +83,25 @@
                     const match = folder.name.match(/\d+/);
                     const lessonNum = match ? match[0] : (index + 1);
                     const formattedNum = lessonNum.toString().padStart(2, '0');
-                    
-                    // Tạo đường link truy cập bài
-                    const lessonUrl = isExternal 
-                        ? `https://${owner}.github.io/${repo}/${folder.name}/index.html`
-                        : `./${folder.name}/index.html`;
-
-                    const targetAttr = isExternal ? 'target="_blank"' : '';
                     const borderClass = index < lessonFolders.length - 1 ? 'border-b border-slate-100' : '';
-                    const numColorClass = isExternal ? 'text-slate-500' : 'text-amber-700';
 
-                    const lessonRow = `
+                    container.insertAdjacentHTML('beforeend', `
                         <div class="flex items-center justify-between p-4 hover:bg-slate-50 rounded-lg transition ${borderClass}">
                             <div class="flex items-center space-x-4">
-                                <span class="text-lg font-bold ${numColorClass} font-mono">${formattedNum}</span>
+                                <span class="text-lg font-bold text-amber-700 font-mono">${formattedNum}</span>
                                 <span class="font-bold text-slate-800">Lesson ${lessonNum}</span>
                             </div>
-                            <a href="${lessonUrl}" ${targetAttr} class="text-sm font-bold text-slate-700 underline hover:text-sky-600 transition">Open Exercise</a>
+                            <a href="./${folder.name}/index.html" class="text-sm font-bold text-slate-700 underline hover:text-sky-600 transition">Open Exercise</a>
                         </div>
-                    `;
-                    container.insertAdjacentHTML('beforeend', lessonRow);
+                    `);
                 });
-
             } catch (error) {
-                console.error(`Error loading lessons for ${repo}:`, error);
                 container.innerHTML = `<div class="p-4 text-center text-slate-400 text-sm italic">No lessons available yet.</div>`;
             }
         }
 
-        // Tải danh sách tự động khi load trang
         document.addEventListener('DOMContentLoaded', () => {
-            // Quét bài cho Semester 5 (Repo hiện tại)
-            fetchLessons(username, currentRepo, 'semester5-lessons', false);
-            
-            // Quét bài cho Semester 4 (Repo IELTS-A_S4 cũ)
-            fetchLessons(username, 'IELTS-A_S4', 'semester4-lessons', true);
+            fetchLessons(username, 'IELTS-2C', 'semester5-lessons');
         });
     </script>
 </body>
