@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IELTS 2C_S5_Lesson 5</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<style type="text/tailwindcss">
+*{font-family:'Quicksand',sans-serif;font-weight:600}
+h1,h2,h3,h4{font-family:'Fredoka',sans-serif}
+.perspective{perspective:1000px}
+.bf{backface-visibility:hidden}
+.ci{transition:transform .5s;transform-style:preserve-3d}
+.fl{transform:rotateY(180deg)}
+.dis{opacity:.4;pointer-events:none}
+@layer components{
+.btn{@apply px-6 py-3 bg-rose-600 hover:bg-rose-700 text-white font-black rounded-xl text-sm shadow-sm cursor-pointer transition}
+.box{@apply bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4}
+.tb{@apply flex-1 py-3 px-2 text-xs md:text-sm font-black rounded-xl text-center whitespace-nowrap cursor-pointer transition}
+.win{@apply max-w-md mx-auto bg-rose-50 border-4 border-rose-300 p-6 rounded-3xl text-center space-y-4 shadow-sm}
+.inp{@apply w-full p-3.5 border-2 border-slate-200 rounded-xl focus:border-rose-500 focus:outline-none text-sm font-medium}
+}
+</style>
+</head>
+<body class="bg-[#fff1f2] text-slate-800 min-h-screen pb-12">
+
+<header class="bg-gradient-to-r from-[#FECDD3] via-[#FFE4E6] to-[#FCE7F3] border-b-4 border-dashed border-rose-300 shadow-sm p-6 text-center rounded-b-3xl">
+  <h1 class="text-3xl md:text-4xl font-black tracking-wide text-rose-950">📚 IELTS 2C_S5_Lesson 5</h1>
+</header>
+
+<div class="max-w-5xl mx-auto px-4 mt-6">
+  <div id="tabs" class="flex bg-rose-100/80 p-1.5 rounded-2xl border border-rose-200 shadow-inner overflow-x-auto"></div>
+</div>
+
+<main class="max-w-5xl mx-auto px-4 py-6">
+
+<!-- 1. VOCAB BANK -->
+<section id="t-ref" class="space-y-6">
+  <div class="box">
+    <div class="flex justify-between items-center">
+      <h2 class="text-2xl font-black text-rose-950">📖 Vocabulary List</h2>
+      <span id="vcount" class="text-xs bg-rose-100 text-rose-800 font-bold px-3 py-1.5 rounded-full"></span>
+    </div>
+    <div class="overflow-auto rounded-2xl border border-slate-200 max-h-[550px]">
+      <table class="w-full text-left bg-white">
+        <thead class="sticky top-0 bg-rose-50 text-rose-900 text-xs uppercase font-black"><tr><th class="p-3.5">Vocabulary</th><th class="p-3.5">Pronunciation</th><th class="p-3.5">Meaning</th><th class="p-3.5">Example Sentence</th></tr></thead>
+        <tbody id="vbody" class="divide-y divide-slate-100 text-xs md:text-sm"></tbody>
+      </table>
+    </div>
+    <div class="text-center"><button class="btn" onclick="go('flash')">Start Flashcards ➔</button></div>
+  </div>
+</section>
+
+<!-- 2. FLASHCARDS -->
+<section id="t-flash" class="hidden space-y-6">
+  <div class="bg-white p-4 rounded-2xl border-2 border-dashed border-rose-300 flex justify-between items-center flex-wrap gap-2">
+    <div class="text-sm font-black text-slate-600">Remaining: <span id="qt" class="text-rose-600"></span></div>
+    <div class="w-full sm:w-1/3 bg-slate-100 h-4 rounded-full overflow-hidden border border-slate-200"><div id="pb" class="bg-gradient-to-r from-rose-400 to-pink-500 h-full transition-all duration-500" style="width:0"></div></div>
+    <button onclick="fInit()" class="text-xs text-rose-500 hover:underline font-black cursor-pointer">🔄 Reset</button>
+  </div>
+  <div id="fc" class="space-y-6">
+    <div class="perspective w-full max-w-md mx-auto h-[400px] cursor-pointer">
+      <div id="fi" onclick="flip()" class="ci w-full h-full relative border-4 border-rose-400 rounded-3xl shadow-md bg-white">
+        <div class="bf absolute inset-0 p-6 flex flex-col justify-between items-center text-center bg-rose-50/40 rounded-[20px]">
+          <span class="text-xs font-black text-rose-700 uppercase bg-rose-100 px-4 py-1.5 rounded-full">Meaning</span>
+          <h3 id="fp" class="text-2xl font-black text-rose-950"></h3>
+          <p class="text-xs text-rose-600 font-black">👉 Tap card to reveal vocabulary 👈</p>
+        </div>
+        <div class="bf absolute inset-0 p-6 flex flex-col justify-between bg-slate-900 text-white rounded-[22px]" style="transform:rotateY(180deg)">
+          <span class="text-xs font-black text-rose-400 uppercase bg-slate-800 px-4 py-1.5 rounded-full w-max mx-auto">Target Word</span>
+          <div class="text-center space-y-3">
+            <h2 id="fw" class="text-2xl md:text-3xl font-black text-amber-300"></h2>
+            <div class="border-t border-slate-700 pt-3 space-y-2">
+              <div id="fpn" class="text-rose-300 text-sm font-mono"></div>
+              <p id="fe" class="text-slate-300 text-xs px-2 leading-relaxed"></p>
+            </div>
+          </div>
+          <p class="text-xs text-center text-slate-500">Rate how well you recalled this 👇</p>
+        </div>
+      </div>
+    </div>
+    <div class="max-w-md mx-auto bg-white p-4 rounded-2xl border border-slate-200 grid grid-cols-4 gap-2 text-xs font-black">
+      <button onclick="rate('again')" class="p-3 bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-600 rounded-xl cursor-pointer"><span class="block">Again</span><span class="block text-[10px] opacity-70">&lt; 1m</span></button>
+      <button onclick="rate('hard')" class="p-3 bg-amber-50 hover:bg-amber-100 border border-amber-200 text-amber-600 rounded-xl cursor-pointer"><span class="block">Hard</span><span class="block text-[10px] opacity-70">10m</span></button>
+      <button onclick="rate('good')" class="p-3 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-600 rounded-xl cursor-pointer"><span class="block">Good</span><span class="block text-[10px] opacity-70">1d</span></button>
+      <button onclick="rate('easy')" class="p-3 bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-600 rounded-xl cursor-pointer"><span class="block">Easy</span><span class="block text-[10px] opacity-70">4d</span></button>
+    </div>
+  </div>
+  <div id="fdone" class="win hidden">
+    <span class="text-5xl block animate-bounce">🥇🏆✨</span>
+    <h4 class="text-2xl font-black text-rose-950">Flashcards Mastered!</h4>
+    <p class="text-sm text-slate-700">Great effort! Ready to play Bingo?</p>
+    <button class="btn w-full" onclick="unlock('bingo')">Play Bingo ➔</button>
+  </div>
+</section>
+
+<!-- 3. BINGO -->
+<section id="t-bingo" class="hidden space-y-6">
+  <div class="box">
+    <div>
+      <h3 class="text-xl font-black text-rose-950">🎯 Vocabulary Bingo</h3>
+      <p class="text-xs text-slate-500 mt-1">Read the definition, then tap the matching word. Complete at least 5 lines (row, column or diagonal) to win.</p>
+    </div>
+    <div class="bg-pink-50 border-2 border-pink-200 rounded-2xl p-4 space-y-1">
+      <div class="flex justify-between text-xs font-black text-pink-700"><span id="brd"></span><span id="bln"></span></div>
+      <p id="bdef" class="text-base font-bold text-slate-800"></p>
+    </div>
+    <div id="bgrid" class="grid grid-cols-5 gap-1.5 md:gap-2 max-w-2xl mx-auto"></div>
+    <div id="bfb" class="hidden p-3 rounded-xl text-xs font-bold text-center"></div>
+  </div>
+  <div id="bwin" class="win hidden">
+    <span class="text-5xl block animate-bounce">🎉🏆🎯</span>
+    <h4 class="text-2xl font-black text-rose-950">BINGO!</h4>
+    <p id="bwt" class="text-sm text-slate-700"></p>
+    <button class="btn w-full" onclick="unlock('write')">Go to Sentence Writing ➔</button>
+  </div>
+</section>
+
+<!-- 4. SENTENCE WRITING -->
+<section id="t-write" class="hidden space-y-6">
+  <div class="box">
+    <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+      <div>
+        <h3 class="text-xl font-black text-slate-800">✍️ Sentence Writing</h3>
+        <p class="text-xs text-slate-500 mt-1">Use the cue words. Add, remove or change words (verb forms, articles, prepositions) to write a correct sentence.</p>
+      </div>
+      <span class="text-xs font-black bg-rose-100 text-rose-800 px-3 py-1.5 rounded-full whitespace-nowrap">Q <span id="sn"></span>/<span id="st"></span></span>
+    </div>
+    <div class="max-w-3xl mx-auto space-y-4">
+      <div class="bg-rose-50 border-2 border-rose-200 rounded-2xl p-4 text-center text-lg font-black text-rose-900" id="scue"></div>
+      <input id="sin" class="inp" placeholder="Type your sentence here..." autocomplete="off">
+      <div id="sfb" class="hidden p-3.5 rounded-2xl text-center font-black text-xs md:text-sm"></div>
+      <div class="flex justify-center gap-3">
+        <button id="schk" class="btn" onclick="sCheck()">✅ Check</button>
+        <button id="snx" class="btn hidden !bg-pink-600" onclick="sNext()">Next ➔</button>
+      </div>
+    </div>
+  </div>
+  <div id="sdone" class="win hidden">
+    <span class="text-5xl block animate-bounce">🌟✍️🎯</span>
+    <h4 class="text-2xl font-black text-rose-950">Sentence Writing Completed!</h4>
+    <button class="btn w-full" onclick="unlock('person')">Describe a Person ➔</button>
+  </div>
+</section>
+
+<!-- 5. DESCRIBE A PERSON -->
+<section id="t-person" class="hidden space-y-6">
+  <div class="box">
+    <span class="text-xs uppercase bg-emerald-100 text-emerald-800 font-black px-4 py-1.5 rounded-full">Task: Describe a Person</span>
+    <h3 class="text-2xl font-black text-slate-800">Describe a close friend</h3>
+    <p class="text-xs text-slate-500">Answer each question with at least 3 sentences. Try to use the vocabulary from this lesson. All boxes must be completed before you see the suggestions.</p>
+    <div id="pq" class="space-y-5"></div>
+    <div id="perr" class="hidden p-3 rounded-xl text-xs font-bold text-center bg-rose-100 text-rose-900"></div>
+    <button class="btn w-full !py-4" onclick="pSubmit()">Submit & See Suggestions ➔</button>
+    <div id="psug" class="hidden space-y-4 pt-4 border-t border-slate-200">
+      <h4 class="text-base font-black text-rose-950">💡 Suggested Sentences</h4>
+      <div id="psl" class="space-y-3 text-xs md:text-sm text-slate-700 bg-rose-50 p-4 rounded-2xl border border-rose-200"></div>
+      <div class="text-center"><button class="btn" onclick="unlock('done')">Complete Lesson ➔</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. SUMMARY -->
+<section id="t-done" class="hidden">
+  <div class="max-w-2xl mx-auto bg-white border-4 border-rose-300 p-8 rounded-3xl space-y-6 shadow-xl text-center">
+    <span class="text-6xl block animate-bounce">🎓📜🥇</span>
+    <h3 class="text-3xl font-black text-rose-950">Congratulations!</h3>
+    <p class="text-sm text-slate-600">You have completed <span class="text-rose-600 font-black">IELTS 2C_S5_Lesson 5</span>!</p>
+    <div class="bg-rose-50/70 p-5 rounded-2xl border border-rose-200 text-left space-y-2 text-xs md:text-sm text-slate-700">
+      <h4 class="text-base font-black text-rose-950 border-b border-rose-200 pb-2">🎯 What you achieved</h4>
+      <p>✓ Reviewed <span id="sv"></span> target words and phrases on people, relationships, energy and climate.</p>
+      <p>✓ Completed Bingo by matching definitions to words.</p>
+      <p>✓ Wrote correct sentences from cue words.</p>
+      <p>✓ Described a close friend using new vocabulary.</p>
+    </div>
+    <button class="btn" onclick="location.reload()">🔄 Restart Lesson</button>
+  </div>
+</section>
+
+</main>
+
+<script>
+const $=id=>document.getElementById(id);
+const sh=a=>[...a].sort(()=>Math.random()-.5);
+
+const V=`astonished|/əˈstɒn.ɪʃt/|Kinh ngạc, ngạc nhiên|Scientists were astonished by the rapid success of the green energy project.
+astonished at|/əˈstɒn.ɪʃt æt/|Kinh ngạc về cái gì|Everyone was astonished at the staggering amount of electricity generated.
+yield|/jiːld/|Mức sản lượng / Sản xuất, mang lại|The new solar panel system can yield a huge amount of renewable energy.
+sceptical|/ˈskep.tɪ.kəl/|Hoài nghi, ngờ vực|Many experts were initially sceptical about the feasibility of the project.
+staggering|/ˈstæɡ.ər.ɪŋ/|Sửng sốt, đáng kinh ngạc (số liệu)|The country spent a staggering amount of money on upgrading its infrastructure.
+proponent|/prəˈpəʊ.nənt/|Người ủng hộ, tán thành|She is a strong proponent of using clean energy to protect the environment.
+utilise|/ˈjuː.təl.aɪz/|Tận dụng, sử dụng hiệu quả|Modern farms utilise solar energy to operate their automatic irrigation systems.
+depression|/dɪˈpreʃ.ən/|Lùng/hố sụt nông, vùng đất lõm|Rainwater collected in a small depression in the desert soil.
+purify|/ˈpjʊə.rɪ.faɪ/|Lọc sạch, làm tinh khiết|Special filters are used to purify contaminated water for drinking.
+wash off|/wɒʃ ɒf/|Rửa trôi, làm sạch|Dust on solar panels must be washed off regularly to maintain performance.
+irrigation|/ˌɪr.ɪˈɡeɪ.ʃən/|Sự tưới tiêu|Efficient irrigation is vital for growing crops in dry agricultural regions.
+lush|/lʌʃ/|Tươi tốt, sum sê (cây cối)|Thanks to proper watering, the desert valley turned into a lush green oasis.
+quantity|/ˈkwɒn.tə.ti/|Số lượng|The plant produces a large quantity of clean power every day.
+a huge array of|/ə hjuːdʒ əˈreɪ əv/|Một tập hợp/số lượng lớn cái gì|The exhibition showcased a huge array of eco-friendly technologies.
+consortium|/kənˈsɔː.ti.əm/|Tập đoàn, liên minh|A consortium of international companies invested in the offshore wind farm.
+transmit|/trænzˈmɪt/|Truyền tải (điện, tín hiệu)|High-voltage cables are used to transmit power across long distances.
+renewable (sources of energy)|/rɪˈnjuː.ə.bəl/|(Nguồn năng lượng) Tái tạo|Solar and wind are two of the most popular renewable energy sources.
+electrical grid|/iˈlek.trɪ.kəl ɡrɪd/|Mạng lưới điện quốc gia|Clean power generated from the solar farm is fed directly into the national electrical grid.
+infrastructure|/ˈɪn.frəˌstrʌk.tʃər/|Cơ sở hạ tầng|Massive investments in energy infrastructure are necessary for sustainable growth.
+government subsidies|/ˈɡʌv.ən.mənt ˈsʌb.sɪ.diz/|Tiền trợ cấp của chính phủ|Many companies adopt green tech thanks to government subsidies.
+pass a law|/pɑːs ə lɔː/|Thông qua một đạo luật|Parliament decided to pass a law to reduce industrial carbon emissions.
+generate (electricity)|/ˈdʒen.ə.reɪt/|Phát/tạo ra (điện)|Wind turbines generate electricity without producing harmful greenhouse gases.
+stare at|/steər æt/|Nhìn chằm chằm vào|He stood silently and stared at the giant wind turbines on the hill.
+hit it off|/hɪt ɪt ɒf/|Tâm đầu ý hợp ngay từ đầu|We hit it off instantly the first time we met at the club.
+get over (being shy)|/ɡet ˈəʊ.vər/|Vượt qua (sự nhút nhát)|Joining a public speaking group helped her get over her shyness.
+turn to someone|/tɜːn tuː ˈsʌm.wʌn/|Tìm đến ai để xin trợ giúp/lời khuyên|She always turns to her best friend whenever she faces difficulties.
+in need of help|/ɪn niːd əv help/|Đang cần sự giúp đỡ|The local charity provides food for families in need of help.
+come over|/kʌm ˈəʊ.vər/|Ghé qua nhà ai chơi|Feel free to come over for dinner this weekend!
+adore|/əˈdɔːr/|Yêu mến, mê mẩn|She absolutely adores her grandmother for her warmth and wisdom.
+have a demanding schedule|/hæv ə dɪˈmɑːn.dɪŋ ˈʃed.juːl/|Có lịch trình bận rộn/dày đặc|Despite having a demanding schedule, he still makes time for his family.
+keep in touch|/kiːp ɪn tʌtʃ/|Giữ liên lạc|Social media helps us keep in touch with friends who live far away.
+catch up|/kætʃ ʌp/|Hàn huyên, cập nhật tin tức|We sat down over tea to catch up on each other's lives.
+like-minded|/ˌlaɪkˈmaɪn.dɪd/|Cùng chí hướng, cùng suy nghĩ|She joined an environmental group to meet like-minded people.
+make someone feel at ease|/meɪk ˈsʌm.wʌn fiːl æt iːz/|Làm ai đó cảm thấy thoải mái/dễ chịu|His friendly smile instantly made the new student feel at ease.
+have some privacy|/hæv səm ˈprɪv.ə.si/|Có sự riêng tư|Everyone needs to have some privacy even in a close relationship.
+play different roles|/pleɪ ˈdɪf.ər.ənt rəʊlz/|Đóng các vai trò khác nhau|Parents play different roles in supporting their children's growth.
+unconditional support|/ˌʌn.kənˈdɪʃ.ən.əl səˈpɔːt/|Sự hỗ trợ vô điều kiện|True friends always offer unconditional support during tough times.
+rely on|/rɪˈlaɪ ɒn/|Dựa dẫm, tin tưởng vào ai|You can always rely on him to keep his promises.
+go through difficulties together|/ɡəʊ θruː ˈdɪf.ɪ.kəl.tiz təˈɡeð.ər/|Cùng nhau trải qua khó khăn|Strong relationships are built when people go through difficulties together.
+weapon|/ˈwep.ən/|Vũ khí|Renewable energy can be a powerful weapon against global climate change.
+stockpile of|/ˈstɒk.paɪl əv/|Kho dự trữ / Nguồn tích trữ lớn|The nation maintains a large stockpile of emergency fuel resources.
+beneath|/bɪˈniːθ/|Ở bên dưới|Large freshwater reserves were discovered deep beneath the desert surface.
+vulnerable to|/ˈvʌl.nər.ə.bəl tuː/|Dễ bị tổn thương / Nhạy cảm với|Coastal cities are highly vulnerable to rising sea levels.
+glacier|/ˈɡlæs.i.ər/|Băng hà, sông băng|The melting of the glacier contributes significantly to rising ocean levels.
+thaw|/θɔː/|Tan chảy (băng, tuyết)|As temperatures rise, frozen soils begin to thaw and release greenhouse gases.
+emission|/iˈmɪʃ.ən/|Khí thải, sự phát thải|Strict regulations were introduced to cut carbon emissions from factories.
+accumulate|/əˈkjuː.mjə.leɪt/|Tích tụ, dồn lại|Plastic waste continues to accumulate in the world's oceans.
+ocean currents|/ˈəʊ.ʃən ˈkʌr.ənts/|Dòng hải lưu|Ocean currents play a crucial role in regulating the global climate system.
+short-sighted|/ˌʃɔːtˈsaɪ.tɪd/|Nhìn ngắn hạn, thiếu tầm nhìn xa|Relying solely on fossil fuels is a short-sighted economic policy.
+far-sighted|/ˌfɑːˈsaɪ.tɪd/|Nhìn xa trông rộng, có tầm nhìn|The government took a far-sighted approach by investing heavily in green technology.
+abandon|/əˈbæn.dən/|Từ bỏ, ruồng bỏ|Many countries plan to abandon coal power in favor of clean alternatives.
+power plants|/ˈpaʊ.ər plɑːnts/|Nhà máy điện|Thermal power plants generate a massive amount of carbon dioxide.
+substitute|/ˈsʌb.stɪ.tʃuːt/|Cho thay thế / Vật thay thế|Solar energy is becoming a viable substitute for traditional fossil fuels.
+substantial|/səbˈstæn.ʃəl/|Đáng kể, lớn|Switching to clean energy requires a substantial financial investment.
+emit|/iˈmɪt/|Bốc ra, tỏa ra, phát thải|Vehicles that emit high levels of pollutants will face heavy fines.
+absorb|/əbˈzɔːb/|Hấp thụ|Oceans absorb a vast quantity of heat produced by global warming.`.split('\n').map(l=>l.split('|'));
+
+const B=`hit it off|to like someone and get on well with them straight away
+get over (being shy)|to stop feeling a problem, such as shyness
+turn to someone|to ask someone for help or advice
+in need of help|needing someone to support you
+come over|to visit someone at their home
+adore|to love and admire someone very much
+keep in touch|to stay in contact with someone by phone or messages
+catch up|to talk with someone to learn their recent news
+like-minded|having similar ideas and interests to other people
+make someone feel at ease|to help someone feel relaxed and comfortable
+have some privacy|to be alone without others watching or listening
+play different roles|to have different jobs or duties in a situation
+unconditional support|help that is given with no conditions
+rely on|to depend on someone and trust them
+go through difficulties together|to live through hard times as a team
+sceptical|doubting that something is true or good
+proponent|a person who publicly supports an idea
+utilise|to use something in a practical and effective way
+vulnerable to|easily hurt or affected by something bad
+abandon|to leave something for good or stop doing it
+substitute|something used in place of another thing
+substantial|large in amount or importance
+short-sighted|not thinking about what will happen in the future
+far-sighted|able to plan wisely for the future
+astonished|very surprised`.split('\n').map(l=>l.split('|'));
+
+const S=[
+["she / turn to / best friend / when / she / need / advice","She turns to her best friend when she needs advice."],
+["I / rely on / my brother / because / he / always / keep / promises","I rely on my brother because he always keeps his promises."],
+["we / keep in touch / by / message / every week","We keep in touch by message every week."],
+["they / hit it off / when / meet / at a party (past)","They hit it off when they met at a party."],
+["he / get over / shy / after / join / drama club (past)","He got over his shyness after he joined the drama club."],
+["my parents / give / I / unconditional support / every day","My parents give me unconditional support every day."],
+["everyone / need / have some privacy / sometimes","Everyone needs to have some privacy sometimes."],
+["she / adore / her grandmother / because / she / make / her / feel at ease","She adores her grandmother because she makes her feel at ease."],
+["many people / be / sceptical / about / renewable energy","Many people are sceptical about renewable energy."],
+["coastal cities / be / vulnerable to / rise / sea levels","Coastal cities are vulnerable to rising sea levels."],
+["solar energy / be / good / substitute / fossil fuels","Solar energy is a good substitute for fossil fuels."]];
+
+const P=[
+["Who is your close friend, and how did you first meet?",["My close friend is Linh, and we hit it off the first time we met at university.","We were both shy at first, but we got over it quickly.","She made me feel at ease because she was so friendly and kind."]],
+["What do you usually do together, and how do you keep in touch?",["We often come over to each other's house to catch up on our news.","Although she has a demanding schedule, we keep in touch by message every day.","We are like-minded, so we enjoy the same hobbies and films."]],
+["Why is this person important to you, and how does he or she support you?",["I can always rely on her because she gives me unconditional support.","I turn to her whenever I am in need of help.","We have gone through difficulties together, so our friendship is very strong."]]];
+
+/* NAVIGATION */
+const TABS=[['ref','📖 Vocab Bank'],['flash','🎴 Flashcards'],['bingo','🎯 Bingo'],['write','✍️ Sentence Writing'],['person','👤 Describe a Person'],['done','🎉 Summary']];
+const open=new Set(['ref','flash']);
+function go(t){
+  TABS.forEach(([id,l])=>{
+    $('t-'+id).classList.toggle('hidden',id!=t);
+    $('b-'+id).className='tb '+(id==t?'bg-white text-rose-600 shadow-sm':'text-slate-500')+(open.has(id)?'':' dis');
+  });
+  if(t=='bingo'&&!bg.cells)bInit();
+  if(t=='write'&&si==0)sLoad();
+}
+function unlock(t){open.add(t);go(t)}
+$('tabs').innerHTML=TABS.map(([id,l])=>`<button id="b-${id}" onclick="go('${id}')" class="tb">${l}</button>`).join('');
+
+/* 1. VOCAB BANK */
+$('vcount').textContent=V.length+' Core Words';
+$('sv').textContent=V.length;
+$('vbody').innerHTML=V.map(v=>`<tr class="hover:bg-slate-50"><td class="p-3.5 font-bold text-rose-950">${v[0]}</td><td class="p-3.5 text-rose-600 font-mono">${v[1]}</td><td class="p-3.5 text-slate-700">${v[2]}</td><td class="p-3.5 text-slate-600 font-normal">${v[3]}</td></tr>`).join('');
+
+/* 2. FLASHCARDS */
+let q=[],cur,fl=false;
+function fInit(){q=[...V];$('fc').classList.remove('hidden');$('fdone').classList.add('hidden');fNext()}
+function fNext(){
+  $('qt').textContent=q.length+' cards';
+  $('pb').style.width=(V.length-q.length)/V.length*100+'%';
+  if(!q.length){$('fc').classList.add('hidden');$('fdone').classList.remove('hidden');return}
+  cur=q[0];fl=false;$('fi').classList.remove('fl');
+  setTimeout(()=>{$('fp').textContent=cur[2];$('fw').textContent=cur[0];$('fpn').textContent=cur[1];$('fe').textContent='"'+cur[3]+'"'},150);
+}
+function flip(){fl=!fl;$('fi').classList.toggle('fl',fl)}
+function rate(a){if(a=='again')q.push(q.shift());else q.shift();fNext()}
+
+/* 3. BINGO */
+let bg={};
+const LN=[];
+for(let i=0;i<5;i++){LN.push([0,1,2,3,4].map(j=>i*5+j),[0,1,2,3,4].map(j=>j*5+i))}
+LN.push([0,6,12,18,24],[4,8,12,16,20]);
+const bLines=()=>LN.filter(l=>l.every(i=>bg.marked.has(i))).length;
+function bInit(){
+  bg={cells:sh(B.map(x=>x[0])),order:sh(B),r:0,marked:new Set(),miss:0,over:false};
+  $('bwin').classList.add('hidden');$('bfb').classList.add('hidden');bDraw();
+}
+function bDraw(){
+  $('bgrid').innerHTML=bg.cells.map((w,i)=>`<button onclick="bPick(${i})" class="aspect-square p-1 rounded-xl border-2 text-[10px] md:text-sm font-black leading-tight flex items-center justify-center text-center cursor-pointer transition ${bg.marked.has(i)?'bg-emerald-400 border-emerald-600 text-white':'bg-white border-slate-200 text-rose-900 hover:bg-rose-50'}">${w}</button>`).join('');
+  $('brd').textContent='Round '+Math.min(bg.r+1,25)+' / 25';
+  $('bln').textContent='Lines: '+bLines()+' / 5';
+  if(!bg.over)$('bdef').textContent='Which word or phrase means: "'+bg.order[bg.r][1]+'"?';
+}
+function bPick(i){
+  if(bg.over||bg.marked.has(i))return;
+  const f=$('bfb');f.classList.remove('hidden');
+  if(bg.cells[i]==bg.order[bg.r][0]){
+    bg.marked.add(i);bg.r++;
+    f.className='p-3 rounded-xl text-xs font-bold text-center bg-emerald-100 text-emerald-900';f.textContent='🎉 Correct!';
+    if(bLines()>=5||bg.r>=25){
+      bg.over=true;$('bdef').textContent='Well done!';
+      $('bwt').textContent='You completed '+bLines()+' lines with '+bg.miss+' wrong pick(s).';
+      $('bwin').classList.remove('hidden');
+    }
+  }else{
+    bg.miss++;
+    f.className='p-3 rounded-xl text-xs font-bold text-center bg-rose-100 text-rose-900';f.textContent='❌ Not this one. Read the definition again and try another cell.';
+  }
+  bDraw();
+}
+
+/* 4. SENTENCE WRITING */
+let si=0,tries=0;
+const norm=s=>s.toLowerCase().replace(/[^a-z' ]/g,'').replace(/\s+/g,' ').trim();
+function sLoad(){
+  if(si>=S.length){$('sdone').classList.remove('hidden');return}
+  tries=0;$('sn').textContent=si+1;$('st').textContent=S.length;
+  $('scue').textContent=S[si][0];$('sin').value='';$('sin').disabled=false;
+  $('sfb').classList.add('hidden');$('snx').classList.add('hidden');$('schk').classList.remove('hidden');
+}
+function sCheck(){
+  const f=$('sfb');f.classList.remove('hidden');
+  if(!$('sin').value.trim()){f.className='p-3.5 rounded-2xl text-center font-black text-xs md:text-sm bg-amber-100 text-amber-900';f.textContent='⚠️ Please write a sentence first. It can be wrong, but the box cannot be empty.';return}
+  if(norm($('sin').value)==norm(S[si][1])){
+    f.className='p-3.5 rounded-2xl text-center font-black text-xs md:text-sm bg-emerald-100 text-emerald-900';
+    f.textContent='🎉 Correct! '+S[si][1];sDone();
+  }else{
+    tries++;
+    f.className='p-3.5 rounded-2xl text-center font-black text-xs md:text-sm bg-rose-100 text-rose-800';
+    if(tries>=2){f.textContent='❌ Answer: '+S[si][1];sDone()}
+    else f.textContent='❌ Not quite. Check verb forms, articles, prepositions and word order.';
+  }
+}
+function sDone(){$('sin').disabled=true;$('schk').classList.add('hidden');$('snx').classList.remove('hidden')}
+function sNext(){si++;sLoad()}
+
+/* 5. DESCRIBE A PERSON */
+$('pq').innerHTML=P.map((p,i)=>`<div class="space-y-2"><label class="block text-sm font-black text-rose-950">${i+1}. ${p[0]}</label><textarea id="pa${i}" rows="4" class="inp" placeholder="Write at least 3 sentences..."></textarea></div>`).join('');
+function pSubmit(){
+  const bad=P.findIndex((p,i)=>$('pa'+i).value.split(/[.!?]+/).filter(s=>s.trim().length>2).length<3);
+  const e=$('perr');
+  if(bad>=0){e.classList.remove('hidden');e.textContent='Question '+(bad+1)+' needs at least 3 sentences.';return}
+  e.classList.add('hidden');
+  $('psl').innerHTML=P.map((p,i)=>`<div><b>${i+1}. ${p[0]}</b><ul class="list-disc pl-5 mt-1 font-medium">${p[1].map(s=>`<li>${s}</li>`).join('')}</ul></div>`).join('');
+  $('psug').classList.remove('hidden');$('psug').scrollIntoView({behavior:'smooth'});
+}
+
+window.addEventListener('DOMContentLoaded',()=>{go('ref');fInit()});
+</script>
+</body>
+</html>
