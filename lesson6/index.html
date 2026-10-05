@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IELTS 2C_S5_Lesson 6</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<style>
+*, body, html, button, span, h1, h2, h3, p, div, input, select, textarea { font-family: 'Quicksand', sans-serif; font-weight: 600; }
+h1, h2, h3, .font-heading { font-family: 'Fredoka', sans-serif; }
+.perspective { perspective: 1000px; }
+.backface-hidden { backface-visibility: hidden; }
+.card-inner { transition: transform 0.5s; transform-style: preserve-3d; }
+.card-flipped { transform: rotateY(180deg); }
+.disabled-tab { opacity: 0.4; cursor: not-allowed !important; pointer-events: none; }
+@keyframes shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-5px)} 40%,80%{transform:translateX(5px)} }
+.wrong-shake { animation: shake 0.4s ease-in-out; }
+.audio-btn { display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:999px; background:#FCE7F3; color:#9D174D; font-size:11px; cursor:pointer; border:1px solid #FBCFE8; flex-shrink:0; }
+.audio-btn:hover { background:#FBCFE8; }
+</style>
+</head>
+<body class="bg-[#FFF5F7] text-slate-700 min-h-screen flex flex-col selection:bg-rose-200 pb-12">
+
+<header class="bg-gradient-to-r from-[#FCE7F3] via-[#FFE4E6] to-[#FFEDD5] border-b-4 border-dashed border-rose-300 shadow-sm p-6 text-center rounded-b-3xl">
+<h1 class="text-3xl md:text-4xl font-black tracking-wide drop-shadow-sm text-rose-950">🌿 IELTS 2C_S5_Lesson 6</h1>
+</header>
+
+<div class="max-w-5xl w-full mx-auto px-4 mt-6">
+<div class="flex bg-rose-100/70 p-1.5 rounded-2xl border border-rose-200 shadow-inner overflow-x-auto">
+<button onclick="switchTab('reference')" id="btn-reference" class="tab-btn flex-1 py-3 px-2 text-xs md:text-sm font-black rounded-xl text-center bg-white text-rose-700 shadow-sm transition cursor-pointer whitespace-nowrap">📚 Vocab Bank</button>
+<button onclick="switchTab('flashcard')" id="btn-flashcard" class="tab-btn flex-1 py-3 px-2 text-xs md:text-sm font-black rounded-xl text-center text-slate-500 transition cursor-pointer whitespace-nowrap">🎴 Flashcards</button>
+<button onclick="switchTab('game')" id="btn-game" class="tab-btn disabled-tab flex-1 py-3 px-2 text-xs md:text-sm font-black rounded-xl text-center text-slate-500 transition whitespace-nowrap">⌨️ Type the Word</button>
+<button onclick="switchTab('writing')" id="btn-writing" class="tab-btn disabled-tab flex-1 py-3 px-2 text-xs md:text-sm font-black rounded-xl text-center text-slate-500 transition whitespace-nowrap">🙂 Describe People</button>
+<button onclick="switchTab('summary')" id="btn-summary" class="tab-btn disabled-tab flex-1 py-3 px-2 text-xs md:text-sm font-black rounded-xl text-center text-slate-500 transition whitespace-nowrap">🎉 Completion</button>
+</div>
+</div>
+
+<main class="flex-1 max-w-5xl w-full mx-auto px-4 py-6">
+
+<!-- TAB 1: VOCAB BANK -->
+<section id="tab-reference" class="tab-content block space-y-6">
+<div class="bg-white p-6 rounded-3xl border border-rose-100 shadow-sm space-y-4">
+<div class="flex justify-between items-center flex-wrap gap-2">
+<h2 class="text-2xl font-black text-rose-950 font-heading">📖 Vocabulary Table</h2>
+<span class="text-xs bg-rose-100 text-rose-800 px-3 py-1 rounded-full font-bold">29 Items</span>
+</div>
+<div class="overflow-x-auto rounded-2xl border border-rose-100 max-h-[520px]">
+<table class="w-full text-left border-collapse bg-white">
+<thead class="sticky top-0 bg-rose-50/90 border-b border-rose-200 text-rose-900 text-xs uppercase tracking-wider font-black z-10">
+<tr><th class="p-3.5">Vocabulary</th><th class="p-3.5">Pronunciation</th><th class="p-3.5">Meaning (VN)</th><th class="p-3.5">Example Sentence</th></tr>
+</thead>
+<tbody id="reference-table-body" class="divide-y divide-rose-50 text-xs md:text-sm"></tbody>
+</table>
+</div>
+<div class="text-center pt-2">
+<button onclick="switchTab('flashcard')" class="px-8 py-3.5 bg-rose-600 hover:bg-rose-700 text-white font-black rounded-xl text-sm shadow-sm transition cursor-pointer">Start Flashcards ➔</button>
+</div>
+</div>
+</section>
+
+<!-- TAB 2: FLASHCARDS -->
+<section id="tab-flashcard" class="tab-content hidden space-y-6">
+<div class="bg-white p-4 rounded-2xl border-2 border-dashed border-rose-300 shadow-sm flex justify-between items-center flex-wrap gap-2">
+<div class="text-sm font-black text-slate-600">Remaining Queue: <span id="queue-text" class="text-rose-600 font-extrabold">0 cards</span></div>
+<div class="w-full sm:w-1/3 bg-slate-100 h-4 rounded-full overflow-hidden p-0.5 border border-slate-200">
+<div id="progress-bar" class="bg-gradient-to-r from-rose-400 to-amber-400 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+</div>
+<button onclick="resetProgress()" class="text-xs text-rose-600 hover:underline font-black cursor-pointer">🔄 Reset Session</button>
+</div>
+
+<div id="flashcard-container" class="space-y-6">
+<div id="card-arena" class="perspective w-full max-w-md mx-auto h-[420px] cursor-pointer">
+<div id="flashcard-inner" onclick="flipCard()" class="card-inner w-full h-full relative border-4 border-rose-300 rounded-3xl shadow-md bg-white">
+<div class="backface-hidden absolute inset-0 p-6 flex flex-col justify-between items-center text-center bg-rose-50/40 rounded-[20px]">
+<span id="f-badge" class="text-xs font-black text-rose-700 uppercase tracking-widest bg-rose-100/80 px-4 py-1.5 rounded-full">Meaning (VN)</span>
+<div class="space-y-3 my-auto w-full"><h3 id="f-prompt" class="text-lg md:text-xl font-black text-rose-950 px-2 leading-snug"></h3></div>
+<p class="text-xs text-rose-600 font-black">👉 Tap card to reveal vocabulary 👈</p>
+</div>
+<div class="backface-hidden w-full h-full absolute inset-0 p-6 flex flex-col justify-between bg-slate-800 text-white rounded-[22px]" style="transform: rotateY(180deg);">
+<span id="b-badge" class="text-xs font-black text-rose-300 uppercase tracking-widest bg-slate-700/80 px-4 py-1.5 rounded-full w-max mx-auto">Target Vocabulary</span>
+<div class="my-auto space-y-3 text-center">
+<h2 id="b-answer" class="text-2xl md:text-3xl font-black text-amber-300"></h2>
+<div id="b-extra-content" class="space-y-2 border-t border-slate-700 pt-3">
+<div class="flex justify-center items-center space-x-2">
+<span id="b-ipa" class="text-rose-300 font-bold text-sm font-mono"></span>
+<button id="b-audio-btn" onclick="speakText(currentCard.word, event)" class="w-7 h-7 bg-rose-900 hover:bg-rose-800 text-rose-100 rounded-full transition flex items-center justify-center text-xs cursor-pointer shadow-sm">🔊</button>
+</div>
+<p id="b-example" class="text-slate-300 text-xs px-2 font-medium leading-relaxed"></p>
+</div>
+</div>
+<p class="text-xs text-center text-slate-400 font-bold">Rate your recall difficulty 👇</p>
+</div>
+</div>
+</div>
+
+<div class="w-full max-w-md mx-auto bg-white p-4 rounded-2xl border border-rose-100 shadow-sm grid grid-cols-4 gap-2">
+<button onclick="handleAnkiAction('again')" class="p-2 bg-rose-50 hover:bg-rose-100 border border-rose-200 rounded-xl text-center transition cursor-pointer"><span class="block text-xs font-black text-rose-600">Again</span><span class="text-[10px] text-rose-400 font-bold block mt-0.5">&lt; 1m</span></button>
+<button onclick="handleAnkiAction('hard')" class="p-2 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded-xl text-center transition cursor-pointer"><span class="block text-xs font-black text-amber-600">Hard</span><span class="text-[10px] text-amber-400 font-bold block mt-0.5">10m</span></button>
+<button onclick="handleAnkiAction('good')" class="p-2 bg-rose-50 hover:bg-rose-100 border border-rose-200 rounded-xl text-center transition cursor-pointer"><span class="block text-xs font-black text-rose-600">Good</span><span class="text-[10px] text-rose-500 font-bold block mt-0.5">1d</span></button>
+<button onclick="handleAnkiAction('easy')" class="p-2 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 rounded-xl text-center transition shadow-sm cursor-pointer"><span class="block text-xs font-black text-emerald-600">Easy</span><span class="text-[10px] text-emerald-500 font-bold block mt-0.5">4d</span></button>
+</div>
+</div>
+
+<div id="flashcard-success-box" class="max-w-md mx-auto bg-emerald-50 border-4 border-emerald-300 p-6 rounded-3xl text-center space-y-4 hidden shadow-sm">
+<span class="text-5xl block animate-bounce">🌟🌿🎉</span>
+<h4 class="text-2xl font-heading font-black text-emerald-900">Flashcards Mastered!</h4>
+<p class="text-sm text-slate-700 font-medium leading-relaxed">Awesome! You have reviewed all 29 vocabulary items.</p>
+<button onclick="unlockAndGoToGame()" class="w-full py-3.5 bg-rose-600 hover:bg-rose-700 text-white font-black rounded-xl shadow-md transition cursor-pointer text-sm tracking-wide">Start Type the Word ➔</button>
+</div>
+</section>
+
+<!-- TAB 3: TYPE THE WORD -->
+<section id="tab-game" class="tab-content hidden space-y-6">
+<div class="bg-white p-6 rounded-3xl border border-rose-100 shadow-sm space-y-6">
+<div class="flex justify-between items-center border-b border-rose-50 pb-3 flex-wrap gap-2">
+<div>
+<h3 class="text-xl font-heading font-black text-rose-950">⌨️ Type the Word</h3>
+<p class="text-xs text-slate-500 mt-0.5">Read the Vietnamese meaning and the sentence, then type the missing word or phrase yourself.</p>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-xs font-black bg-rose-50 text-rose-800 px-3 py-1.5 rounded-full">Word <span id="tw-idx">1</span> of <span id="tw-total">20</span></span>
+<span class="text-xs font-black bg-amber-50 text-amber-800 px-3 py-1.5 rounded-full">Score: <span id="tw-score">0</span></span>
+</div>
+</div>
+
+<div class="max-w-xl mx-auto space-y-4">
+<div class="text-center space-y-1">
+<p class="text-[11px] font-black text-rose-700 uppercase tracking-wide">Vietnamese meaning</p>
+<h2 id="tw-meaning" class="text-xl md:text-2xl font-black text-rose-950"></h2>
+</div>
+<p id="tw-sentence" class="text-sm md:text-base font-bold text-slate-800 leading-relaxed bg-rose-50/50 p-4 rounded-2xl border border-rose-100 text-center"></p>
+<input id="tw-input" type="text" placeholder="Type your answer here..." class="w-full p-3 bg-white border-2 border-rose-200 rounded-xl text-sm md:text-base font-bold text-center outline-none focus:border-rose-500">
+<p id="tw-hint" class="hidden text-center text-xs text-amber-700 font-black bg-amber-50 border border-amber-200 rounded-xl p-2"></p>
+<div id="tw-feedback" class="hidden text-center font-black text-xs md:text-sm p-2"></div>
+<div class="flex justify-center items-center gap-3">
+<button onclick="showHint()" class="px-5 py-2.5 bg-amber-100 hover:bg-amber-200 text-amber-800 font-black rounded-xl text-xs shadow-sm transition cursor-pointer">💡 Hint</button>
+<button onclick="checkTypeAnswer()" id="tw-check-btn" class="px-7 py-2.5 bg-rose-600 hover:bg-rose-700 text-white font-black rounded-xl text-xs shadow-sm transition cursor-pointer">✅ Check</button>
+<button onclick="nextTypeQuestion()" id="tw-next-btn" class="hidden px-7 py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-black rounded-xl text-xs shadow-sm transition cursor-pointer">Next ➔</button>
+</div>
+</div>
+</div>
+
+<div id="tw-success-box" class="max-w-md mx-auto bg-emerald-50 border-4 border-emerald-300 p-6 rounded-3xl text-center space-y-4 hidden shadow-sm">
+<span class="text-5xl block animate-bounce">⌨️🏆✨</span>
+<h4 class="text-2xl font-heading font-black text-emerald-900">All Done!</h4>
+<p class="text-sm text-slate-700 font-medium">Score: <span id="tw-final-score"></span>/20</p>
+<button onclick="unlockAndGoToWriting()" class="w-full py-3.5 bg-rose-600 hover:bg-rose-700 text-white font-black rounded-xl shadow-md transition cursor-pointer text-sm tracking-wide">Start Describing People ➔</button>
+</div>
+</section>
+
+<!-- TAB 4: DESCRIBE PEOPLE -->
+<section id="tab-writing" class="tab-content hidden space-y-6">
+<div class="bg-white p-6 rounded-3xl border border-rose-100 shadow-sm space-y-5">
+<h3 class="text-xl font-black text-rose-950 font-heading">Describing People</h3>
+<p class="text-xs text-slate-600 font-bold leading-relaxed">For each person below, write 3 to 4 connected sentences (not just one simple sentence). Describe both appearance and personality, and try to use at least 2 to 3 words from the vocabulary table. There is no fixed answer. Once you have written something for all 5 people, you can check the suggested answers at the bottom.</p>
+</div>
+
+<div id="describe-container" class="space-y-4"></div>
+
+<div class="bg-white p-6 rounded-3xl border border-rose-100 shadow-sm space-y-4">
+<div class="flex items-center gap-2">
+<button id="describe-model-btn" onclick="toggleDescribeModel()" disabled class="text-xs text-slate-400 font-black cursor-not-allowed">👁️ Write all 5 descriptions first to unlock suggested answers</button>
+</div>
+<div id="describe-model-box" class="hidden space-y-4 text-xs md:text-sm text-slate-700 font-medium bg-emerald-50 border border-emerald-200 p-4 rounded-2xl leading-relaxed"></div>
+<div class="text-center pt-2">
+<button onclick="unlockAndGoToSummary()" class="px-8 py-3.5 bg-rose-600 hover:bg-rose-700 text-white font-black rounded-xl text-sm shadow-md transition cursor-pointer">Finish &amp; Go to Summary ➔</button>
+</div>
+</div>
+</section>
+
+<!-- TAB 5: COMPLETION -->
+<section id="tab-summary" class="tab-content hidden space-y-6">
+<div class="max-w-2xl mx-auto bg-white border-4 border-rose-200 p-8 rounded-3xl space-y-6 shadow-xl text-center">
+<div class="space-y-2">
+<span class="text-6xl block animate-bounce">🎓🌿🙂</span>
+<h3 class="text-3xl font-heading font-black text-rose-950">Congratulations!</h3>
+<p class="text-sm text-slate-600 font-bold">You have completed <span class="text-rose-600 font-black">IELTS 2C_S5_Lesson 6</span>.</p>
+</div>
+<div class="bg-rose-50/60 p-5 rounded-2xl border border-rose-200 space-y-3 text-left">
+<h4 class="text-base font-black text-rose-900 border-b border-rose-200 pb-2">💡 Key Takeaways</h4>
+<ul class="space-y-2.5 text-xs md:text-sm text-slate-700 font-bold">
+<li class="flex items-start gap-2"><span class="text-rose-600 font-black">1.</span><span><b>IELTS Listening — volunteering:</b> get down, bear in mind, spoil, recruit, administrative work, litter, salaried, appealing, nature reserve, carry out surveys, hands-on.</span></li>
+<li class="flex items-start gap-2"><span class="text-rose-600 font-black">2.</span><span><b>Appearance:</b> drop-dead gorgeous, exude a graceful/elegant/adorable/chic vibe (females), exude a clean-cut/masculine/well-groomed vibe (males), radiating smile, her/his smile lights up the room.</span></li>
+<li class="flex items-start gap-2"><span class="text-rose-600 font-black">3.</span><span><b>Personality:</b> charming, approachable, witty, bright, have an innate talent for something, diligent, devoted, resilient, eloquent, meticulous, humble, warm-hearted, well-mannered.</span></li>
+</ul>
+</div>
+<div class="text-center pt-2">
+<button onclick="location.reload()" class="px-8 py-3.5 bg-rose-600 hover:bg-rose-700 text-white font-black rounded-xl shadow-md transition cursor-pointer text-sm">🔄 Restart Lesson</button>
+</div>
+</div>
+</section>
+
+</main>
+
+<script>
+const vocabularyData = [
+{ word: "Get down (= make a note)", ipa: "/ɡet daʊn/", meaning: "Ghi lại, chép lại", ex: "I'll get down the address so I don't forget it." },
+{ word: "Bear in mind", ipa: "/beər ɪn maɪnd/", meaning: "Ghi nhớ, lưu ý", ex: "Bear in mind that you'll need to wear boots for the fieldwork." },
+{ word: "Spoil", ipa: "/spɔɪl/", meaning: "Làm hỏng, phá hoại (cảnh quan)", ex: "Litter can really spoil the natural beauty of the reserve." },
+{ word: "Recruit", ipa: "/rɪˈkruːt/", meaning: "Tuyển, chiêu mộ", ex: "The centre is looking to recruit new volunteers for the summer." },
+{ word: "Administrative work", ipa: "/ədˈmɪnɪstrətɪv wɜːk/", meaning: "Công việc hành chính", ex: "Some roles involve administrative work, like answering emails and filing reports." },
+{ word: "Litter", ipa: "/ˈlɪtər/", meaning: "Rác vứt bừa bãi", ex: "Volunteers are asked to pick up litter along the trails." },
+{ word: "Salaried", ipa: "/ˈsælərid/", meaning: "Được trả lương, hưởng lương", ex: "Unlike the volunteers, the manager is a salaried member of staff." },
+{ word: "Appealing", ipa: "/əˈpiːlɪŋ/", meaning: "Hấp dẫn, lôi cuốn", ex: "The idea of working outdoors all day sounds really appealing to me." },
+{ word: "Nature reserve", ipa: "/ˈneɪtʃər rɪˈzɜːv/", meaning: "Khu bảo tồn thiên nhiên", ex: "She volunteers at a local nature reserve every weekend." },
+{ word: "Carry out surveys", ipa: "/ˈkæri aʊt ˈsɜːveɪz/", meaning: "Thực hiện khảo sát", ex: "Volunteers help carry out surveys on the number of birds in the area." },
+{ word: "Hands-on", ipa: "/ˌhændz ˈɒn/", meaning: "Mang tính thực hành trực tiếp", ex: "It's a hands-on job, so you'll be outdoors most of the time." },
+{ word: "Drop-dead gorgeous", ipa: "/ˌdrɒp ded ˈɡɔːdʒəs/", meaning: "Đẹp đến nghẹt thở", ex: "The moment she walked in, everyone noticed how drop-dead gorgeous she looked." },
+{ word: "Exude a graceful/elegant/adorable/chic vibe (females)", ipa: "/ɪɡˈzjuːd/", meaning: "Toát lên vẻ duyên dáng/thanh lịch/đáng yêu/sang trọng", ex: "She exudes such an elegant aura that people naturally feel drawn to her." },
+{ word: "Exude a clean-cut/masculine/well-groomed vibe (males)", ipa: "/ɪɡˈzjuːd/", meaning: "Toát lên vẻ gọn gàng/nam tính/chỉn chu", ex: "He exudes a clean-cut, well-groomed vibe that makes a great first impression." },
+{ word: "Charming", ipa: "/ˈtʃɑːmɪŋ/", meaning: "Duyên dáng, quyến rũ", ex: "What I like most about him is how charming he is in conversation." },
+{ word: "Radiating smile", ipa: "/ˈreɪdieɪtɪŋ smaɪl/", meaning: "Nụ cười rạng rỡ", ex: "She always greets people with a radiating smile." },
+{ word: "Her/his smile lights up the room", ipa: "/laɪts ʌp ðə ruːm/", meaning: "Nụ cười làm sáng bừng cả căn phòng", ex: "Whenever she walks in, her smile lights up the room." },
+{ word: "Approachable", ipa: "/əˈprəʊtʃəbl/", meaning: "Dễ gần, thân thiện", ex: "Even though he's our team leader, he's incredibly approachable." },
+{ word: "Witty", ipa: "/ˈwɪti/", meaning: "Dí dỏm, hóm hỉnh", ex: "He's so witty that he can make anyone laugh within minutes." },
+{ word: "Bright", ipa: "/braɪt/", meaning: "Thông minh, sáng dạ", ex: "She's one of the brightest students in our class." },
+{ word: "Have an innate talent for something", ipa: "/ɪˈneɪt ˈtælənt/", meaning: "Có năng khiếu bẩm sinh về", ex: "He has an innate talent for playing the piano, even without formal training." },
+{ word: "Diligent", ipa: "/ˈdɪlɪdʒənt/", meaning: "Chăm chỉ, siêng năng", ex: "My friend is incredibly diligent; she never misses a deadline." },
+{ word: "Devoted", ipa: "/dɪˈvəʊtɪd/", meaning: "Tận tâm, hết lòng", ex: "He's a devoted father who always puts his family first." },
+{ word: "Resilient", ipa: "/rɪˈzɪliənt/", meaning: "Kiên cường, bền bỉ", ex: "Despite the setbacks, she remained remarkably resilient." },
+{ word: "Eloquent", ipa: "/ˈeləkwənt/", meaning: "Hùng biện, ăn nói lưu loát", ex: "He gave such an eloquent speech that the whole room was captivated." },
+{ word: "Meticulous", ipa: "/mɪˈtɪkjələs/", meaning: "Tỉ mỉ, cẩn thận", ex: "She's extremely meticulous about every detail in her work." },
+{ word: "Humble", ipa: "/ˈhʌmbl/", meaning: "Khiêm tốn", ex: "Despite his success, he has always remained humble." },
+{ word: "Warm-hearted", ipa: "/ˌwɔːm ˈhɑːtɪd/", meaning: "Ấm áp, tốt bụng", ex: "She's such a warm-hearted person who always checks on her friends." },
+{ word: "Well-mannered", ipa: "/ˌwel ˈmænəd/", meaning: "Lịch sự, có phép tắc", ex: "His parents raised him to be polite and well-mannered." }
+];
+
+let cardQueue = [], currentCard = null, isFlipped = false;
+const totalCardsCount = vocabularyData.length;
+
+window.onload = function () {
+  renderVocabTable();
+  initFlashcards();
+  renderDescribeContainer();
+};
+
+function switchTab(tabId) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+  document.querySelectorAll('.tab-btn').forEach(btn => { btn.classList.remove('bg-white', 'text-rose-700', 'shadow-sm'); btn.classList.add('text-slate-500'); });
+  document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+  const activeBtn = document.getElementById(`btn-${tabId}`);
+  if (activeBtn) { activeBtn.classList.add('bg-white', 'text-rose-700', 'shadow-sm'); activeBtn.classList.remove('text-slate-500'); }
+  if (tabId === 'game' && !typeGameInitialised) { initTypeGame(); typeGameInitialised = true; }
+}
+
+function renderVocabTable() {
+  const tbody = document.getElementById('reference-table-body');
+  tbody.innerHTML = vocabularyData.map((item, i) => `
+    <tr class="hover:bg-rose-50/50 transition">
+      <td class="p-3.5 font-black text-rose-950"><span class="inline-flex items-center gap-2"><button class="audio-btn" onclick="speakText('${item.word.replace(/'/g, "\\'")}')">🔊</button>${item.word}</span></td>
+      <td class="p-3.5 font-mono text-xs text-rose-700">${item.ipa}</td>
+      <td class="p-3.5 text-slate-700">${item.meaning}</td>
+      <td class="p-3.5 italic text-slate-500">${item.ex}</td>
+    </tr>`).join('');
+}
+
+function speakText(text, event) {
+  if (event) event.stopPropagation();
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-US'; u.rate = 0.9;
+    window.speechSynthesis.speak(u);
+  }
+}
+
+function initFlashcards() {
+  cardQueue = [...vocabularyData];
+  shuffleArray(cardQueue);
+  updateProgressBar();
+  showNextCard();
+}
+function resetProgress() {
+  document.getElementById('flashcard-container').classList.remove('hidden');
+  document.getElementById('flashcard-success-box').classList.add('hidden');
+  initFlashcards();
+}
+function shuffleArray(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } }
+function showNextCard() {
+  if (cardQueue.length === 0) {
+    document.getElementById('flashcard-container').classList.add('hidden');
+    document.getElementById('flashcard-success-box').classList.remove('hidden');
+    return;
+  }
+  currentCard = cardQueue[0]; isFlipped = false;
+  document.getElementById('flashcard-inner').classList.remove('card-flipped');
+  document.getElementById('f-prompt').innerText = currentCard.meaning;
+  document.getElementById('b-answer').innerText = currentCard.word;
+  document.getElementById('b-ipa').innerText = currentCard.ipa;
+  document.getElementById('b-example').innerText = `"${currentCard.ex}"`;
+  document.getElementById('queue-text').innerText = `${cardQueue.length} card${cardQueue.length > 1 ? 's' : ''}`;
+  updateProgressBar();
+}
+function flipCard() {
+  isFlipped = !isFlipped;
+  document.getElementById('flashcard-inner').classList.toggle('card-flipped', isFlipped);
+}
+function handleAnkiAction(type) {
+  if (!currentCard) return;
+  if (type === 'again') { const c = cardQueue.shift(); cardQueue.push(c); } else { cardQueue.shift(); }
+  showNextCard();
+}
+function updateProgressBar() {
+  const completed = totalCardsCount - cardQueue.length;
+  const pct = Math.round((completed / totalCardsCount) * 100);
+  document.getElementById('progress-bar').style.width = `${pct}%`;
+}
+function unlockAndGoToGame() {
+  document.getElementById('btn-game').classList.remove('disabled-tab');
+  switchTab('game');
+}
+
+// TYPE THE WORD GAME
+const typeQuestions = [
+  { meaning: "Ghi lại, chép lại", sentence: "I need to ___ her phone number before I forget it.", answer: "get down" },
+  { meaning: "Ghi nhớ, lưu ý", sentence: "Please ___ that the trail can be muddy after rain.", answer: "bear in mind" },
+  { meaning: "Làm hỏng, phá hoại (cảnh quan)", sentence: "Litter can really ___ the natural beauty of the reserve.", answer: "spoil" },
+  { meaning: "Tuyển, chiêu mộ", sentence: "The centre is looking to ___ new volunteers for the summer.", answer: "recruit" },
+  { meaning: "Công việc hành chính", sentence: "Some roles involve ___, like answering emails and filing reports.", answer: "administrative work" },
+  { meaning: "Rác vứt bừa bãi", sentence: "Volunteers are asked to pick up ___ along the trails.", answer: "litter" },
+  { meaning: "Được trả lương, hưởng lương", sentence: "Unlike the volunteers, the manager is a ___ member of staff.", answer: "salaried" },
+  { meaning: "Hấp dẫn, lôi cuốn", sentence: "The idea of working outdoors all day sounds really ___ to me.", answer: "appealing" },
+  { meaning: "Khu bảo tồn thiên nhiên", sentence: "She volunteers at a local ___ every weekend.", answer: "nature reserve" },
+  { meaning: "Thực hiện khảo sát", sentence: "Volunteers help ___ on the number of birds in the area.", answer: "carry out surveys" },
+  { meaning: "Mang tính thực hành trực tiếp", sentence: "It's a ___ job, so you'll be outdoors most of the time.", answer: "hands-on" },
+  { meaning: "Duyên dáng, quyến rũ", sentence: "What I like most about him is how ___ he is in conversation.", answer: "charming" },
+  { meaning: "Dễ gần, thân thiện", sentence: "Even though he's our team leader, he's incredibly ___.", answer: "approachable" },
+  { meaning: "Dí dỏm, hóm hỉnh", sentence: "He's so ___ that he can make anyone laugh within minutes.", answer: "witty" },
+  { meaning: "Chăm chỉ, siêng năng", sentence: "My friend is incredibly ___; she never misses a deadline.", answer: "diligent" },
+  { meaning: "Kiên cường, bền bỉ", sentence: "Despite the setbacks, she remained remarkably ___.", answer: "resilient" },
+  { meaning: "Hùng biện, ăn nói lưu loát", sentence: "He gave such an ___ speech that the whole room was captivated.", answer: "eloquent" },
+  { meaning: "Tỉ mỉ, cẩn thận", sentence: "She's extremely ___ about every detail in her work.", answer: "meticulous" },
+  { meaning: "Ấm áp, tốt bụng", sentence: "She's such a ___ person who always checks on her friends.", answer: "warm-hearted" },
+  { meaning: "Đẹp đến nghẹt thở", sentence: "The moment she walked in, everyone noticed how ___ she looked.", answer: "drop-dead gorgeous" }
+];
+let twIdx = 0, twScore = 0, typeGameInitialised = false, twHintUsed = false;
+
+function initTypeGame() {
+  twIdx = 0; twScore = 0;
+  document.getElementById('tw-score').innerText = 0;
+  document.getElementById('tw-total').innerText = typeQuestions.length;
+  document.getElementById('tw-success-box').classList.add('hidden');
+  loadTypeQuestion();
+}
+function normalizeAnswer(s) {
+  return s.toLowerCase().replace(/-/g, ' ').replace(/[.,!?]/g, '').replace(/\s+/g, ' ').trim();
+}
+function loadTypeQuestion() {
+  if (twIdx >= typeQuestions.length) {
+    document.getElementById('tw-final-score').innerText = twScore;
+    document.getElementById('tw-success-box').classList.remove('hidden');
+    return;
+  }
+  const q = typeQuestions[twIdx];
+  twHintUsed = false;
+  document.getElementById('tw-idx').innerText = twIdx + 1;
+  document.getElementById('tw-meaning').innerText = q.meaning;
+  document.getElementById('tw-sentence').innerHTML = q.sentence.replace('___', '<b>_____</b>');
+  document.getElementById('tw-input').value = '';
+  document.getElementById('tw-input').disabled = false;
+  document.getElementById('tw-hint').classList.add('hidden');
+  document.getElementById('tw-feedback').classList.add('hidden');
+  document.getElementById('tw-check-btn').classList.remove('hidden');
+  document.getElementById('tw-next-btn').classList.add('hidden');
+  document.getElementById('tw-input').focus();
+}
+function showHint() {
+  const q = typeQuestions[twIdx];
+  twHintUsed = true;
+  const words = q.answer.split(' ');
+  const hintText = words.map(w => w.slice(0, 1) + '_'.repeat(Math.max(w.length - 1, 0))).join(' ');
+  const hint = document.getElementById('tw-hint');
+  hint.classList.remove('hidden');
+  hint.innerText = `💡 Gợi ý: ${hintText} (${words.length} từ)`;
+}
+function checkTypeAnswer() {
+  const q = typeQuestions[twIdx];
+  const userVal = normalizeAnswer(document.getElementById('tw-input').value);
+  const correctVal = normalizeAnswer(q.answer);
+  const feedback = document.getElementById('tw-feedback');
+  feedback.classList.remove('hidden');
+  if (userVal.length === 0) {
+    feedback.className = "text-center font-black text-xs md:text-sm p-2 text-amber-700";
+    feedback.innerText = "Please type an answer first.";
+    return;
+  }
+  if (userVal === correctVal) {
+    if (!twHintUsed) twScore++;
+    document.getElementById('tw-score').innerText = twScore;
+    feedback.className = "text-center font-black text-xs md:text-sm p-2 text-emerald-700";
+    feedback.innerText = `✅ Correct! "${q.answer}"`;
+    document.getElementById('tw-input').disabled = true;
+    document.getElementById('tw-check-btn').classList.add('hidden');
+    document.getElementById('tw-next-btn').classList.remove('hidden');
+  } else {
+    feedback.className = "text-center font-black text-xs md:text-sm p-2 text-rose-600";
+    feedback.innerText = "❌ Not quite. Check your spelling and try again.";
+    document.getElementById('tw-input').classList.add('wrong-shake');
+    setTimeout(() => document.getElementById('tw-input').classList.remove('wrong-shake'), 400);
+  }
+}
+function nextTypeQuestion() { twIdx++; loadTypeQuestion(); }
+function unlockAndGoToWriting() {
+  document.getElementById('btn-writing').classList.remove('disabled-tab');
+  switchTab('writing');
+}
+
+// DESCRIBE PEOPLE
+const describeTargets = [
+  { label: "1. A famous person you admire", placeholder: "e.g. a singer, actor, athlete..." },
+  { label: "2. A family member", placeholder: "e.g. your grandmother, father, sister..." },
+  { label: "3. A teacher you remember", placeholder: "e.g. a teacher from school..." },
+  { label: "4. A close friend", placeholder: "e.g. your best friend..." },
+  { label: "5. A classmate or colleague", placeholder: "e.g. someone you study or work with..." }
+];
+function renderDescribeContainer() {
+  const c = document.getElementById('describe-container');
+  c.innerHTML = describeTargets.map((t, i) => `
+    <div class="bg-white p-5 rounded-2xl border border-rose-100 shadow-sm space-y-2">
+      <h4 class="text-sm font-black text-rose-900">${t.label}</h4>
+      <textarea id="desc-input-${i}" oninput="checkDescribeProgress()" rows="3" placeholder="${t.placeholder}" class="w-full p-3 bg-rose-50/30 border border-rose-200 rounded-xl text-sm outline-none focus:border-rose-400 font-medium"></textarea>
+    </div>`).join('');
+}
+function checkDescribeProgress() {
+  const allFilled = describeTargets.every((t, i) => document.getElementById(`desc-input-${i}`).value.trim().length > 0);
+  const btn = document.getElementById('describe-model-btn');
+  btn.disabled = !allFilled;
+  btn.className = allFilled ? "text-xs text-rose-600 hover:underline font-black cursor-pointer" : "text-xs text-slate-400 font-black cursor-not-allowed";
+  btn.innerText = allFilled ? "👁️ Show suggested answers" : "👁️ Write all 5 descriptions first to unlock suggested answers";
+}
+const describeModels = [
+  "The celebrity I admire most is a Vietnamese actress who is simply drop-dead gorgeous on screen. Off camera, though, what really stands out is how approachable and humble she is in interviews. She's also incredibly witty, which makes her very popular with younger fans. I think it's rare to find someone so talented who still comes across as warm-hearted.",
+  "My grandmother is someone I really look up to. She's quite small, but she still exudes a graceful, elegant aura whenever she dresses up for a family event. What I admire most, though, is how diligent and meticulous she is, even with simple tasks like cooking. She's also incredibly devoted to our family, always putting everyone else first.",
+  "One teacher I'll never forget is my high school English teacher. She has a radiating smile that genuinely lights up the room the moment she walks in. Despite being very strict about deadlines, she's remarkably approachable, so students never hesitate to ask questions. I think her eloquent way of explaining things is the reason so many of us grew to love English.",
+  "My best friend is someone with an incredibly bright and resilient personality. Even when things go wrong, she stays calm and finds a solution instead of panicking. She also has an innate talent for drawing, something she's never had formal lessons in. On top of that, she's always well-mannered around adults, which my parents constantly comment on.",
+  "A classmate I really respect is naturally charming and seems to have an innate talent for public speaking. He's also extremely diligent, often staying behind after class to help others with homework. Even though he's clearly bright, he remains humble about his achievements. I think that combination of charm and humility is why everyone in class likes him."
+];
+function toggleDescribeModel() {
+  const allFilled = describeTargets.every((t, i) => document.getElementById(`desc-input-${i}`).value.trim().length > 0);
+  if (!allFilled) return;
+  const box = document.getElementById('describe-model-box');
+  if (box.classList.contains('hidden')) {
+    box.innerHTML = describeModels.map((p, i) => `<p><b>${describeTargets[i].label}:</b> ${p}</p>`).join('');
+  }
+  box.classList.toggle('hidden');
+}
+function unlockAndGoToSummary() {
+  document.getElementById('btn-summary').classList.remove('disabled-tab');
+  switchTab('summary');
+}
+</script>
+</body>
+</html>
