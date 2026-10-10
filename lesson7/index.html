@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IELTS 2C_S5_Lesson 7</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.2.2"></script>
+<style>
+*, body, html, button, span, h1, h2, h3, p, div, input, select, textarea { font-family: 'Quicksand', sans-serif; font-weight: 600; }
+h1, h2, h3, .font-heading { font-family: 'Fredoka', sans-serif; }
+.perspective { perspective: 1000px; }
+.backface-hidden { backface-visibility: hidden; }
+.card-inner { transition: transform 0.5s; transform-style: preserve-3d; }
+.card-flipped { transform: rotateY(180deg); }
+.disabled-tab { opacity: 0.4; cursor: not-allowed !important; pointer-events: none; }
+@keyframes shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-5px)} 40%,80%{transform:translateX(5px)} }
+.shake { animation: shake 0.4s ease-in-out; }
+.audio-btn { display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:999px; background:#E0F2FE; color:#075985; font-size:11px; cursor:pointer; border:1px solid #BAE6FD; flex-shrink:0; }
+.audio-btn:hover { background:#BAE6FD; }
+.mem-card { height: 86px; cursor: pointer; perspective: 700px; }
+.mem-inner { position: relative; width: 100%; height: 100%; transition: transform 0.4s; transform-style: preserve-3d; }
+.mem-card.flipped .mem-inner, .mem-card.matched .mem-inner { transform: rotateY(180deg); }
+.mem-face { position: absolute; inset: 0; backface-visibility: hidden; border-radius: 12px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 6px; font-size: 0.72rem; line-height: 1.2; }
+.mem-front { background: #E0F2FE; border: 2px solid #7DD3FC; font-size: 1.4rem; }
+.mem-back { transform: rotateY(180deg); background: #ffffff; border: 2px solid #38BDF8; font-weight: 700; color: #0C4A6E; }
+.mem-card.matched .mem-back { background: #D1FAE5; border-color: #10B981; color: #065F46; }
+.slot { width: 34px; height: 42px; border-bottom: 3px solid #38BDF8; display: inline-flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: 800; color: #0C4A6E; text-transform: lowercase; }
+.tile { min-width: 40px; height: 44px; padding: 0 10px; border-radius: 12px; border: 2px solid #7DD3FC; background: #ffffff; font-size: 1.1rem; font-weight: 800; color: #0369A1; cursor: pointer; }
+.tile:hover { background: #E0F2FE; }
+.tile.used { opacity: 0.25; pointer-events: none; }
+.opt { width: 100%; text-align: left; padding: 12px 14px; border-radius: 14px; border: 2px solid #BAE6FD; background: #ffffff; font-size: 0.9rem; font-weight: 700; color: #0C4A6E; cursor: pointer; }
+.opt:hover { background: #F0F9FF; }
+.opt.right { border-color: #10B981; background: #D1FAE5; color: #065F46; }
+.opt.bad { border-color: #F43F5E; background: #FFE4E6; color: #9F1239; }
+.gap-fill { display: inline-block; min-width: 90px; padding: 0 10px; border-bottom: 3px dashed #F59E0B; color: #92400E; font-weight: 800; text-align: center; }
+</style>
+</head>
+<body class="bg-[#F0F9FF] text-slate-700 min-h-screen flex flex-col selection:bg-sky-200 pb-12">
+
+<header class="bg-gradient-to-r from-[#E0F2FE] via-[#FFF1E6] to-[#FFE8D6] border-b-4 border-dashed border-sky-300 shadow-sm p-6 text-center rounded-b-3xl">
+<h1 class="text-3xl md:text-4xl font-black tracking-wide drop-shadow-sm text-sky-950">🛒 IELTS 2C_S5_Lesson 7</h1>
+</header>
+
+<div class="max-w-5xl w-full mx-auto px-4 mt-6">
+<div class="flex bg-sky-100/70 p-1.5 rounded-2xl border border-sky-200 shadow-inner overflow-x-auto">
+<button onclick="switchTab('reference')" id="btn-reference" class="tab-btn flex-1 py-3 px-2 text-xs md:text-sm font-black rounded-xl text-center bg-white text-sky-700 shadow-sm transition cursor-pointer whitespace-nowrap">📚 Vocab Bank</button>
+<button onclick="switchTab('flashcard')" id="btn-flashcard" class="tab-btn flex-1 py-3 px-2 text-xs md:text-sm font-black rounded-xl text-center text-slate-500 transition cursor-pointer whitespace-nowrap">🎴 Flashcards</button>
+<button onclick="switchTab('game')" id="btn-game" class="tab-btn disabled-tab flex-1 py-3 px-2 text-xs md:text-sm font-black rounded-xl text-center text-slate-500 transition whitespace-nowrap">🧩 Word Games</button>
+<button onclick="switchTab('writing')" id="btn-writing" class="tab-btn disabled-tab flex-1 py-3 px-2 text-xs md:text-sm font-black rounded-xl text-center text-slate-500 transition whitespace-nowrap">✍️ Shop &amp; Eat Writing</button>
+<button onclick="switchTab('summary')" id="btn-summary" class="tab-btn disabled-tab flex-1 py-3 px-2 text-xs md:text-sm font-black rounded-xl text-center text-slate-500 transition whitespace-nowrap">🎉 Completion</button>
+</div>
+</div>
+
+<main class="flex-1 max-w-5xl w-full mx-auto px-4 py-6">
+
+<!-- TAB 1: VOCAB BANK -->
+<section id="tab-reference" class="tab-content block space-y-6">
+<div class="bg-white p-6 rounded-3xl border border-sky-100 shadow-sm space-y-4">
+<div class="flex justify-between items-center flex-wrap gap-2">
+<h2 class="text-2xl font-black text-sky-950 font-heading">📖 Vocabulary Table</h2>
+<span class="text-xs bg-sky-100 text-sky-800 px-3 py-1 rounded-full font-bold">42 Items</span>
+</div>
+<div class="overflow-x-auto rounded-2xl border border-sky-100 max-h-[560px]">
+<table class="w-full text-left border-collapse bg-white">
+<thead class="sticky top-0 bg-sky-50/95 border-b border-sky-200 text-sky-900 text-xs uppercase tracking-wider font-black z-10">
+<tr><th class="p-3.5">Vocabulary</th><th class="p-3.5">Pronunciation</th><th class="p-3.5">Meaning</th><th class="p-3.5">Tiếng Việt</th><th class="p-3.5">Example Sentence</th></tr>
+</thead>
+<tbody id="reference-table-body" class="divide-y divide-sky-50 text-xs md:text-sm"></tbody>
+</table>
+</div>
+<div class="text-center pt-2">
+<button onclick="switchTab('flashcard')" class="px-8 py-3.5 bg-sky-600 hover:bg-sky-700 text-white font-black rounded-xl text-sm shadow-sm transition cursor-pointer">Start Flashcards ➔</button>
+</div>
+</div>
+</section>
+
+<!-- TAB 2: FLASHCARDS -->
+<section id="tab-flashcard" class="tab-content hidden space-y-6">
+<div class="bg-white p-4 rounded-2xl border-2 border-dashed border-sky-300 shadow-sm flex justify-between items-center flex-wrap gap-2">
+<div class="text-sm font-black text-slate-600">Remaining Queue: <span id="queue-text" class="text-sky-600 font-extrabold">0 cards</span></div>
+<div class="w-full sm:w-1/3 bg-slate-100 h-4 rounded-full overflow-hidden p-0.5 border border-slate-200">
+<div id="progress-bar" class="bg-gradient-to-r from-sky-400 to-amber-400 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+</div>
+<button onclick="resetProgress()" class="text-xs text-sky-600 hover:underline font-black cursor-pointer">🔄 Reset Session</button>
+</div>
+
+<div id="flashcard-container" class="space-y-6">
+<div id="card-arena" class="perspective w-full max-w-md mx-auto h-[420px] cursor-pointer">
+<div id="flashcard-inner" onclick="flipCard()" class="card-inner w-full h-full relative border-4 border-sky-300 rounded-3xl shadow-md bg-white">
+<div class="backface-hidden absolute inset-0 p-6 flex flex-col justify-between items-center text-center bg-sky-50/50 rounded-[20px]">
+<span class="text-xs font-black text-sky-700 uppercase tracking-widest bg-sky-100/80 px-4 py-1.5 rounded-full">Meaning</span>
+<div class="space-y-3 my-auto w-full">
+<h3 id="f-prompt" class="text-xl md:text-2xl font-black text-sky-950 px-2 leading-snug"></h3>
+<p id="f-en" class="text-sm text-slate-500 font-medium px-3"></p>
+</div>
+<p class="text-xs text-sky-600 font-black">👉 Tap card to reveal vocabulary 👈</p>
+</div>
+<div class="backface-hidden w-full h-full absolute inset-0 p-6 flex flex-col justify-between bg-slate-800 text-white rounded-[22px]" style="transform: rotateY(180deg);">
+<span class="text-xs font-black text-sky-300 uppercase tracking-widest bg-slate-700/80 px-4 py-1.5 rounded-full w-max mx-auto">Target Vocabulary</span>
+<div class="my-auto space-y-3 text-center">
+<h2 id="b-answer" class="text-2xl md:text-3xl font-black text-amber-300"></h2>
+<div class="space-y-2 border-t border-slate-700 pt-3">
+<div class="flex justify-center items-center space-x-2">
+<span id="b-ipa" class="text-sky-300 font-bold text-sm font-mono"></span>
+<button onclick="speakIdx(currentCardIdx, event)" class="w-7 h-7 bg-sky-900 hover:bg-sky-800 text-sky-100 rounded-full transition flex items-center justify-center text-xs cursor-pointer shadow-sm">🔊</button>
+</div>
+<p id="b-example" class="text-slate-300 text-xs px-2 font-medium leading-relaxed"></p>
+</div>
+</div>
+<p class="text-xs text-center text-slate-400 font-bold">Rate your recall difficulty 👇</p>
+</div>
+</div>
+</div>
+
+<div class="w-full max-w-md mx-auto bg-white p-4 rounded-2xl border border-sky-100 shadow-sm grid grid-cols-4 gap-2">
+<button onclick="handleAnkiAction('again')" class="p-2 bg-rose-50 hover:bg-rose-100 border border-rose-200 rounded-xl text-center transition cursor-pointer"><span class="block text-xs font-black text-rose-600">Again</span><span class="text-[10px] text-rose-400 font-bold block mt-0.5">&lt; 1m</span></button>
+<button onclick="handleAnkiAction('hard')" class="p-2 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded-xl text-center transition cursor-pointer"><span class="block text-xs font-black text-amber-600">Hard</span><span class="text-[10px] text-amber-400 font-bold block mt-0.5">10m</span></button>
+<button onclick="handleAnkiAction('good')" class="p-2 bg-sky-50 hover:bg-sky-100 border border-sky-200 rounded-xl text-center transition cursor-pointer"><span class="block text-xs font-black text-sky-600">Good</span><span class="text-[10px] text-sky-500 font-bold block mt-0.5">1d</span></button>
+<button onclick="handleAnkiAction('easy')" class="p-2 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 rounded-xl text-center transition shadow-sm cursor-pointer"><span class="block text-xs font-black text-emerald-600">Easy</span><span class="text-[10px] text-emerald-500 font-bold block mt-0.5">4d</span></button>
+</div>
+</div>
+
+<div id="flashcard-success-box" class="max-w-md mx-auto bg-emerald-50 border-4 border-emerald-300 p-6 rounded-3xl text-center space-y-4 hidden shadow-sm">
+<span class="text-5xl block animate-bounce">🌟🛒🎉</span>
+<h4 class="text-2xl font-heading font-black text-emerald-900">Flashcards Mastered!</h4>
+<p class="text-sm text-slate-700 font-medium leading-relaxed">Awesome! You have reviewed all 42 vocabulary items.</p>
+<button onclick="unlockAndGoToGame()" class="w-full py-3.5 bg-sky-600 hover:bg-sky-700 text-white font-black rounded-xl shadow-md transition cursor-pointer text-sm tracking-wide">Start Word Games ➔</button>
+</div>
+</section>
+
+<!-- TAB 3: WORD GAMES -->
+<section id="tab-game" class="tab-content hidden space-y-6">
+<div class="bg-white p-6 rounded-3xl border border-sky-100 shadow-sm space-y-5">
+<div class="flex justify-between items-center border-b border-sky-50 pb-3 flex-wrap gap-2">
+<div>
+<h3 class="text-xl font-heading font-black text-sky-950">🧩 Word Games</h3>
+<p class="text-xs text-slate-500 mt-0.5">3 rounds, 3 different games. Finish a round to unlock the next one.</p>
+</div>
+<div id="round-pills" class="flex items-center gap-2 flex-wrap"></div>
+</div>
+<div id="round-area"></div>
+<div class="text-center">
+<button id="round-next-btn" onclick="nextRound()" class="hidden px-8 py-3 bg-amber-500 hover:bg-amber-600 text-white font-black rounded-xl text-sm shadow-sm transition cursor-pointer">Next Round ➔</button>
+</div>
+</div>
+
+<div id="games-success-box" class="max-w-md mx-auto bg-emerald-50 border-4 border-emerald-300 p-6 rounded-3xl text-center space-y-4 hidden shadow-sm">
+<span class="text-5xl block animate-bounce">🧩🏆✨</span>
+<h4 class="text-2xl font-heading font-black text-emerald-900">All 3 Rounds Completed!</h4>
+<p id="games-summary" class="text-sm text-slate-700 font-medium leading-relaxed"></p>
+<button onclick="unlockAndGoToWriting()" class="w-full py-3.5 bg-sky-600 hover:bg-sky-700 text-white font-black rounded-xl shadow-md transition cursor-pointer text-sm tracking-wide">Start Writing ➔</button>
+</div>
+</section>
+
+<!-- TAB 4: WRITING -->
+<section id="tab-writing" class="tab-content hidden space-y-6">
+<div class="bg-white p-6 rounded-3xl border border-sky-100 shadow-sm space-y-3">
+<h3 class="text-xl font-black text-sky-950 font-heading">Shop &amp; Eat Writing</h3>
+<p class="text-xs text-slate-600 font-bold leading-relaxed">Write 3 to 4 connected sentences for each task. Use as many words from the chips as you can. The chips turn green when you use them. There is no fixed answer. When all 3 tasks are done, you can view suggested answers at the bottom.</p>
+</div>
+<div id="writing-container" class="space-y-4"></div>
+<div class="bg-white p-6 rounded-3xl border border-sky-100 shadow-sm space-y-4">
+<div class="flex items-center gap-2">
+<button id="writing-model-btn" onclick="toggleWritingModel()" disabled class="text-xs text-slate-400 font-black cursor-not-allowed">👁️ Write all 3 answers first to unlock suggested answers</button>
+</div>
+<div id="writing-model-box" class="hidden space-y-4 text-xs md:text-sm text-slate-700 font-medium bg-emerald-50 border border-emerald-200 p-4 rounded-2xl leading-relaxed"></div>
+<div class="text-center pt-2">
+<button onclick="unlockAndGoToSummary()" class="px-8 py-3.5 bg-sky-600 hover:bg-sky-700 text-white font-black rounded-xl text-sm shadow-md transition cursor-pointer">Finish &amp; Go to Summary ➔</button>
+</div>
+</div>
+</section>
+
+<!-- TAB 5: COMPLETION -->
+<section id="tab-summary" class="tab-content hidden space-y-6">
+<div class="max-w-2xl mx-auto bg-white border-4 border-sky-200 p-8 rounded-3xl space-y-6 shadow-xl text-center">
+<div class="space-y-2">
+<span class="text-6xl block animate-bounce">🎓🛒🥗</span>
+<h3 class="text-3xl font-heading font-black text-sky-950">Congratulations!</h3>
+<p class="text-sm text-slate-600 font-bold">You have completed <span class="text-sky-600 font-black">IELTS 2C_S5_Lesson 7</span>.</p>
+</div>
+<div class="bg-sky-50/60 p-5 rounded-2xl border border-sky-200 space-y-3 text-left">
+<h4 class="text-base font-black text-sky-900 border-b border-sky-200 pb-2">💡 Key Takeaways</h4>
+<ul class="space-y-2.5 text-xs md:text-sm text-slate-700 font-bold">
+<li class="flex items-start gap-2"><span class="text-sky-600 font-black">1.</span><span><b>Food and health:</b> have a sweet tooth, sugary, grab a bite, go-to, mouth-watering, cut down on sugar, stay away from, balanced diet, processed food, nutritional value, maintain a healthy lifestyle, home-cooked meals, fix yourself something, staple, local cuisine, make up my mind to, improve my mood, binge on, try out (a recipe).</span></li>
+<li class="flex items-start gap-2"><span class="text-sky-600 font-black">2.</span><span><b>Shops and customers:</b> regular, bargain, retailer, shoplifting, feel guilty, empty-handed, off the beaten track, pile up, dust down.</span></li>
+<li class="flex items-start gap-2"><span class="text-sky-600 font-black">3.</span><span><b>Selling and influencing:</b> persuade, tempt, arouse people's appetites, manipulate, bombard, decompression, desperate, deter.</span></li>
+<li class="flex items-start gap-2"><span class="text-sky-600 font-black">4.</span><span><b>Business and opinion:</b> entrepreneur, turnover, reckon, it's not rocket science, eschew, anathema.</span></li>
+</ul>
+</div>
+<div class="text-center pt-2">
+<button onclick="location.reload()" class="px-8 py-3.5 bg-sky-600 hover:bg-sky-700 text-white font-black rounded-xl shadow-md transition cursor-pointer text-sm">🔄 Restart Lesson</button>
+</div>
+</div>
+</section>
+
+</main>
+
+<script>
+const vocabularyData = [
+{ w: "have a sweet tooth", ipa: "/hæv ə swiːt tuːθ/", en: "to like sweet food very much", vn: "thích ăn đồ ngọt", ex: "I have a sweet tooth, so I can never say no to chocolate." },
+{ w: "sugary", ipa: "/ˈʃʊɡəri/", en: "containing a lot of sugar", vn: "nhiều đường", ex: "Sugary drinks like bubble tea are very popular with students." },
+{ w: "grab a bite", ipa: "/ɡræb ə baɪt/", en: "to eat something quickly because you are in a hurry", vn: "ăn nhanh, ăn vội", ex: "I usually grab a bite between classes." },
+{ w: "go-to", ipa: "/ˈɡəʊ tuː/", en: "something you choose most often", vn: "lựa chọn quen thuộc", ex: "Fruit is my go-to snack when I feel hungry." },
+{ w: "mouth-watering", ipa: "/ˈmaʊθ ˌwɔːtərɪŋ/", en: "looking or smelling very delicious", vn: "ngon chảy nước miếng", ex: "The street food there looked absolutely mouth-watering." },
+{ w: "cut down on sugar", ipa: "/kʌt daʊn ɒn ˈʃʊɡə/", en: "to eat less sugar", vn: "giảm lượng đường", ex: "I am trying to cut down on sugar, so I stopped buying soft drinks." },
+{ w: "stay away from", ipa: "/steɪ əˈweɪ frɒm/", en: "to avoid something harmful", vn: "tránh xa", ex: "I try to stay away from junk food during exam season." },
+{ w: "balanced diet", ipa: "/ˈbælənst ˈdaɪət/", en: "eating different healthy foods in the right amounts", vn: "chế độ ăn cân bằng", ex: "A balanced diet gives you more energy to study." },
+{ w: "processed food", ipa: "/ˈprəʊsest fuːd/", en: "food that has been changed or preserved in factories", vn: "thực phẩm chế biến sẵn", ex: "Instant noodles are a typical kind of processed food." },
+{ w: "nutritional value", ipa: "/njuːˈtrɪʃənl ˈvæljuː/", en: "the health benefits of food", vn: "giá trị dinh dưỡng", ex: "Fruit and nuts have much higher nutritional value than chips." },
+{ w: "maintain a healthy lifestyle", ipa: "/meɪnˈteɪn ə ˈhelθi ˈlaɪfstaɪl/", en: "to continue living in a healthy way", vn: "duy trì lối sống lành mạnh", ex: "Walking to school every day helps me maintain a healthy lifestyle." },
+{ w: "home-cooked meals", ipa: "/ˌhəʊm kʊkt ˈmiːlz/", en: "food prepared at home instead of bought outside", vn: "bữa ăn nấu tại nhà", ex: "I prefer home-cooked meals because they are fresher and cheaper." },
+{ w: "fix yourself something", ipa: "/fɪks jɔːˈself ˈsʌmθɪŋ/", en: "to quickly prepare food or a drink for yourself", vn: "tự làm nhanh món gì đó", ex: "When my parents are out, I fix myself a sandwich." },
+{ w: "staple", ipa: "/ˈsteɪpl/", en: "a basic and important food in a diet", vn: "lương thực chính", ex: "Rice is a staple in most Vietnamese meals." },
+{ w: "local cuisine", ipa: "/ˈləʊkl kwɪˈziːn/", en: "the traditional food of a particular place", vn: "ẩm thực địa phương", ex: "Local cuisine is the best reason to travel around Vietnam." },
+{ w: "make up my mind to", ipa: "/meɪk ʌp maɪ maɪnd tuː/", en: "to decide to do something", vn: "quyết định làm gì", ex: "After a long talk with my mum, I made up my mind to cook more at home." },
+{ w: "improve my mood", ipa: "/ɪmˈpruːv maɪ muːd/", en: "to make me feel happier", vn: "cải thiện tâm trạng", ex: "Listening to music always improves my mood." },
+{ w: "binge on", ipa: "/bɪndʒ ɒn/", en: "to eat too much of something in a short time", vn: "ăn quá nhiều một thứ trong một lúc", ex: "I sometimes binge on bread when I feel stressed." },
+{ w: "try out (a recipe)", say: "try out a recipe", ipa: "/traɪ aʊt ə ˈresəpi/", en: "to test something new to see if you like it", vn: "thử làm (một công thức)", ex: "I love to try out new recipes from cooking blogs." },
+{ w: "persuade", ipa: "/pəˈsweɪd/", en: "to make someone agree to do or believe something", vn: "thuyết phục", ex: "My sister persuaded me to buy a bigger jacket." },
+{ w: "decompression", ipa: "/ˌdiːkəmˈpreʃn/", en: "a space at a shop entrance where customers slow down and relax", vn: "khu giảm tốc ở lối vào cửa hàng", ex: "Many stores leave an open space at the entrance for decompression." },
+{ w: "regular (n)", say: "regular", ipa: "/ˈreɡjələ/", en: "a person who often goes to the same shop or café", vn: "khách quen", ex: "The owner knows every regular by name." },
+{ w: "pile up", ipa: "/paɪl ʌp/", en: "to become a large amount over time", vn: "chất đống, dồn lại", ex: "Dirty dishes started to pile up in the sink." },
+{ w: "bargain (n)", say: "bargain", ipa: "/ˈbɑːɡɪn/", en: "something you buy for less than the normal price", vn: "món hời", ex: "I found a real bargain at the end-of-season sale." },
+{ w: "retailer", ipa: "/ˈriːteɪlə/", en: "a person or company that sells goods to the public", vn: "nhà bán lẻ", ex: "Big retailers often lower their prices on Black Friday." },
+{ w: "shoplifting", ipa: "/ˈʃɒplɪftɪŋ/", en: "stealing goods from a shop", vn: "trộm cắp ở cửa hàng", ex: "Shoplifting is a serious problem for small shops." },
+{ w: "feel guilty", ipa: "/fiːl ˈɡɪlti/", en: "to feel bad because you think you did something wrong", vn: "cảm thấy có lỗi", ex: "I felt guilty after I spent all my pocket money on clothes." },
+{ w: "tempt (v)", say: "tempt", ipa: "/tempt/", en: "to make someone want something they should not have", vn: "cám dỗ", ex: "The smell of fresh bread tempted me to go in." },
+{ w: "arouse people's appetites", ipa: "/əˈraʊz ˈpiːplz ˈæpɪtaɪts/", en: "to make people feel hungry or want something", vn: "kích thích sự thèm ăn của mọi người", ex: "Supermarkets use the smell of baking to arouse people's appetites." },
+{ w: "manipulate", ipa: "/məˈnɪpjuleɪt/", en: "to control or influence someone in a clever, unfair way", vn: "thao túng", ex: "Some adverts try to manipulate customers' feelings." },
+{ w: "reckon", ipa: "/ˈrekən/", en: "to think or believe (informal)", vn: "cho rằng, nghĩ rằng", ex: "I reckon this shop is cheaper than the one next door." },
+{ w: "empty-handed", ipa: "/ˌempti ˈhændɪd/", en: "without bringing or getting anything", vn: "tay không", ex: "She left the market empty-handed because nothing was fresh." },
+{ w: "entrepreneur", ipa: "/ˌɒntrəprəˈnɜː/", en: "a person who starts their own business", vn: "doanh nhân khởi nghiệp", ex: "My uncle is a young entrepreneur who runs a coffee shop." },
+{ w: "it's not rocket science", ipa: "/ɪts nɒt ˈrɒkɪt ˈsaɪəns/", en: "it is not difficult to understand or do", vn: "không khó gì cả", ex: "Cooking rice is not rocket science. Anyone can do it." },
+{ w: "eschew", ipa: "/ɪsˈtʃuː/", en: "to avoid or stay away from something on purpose (formal)", vn: "tránh, kiêng (trang trọng)", ex: "She eschews sugary drinks and only drinks water." },
+{ w: "off the beaten track", ipa: "/ɒf ðə ˌbiːtn ˈtræk/", en: "in a place that few people visit", vn: "nơi ít người biết đến, hẻo lánh", ex: "We found a lovely café off the beaten track." },
+{ w: "anathema", ipa: "/əˈnæθəmə/", en: "something you strongly dislike (formal)", vn: "điều cực kỳ ghê tởm, rất đáng ghét", ex: "Waste is anathema to my grandmother." },
+{ w: "deter", ipa: "/dɪˈtɜː/", en: "to make someone decide not to do something", vn: "ngăn cản, làm nản lòng", ex: "High prices deter many students from shopping there." },
+{ w: "turnover", ipa: "/ˈtɜːnˌəʊvə/", en: "the total money a business earns in a period of time", vn: "doanh thu", ex: "The shop's turnover rose by 20 percent last year." },
+{ w: "desperate", ipa: "/ˈdespərət/", en: "needing or wanting something very much", vn: "tuyệt vọng, rất khao khát", ex: "Small shops are desperate to attract customers during the holidays." },
+{ w: "bombard", ipa: "/bɒmˈbɑːd/", en: "to give someone too many things (ads, questions) at once", vn: "dồn dập tấn công (bằng quảng cáo, câu hỏi)", ex: "Teenagers are bombarded with ads on social media." },
+{ w: "dust down", ipa: "/dʌst daʊn/", en: "to clean dust off something so you can use it again", vn: "phủi bụi, làm mới để dùng lại", ex: "He dusted down his old bike and took it to the shop." }
+];
+
+let cardQueue = [], currentCard = null, currentCardIdx = 0, isFlipped = false;
+const totalCardsCount = vocabularyData.length;
+
+window.onload = function () {
+  renderVocabTable();
+  initFlashcards();
+  renderWriting();
+};
+
+function shuffleArray(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+function switchTab(tabId) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+  document.querySelectorAll('.tab-btn').forEach(btn => { btn.classList.remove('bg-white', 'text-sky-700', 'shadow-sm'); btn.classList.add('text-slate-500'); });
+  document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+  const activeBtn = document.getElementById(`btn-${tabId}`);
+  if (activeBtn) { activeBtn.classList.add('bg-white', 'text-sky-700', 'shadow-sm'); activeBtn.classList.remove('text-slate-500'); }
+  if (tabId === 'game' && !gamesStarted) { gamesStarted = true; gameRound = 1; renderRound(); }
+}
+
+/* AUDIO */
+function speakText(text) {
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-US'; u.rate = 0.9;
+    window.speechSynthesis.speak(u);
+  }
+}
+function speakIdx(i, event) {
+  if (event) event.stopPropagation();
+  const item = vocabularyData[i];
+  speakText(item.say || item.w.replace(/\(.*?\)/g, '').trim());
+}
+
+/* VOCAB BANK */
+function renderVocabTable() {
+  const tbody = document.getElementById('reference-table-body');
+  tbody.innerHTML = vocabularyData.map((item, i) => `
+    <tr class="hover:bg-sky-50/50 transition">
+      <td class="p-3.5 font-black text-sky-950"><span class="inline-flex items-center gap-2"><button class="audio-btn" onclick="speakIdx(${i})">🔊</button>${item.w}</span></td>
+      <td class="p-3.5 font-mono text-xs text-sky-700">${item.ipa}</td>
+      <td class="p-3.5 text-slate-700">${item.en}</td>
+      <td class="p-3.5 text-slate-700">${item.vn}</td>
+      <td class="p-3.5 italic text-slate-500">${item.ex}</td>
+    </tr>`).join('');
+}
+
+/* FLASHCARDS */
+function initFlashcards() {
+  cardQueue = vocabularyData.map((v, i) => i);
+  shuffleArray(cardQueue);
+  updateProgressBar();
+  showNextCard();
+}
+function resetProgress() {
+  document.getElementById('flashcard-container').classList.remove('hidden');
+  document.getElementById('flashcard-success-box').classList.add('hidden');
+  initFlashcards();
+}
+function showNextCard() {
+  if (cardQueue.length === 0) {
+    document.getElementById('flashcard-container').classList.add('hidden');
+    document.getElementById('flashcard-success-box').classList.remove('hidden');
+    return;
+  }
+  currentCardIdx = cardQueue[0];
+  currentCard = vocabularyData[currentCardIdx];
+  isFlipped = false;
+  document.getElementById('flashcard-inner').classList.remove('card-flipped');
+  document.getElementById('f-prompt').innerText = currentCard.vn;
+  document.getElementById('f-en').innerText = currentCard.en;
+  document.getElementById('b-answer').innerText = currentCard.w;
+  document.getElementById('b-ipa').innerText = currentCard.ipa;
+  document.getElementById('b-example').innerText = `"${currentCard.ex}"`;
+  document.getElementById('queue-text').innerText = `${cardQueue.length} card${cardQueue.length > 1 ? 's' : ''}`;
+  updateProgressBar();
+}
+function flipCard() {
+  isFlipped = !isFlipped;
+  document.getElementById('flashcard-inner').classList.toggle('card-flipped', isFlipped);
+}
+function handleAnkiAction(type) {
+  if (!currentCard) return;
+  if (type === 'again') { const c = cardQueue.shift(); cardQueue.push(c); } else { cardQueue.shift(); }
+  showNextCard();
+}
+function updateProgressBar() {
+  const completed = totalCardsCount - cardQueue.length;
+  document.getElementById('progress-bar').style.width = `${Math.round((completed / totalCardsCount) * 100)}%`;
+}
+function unlockAndGoToGame() {
+  document.getElementById('btn-game').classList.remove('disabled-tab');
+  switchTab('game');
+}
+
+/* WORD GAMES */
+let gamesStarted = false, gameRound = 1;
+let memMoves = 0, spScoreFinal = 0, qzScoreFinal = 0;
+
+function renderPills() {
+  const names = ['1 Memory flip', '2 Spell it', '3 Context quiz'];
+  document.getElementById('round-pills').innerHTML = names.map((n, i) => {
+    const active = (i + 1) === gameRound;
+    const done = (i + 1) < gameRound;
+    const cls = active ? 'bg-sky-600 text-white' : (done ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-500');
+    return `<span class="text-xs font-black px-3 py-1.5 rounded-full ${cls}">${done ? '✓ ' : ''}${n}</span>`;
+  }).join('');
+}
+function renderRound() {
+  renderPills();
+  document.getElementById('round-next-btn').classList.add('hidden');
+  if (gameRound === 1) initMemory();
+  else if (gameRound === 2) initSpell();
+  else initQuiz();
+}
+function finishRound(msg) {
+  const area = document.getElementById('round-area');
+  area.innerHTML = `<div class="max-w-md mx-auto text-center space-y-2 py-6"><span class="text-4xl block">🎯</span><p class="text-base font-black text-sky-950">${msg}</p></div>`;
+  const btn = document.getElementById('round-next-btn');
+  btn.innerText = gameRound === 3 ? 'Finish Games ➔' : 'Next Round ➔';
+  btn.classList.remove('hidden');
+}
+function nextRound() {
+  if (gameRound === 3) {
+    document.getElementById('round-next-btn').classList.add('hidden');
+    document.getElementById('games-summary').innerText = `Memory flip: ${memMoves} moves. Spell it: ${spScoreFinal}/${spellData.length}. Context quiz: ${qzScoreFinal}/${mcqData.length}.`;
+    document.getElementById('games-success-box').classList.remove('hidden');
+    return;
+  }
+  gameRound++;
+  renderRound();
+}
+
+/* Round 1: Memory flip */
+const memPairs = [
+  ["persuade", "thuyết phục"], ["decompression", "khu giảm tốc ở lối vào cửa hàng"], ["regular (n)", "khách quen"],
+  ["bargain (n)", "món hời"], ["retailer", "nhà bán lẻ"], ["shoplifting", "trộm cắp ở cửa hàng"],
+  ["feel guilty", "cảm thấy có lỗi"], ["tempt (v)", "cám dỗ"], ["manipulate", "thao túng"],
+  ["reckon", "cho rằng, nghĩ rằng"], ["empty-handed", "tay không"], ["entrepreneur", "doanh nhân khởi nghiệp"]
+];
+let memCards = [], memOpen = [], memMatched = 0, memLock = false;
+function initMemory() {
+  memCards = [];
+  memPairs.forEach((p, i) => { memCards.push({ id: i, text: p[0] }); memCards.push({ id: i, text: p[1] }); });
+  shuffleArray(memCards);
+  memOpen = []; memMatched = 0; memMoves = 0; memLock = false;
+  document.getElementById('round-area').innerHTML = `
+    <p class="text-xs text-slate-600 font-bold mb-3">Flip two cards. Find each English word and its Vietnamese meaning.</p>
+    <p class="text-xs font-black text-sky-800 mb-3">Moves: <span id="mem-moves">0</span> &nbsp; Pairs: <span id="mem-pairs">0</span> / ${memPairs.length}</p>
+    <div class="grid grid-cols-3 md:grid-cols-4 gap-2">` +
+    memCards.map((c, i) => `<div class="mem-card" id="mc-${i}" onclick="flipMem(${i})"><div class="mem-inner"><div class="mem-face mem-front">❓</div><div class="mem-face mem-back">${c.text}</div></div></div>`).join('') +
+    `</div>`;
+}
+function flipMem(i) {
+  const el = document.getElementById(`mc-${i}`);
+  if (memLock || el.classList.contains('flipped') || el.classList.contains('matched')) return;
+  el.classList.add('flipped');
+  memOpen.push(i);
+  if (memOpen.length === 2) {
+    memMoves++;
+    document.getElementById('mem-moves').innerText = memMoves;
+    const [a, b] = memOpen;
+    if (memCards[a].id === memCards[b].id) {
+      ['mc-' + a, 'mc-' + b].forEach(id => { const e = document.getElementById(id); e.classList.remove('flipped'); e.classList.add('matched'); });
+      memMatched++;
+      document.getElementById('mem-pairs').innerText = memMatched;
+      memOpen = [];
+      if (memMatched === memPairs.length) setTimeout(() => finishRound(`Round 1 done in ${memMoves} moves.`), 700);
+    } else {
+      memLock = true;
+      setTimeout(() => {
+        document.getElementById('mc-' + a).classList.remove('flipped');
+        document.getElementById('mc-' + b).classList.remove('flipped');
+        memOpen = []; memLock = false;
+      }, 900);
+    }
+  }
+}
+
+/* Round 2: Spell it */
+const spellData = [
+  { ans: "eschew", vn: "tránh, kiêng (trang trọng)", s: "I try to ___ fast food and cook at home instead." },
+  { ans: "anathema", vn: "điều cực kỳ ghê tởm, rất đáng ghét", s: "Waste is ___ to my grandmother. She never throws food away." },
+  { ans: "deter", vn: "ngăn cản, làm nản lòng", s: "High prices may ___ many students from shopping there." },
+  { ans: "turnover", vn: "doanh thu", s: "The shop's ___ rose by 20 percent last year." },
+  { ans: "desperate", vn: "tuyệt vọng, rất khao khát", s: "Small shops are ___ to attract more customers." },
+  { ans: "bombard", vn: "dồn dập tấn công (bằng quảng cáo, tin nhắn)", s: "Some shops ___ customers with text messages every day." },
+  { ans: "sugary", vn: "nhiều đường", s: "Please avoid ___ drinks before bed." },
+  { ans: "staple", vn: "lương thực chính", s: "Rice is a ___ food in many Asian countries." },
+  { ans: "entrepreneur", vn: "doanh nhân khởi nghiệp", s: "My uncle is a young ___ who opened three coffee shops." },
+  { ans: "shoplifting", vn: "trộm cắp ở cửa hàng", s: "___ is a big problem for small shops." }
+];
+let spIdx = 0, spScore = 0, spPicked = [], spTiles = [], spWrongOnce = false, spHint = false, spDone = false;
+function initSpell() { spIdx = 0; spScore = 0; loadSpell(); }
+function loadSpell() {
+  if (spIdx >= spellData.length) { spScoreFinal = spScore; finishRound(`Round 2 score: ${spScore} / ${spellData.length}`); return; }
+  const q = spellData[spIdx];
+  spPicked = []; spWrongOnce = false; spHint = false; spDone = false;
+  let letters = q.ans.split('').map((ch, i) => ({ ch, id: i }));
+  let tries = 0;
+  do { shuffleArray(letters); tries++; } while (letters.map(l => l.ch).join('') === q.ans && tries < 10);
+  spTiles = letters;
+  renderSpell();
+}
+function renderSpell() {
+  const q = spellData[spIdx];
+  const slots = q.ans.split('').map((c, i) => {
+    const id = spPicked[i];
+    const ch = id !== undefined ? spTiles.find(t => t.id === id).ch : '';
+    return `<span class="slot" id="slot-${i}">${ch}</span>`;
+  }).join(' ');
+  const tiles = spTiles.map(t => `<button class="tile ${spPicked.includes(t.id) ? 'used' : ''}" onclick="pickTile(${t.id})">${t.ch}</button>`).join(' ');
+  document.getElementById('round-area').innerHTML = `
+    <div class="max-w-xl mx-auto space-y-4 text-center">
+      <div class="flex justify-between text-xs font-black text-sky-800"><span>Word ${spIdx + 1} of ${spellData.length}</span><span>Score: ${spScore}</span></div>
+      <p class="text-[11px] font-black text-sky-700 uppercase tracking-wide">Vietnamese meaning</p>
+      <h3 class="text-xl font-black text-sky-950">${q.vn}</h3>
+      <p class="text-sm font-bold text-slate-700 bg-sky-50/60 border border-sky-100 rounded-2xl p-3">${q.s.replace('___', '<span class="gap-fill">' + (spDone ? q.ans : '&nbsp;&nbsp;&nbsp;&nbsp;') + '</span>')}</p>
+      <div id="slots" class="flex justify-center flex-wrap gap-1">${slots}</div>
+      <div class="flex justify-center flex-wrap gap-2">${tiles}</div>
+      <p id="sp-hint" class="${spHint ? '' : 'hidden'} text-xs font-black text-amber-700 bg-amber-50 border border-amber-200 rounded-xl p-2">💡 Starts with "${q.ans[0]}" and has ${q.ans.length} letters.</p>
+      <p id="sp-feedback" class="text-sm font-black min-h-[24px]">${spDone ? '<span class="text-emerald-700">✅ Correct!</span>' : ''}</p>
+      <div class="flex justify-center gap-2">
+        ${spDone ? '<button onclick="nextSpell()" class="px-6 py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-black rounded-xl text-xs cursor-pointer">Next ➔</button>' : `
+        <button onclick="undoTile()" class="px-4 py-2.5 bg-sky-100 hover:bg-sky-200 text-sky-800 font-black rounded-xl text-xs cursor-pointer">⌫ Undo</button>
+        <button onclick="clearTiles()" class="px-4 py-2.5 bg-sky-100 hover:bg-sky-200 text-sky-800 font-black rounded-xl text-xs cursor-pointer">Clear</button>
+        <button onclick="showSpellHint()" class="px-4 py-2.5 bg-amber-100 hover:bg-amber-200 text-amber-800 font-black rounded-xl text-xs cursor-pointer">💡 Hint</button>`}
+      </div>
+    </div>`;
+}
+function pickTile(id) {
+  if (spDone || spPicked.includes(id)) return;
+  const q = spellData[spIdx];
+  spPicked.push(id);
+  renderSpell();
+  if (spPicked.length === q.ans.length) {
+    const word = spPicked.map(pid => spTiles.find(t => t.id === pid).ch).join('');
+    if (word === q.ans) {
+      if (!spWrongOnce) spScore++;
+      spDone = true;
+      renderSpell();
+    } else {
+      spWrongOnce = true;
+      const slots = document.getElementById('slots');
+      slots.classList.add('shake');
+      document.getElementById('sp-feedback').innerHTML = '<span class="text-rose-600">❌ Not quite. Try again.</span>';
+      setTimeout(() => { spPicked = []; renderSpell(); document.getElementById('sp-feedback').innerHTML = '<span class="text-rose-600">❌ Not quite. Try again.</span>'; }, 700);
+    }
+  }
+}
+function undoTile() { if (spDone) return; spPicked.pop(); renderSpell(); }
+function clearTiles() { if (spDone) return; spPicked = []; renderSpell(); }
+function showSpellHint() { spHint = true; renderSpell(); }
+function nextSpell() { spIdx++; loadSpell(); }
+
+/* Round 3: Context quiz */
+const mcqData = [
+  { s: "Work started to ___ while she was on holiday, so she felt stressed when she came back.", ans: "pile up", opts: ["pile up", "dust down", "eschew"] },
+  { s: "Making fried rice is easy. Honestly, ___.", ans: "it's not rocket science", opts: ["it's not rocket science", "it's off the beaten track", "it's anathema"] },
+  { s: "We wanted a quiet holiday, so we chose a small village ___.", ans: "off the beaten track", opts: ["off the beaten track", "empty-handed", "desperate"] },
+  { s: "I need to ___ my old bike before I can ride it again.", ans: "dust down", opts: ["dust down", "pile up", "reckon"] },
+  { s: "Supermarkets often bake bread in the store to ___.", ans: "arouse people's appetites", opts: ["arouse people's appetites", "dust down", "pile up"] },
+  { s: "I ___, so I can never say no to cake.", ans: "have a sweet tooth", opts: ["have a sweet tooth", "grab a bite", "stay away from"] },
+  { s: "I only have ten minutes, so I will just ___ before the next class.", ans: "grab a bite", opts: ["grab a bite", "binge on", "try out"] },
+  { s: "My ___ snack when I am in a hurry is a banana.", ans: "go-to", opts: ["go-to", "local cuisine", "balanced diet"] },
+  { s: "The smell from the street food stall was ___.", ans: "mouth-watering", opts: ["mouth-watering", "nutritional value", "home-cooked meals"] },
+  { s: "My dentist told me to ___, so I stopped drinking soft drinks.", ans: "cut down on sugar", opts: ["cut down on sugar", "grab a bite", "try out a recipe"] },
+  { s: "During exam season, I try to ___ junk food.", ans: "stay away from", opts: ["stay away from", "improve my mood", "make up my mind to"] },
+  { s: "Eating plenty of vegetables, fruit and protein is part of a ___.", ans: "balanced diet", opts: ["balanced diet", "local cuisine", "go-to"] },
+  { s: "Instant noodles and sausages are examples of ___.", ans: "processed food", opts: ["processed food", "home-cooked meals", "balanced diet"] },
+  { s: "Chips taste great, but they have very little ___.", ans: "nutritional value", opts: ["nutritional value", "local cuisine", "staple"] },
+  { s: "Walking to school every day helps me ___.", ans: "maintain a healthy lifestyle", opts: ["maintain a healthy lifestyle", "binge on", "dust down"] },
+  { s: "I prefer ___ because they are fresher and cheaper than eating out.", ans: "home-cooked meals", opts: ["home-cooked meals", "processed food", "sugary"] },
+  { s: "When my mum is out, I usually ___ a sandwich.", ans: "fix myself", opts: ["fix myself", "pile up", "persuade"] },
+  { s: "The best way to learn about a country is to try its ___.", ans: "local cuisine", opts: ["local cuisine", "turnover", "shoplifting"] },
+  { s: "It took me weeks to ___ stop eating late at night.", ans: "make up my mind to", opts: ["make up my mind to", "improve my mood", "try out"] },
+  { s: "Listening to music always helps to ___ when I feel sad.", ans: "improve my mood", opts: ["improve my mood", "binge on", "dust down"] },
+  { s: "Don't ___ snacks while you watch TV, or you will eat too much.", ans: "binge on", opts: ["binge on", "try out", "persuade"] },
+  { s: "I want to ___ a new recipe from that cooking blog this weekend.", ans: "try out", opts: ["try out", "pile up", "reckon"] }
+];
+let qzIdx = 0, qzScore = 0, qzAnswered = false, qzOpts = [];
+function initQuiz() { qzIdx = 0; qzScore = 0; loadQuiz(); }
+function loadQuiz() {
+  if (qzIdx >= mcqData.length) { qzScoreFinal = qzScore; finishRound(`Round 3 score: ${qzScore} / ${mcqData.length}`); return; }
+  const q = mcqData[qzIdx];
+  qzAnswered = false;
+  qzOpts = shuffleArray([...q.opts]);
+  const pct = Math.round((qzIdx / mcqData.length) * 100);
+  document.getElementById('round-area').innerHTML = `
+    <div class="max-w-xl mx-auto space-y-4">
+      <div class="flex justify-between text-xs font-black text-sky-800"><span>Question ${qzIdx + 1} of ${mcqData.length}</span><span>Score: ${qzScore}</span></div>
+      <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden"><div class="bg-gradient-to-r from-sky-400 to-amber-400 h-full rounded-full" style="width:${pct}%"></div></div>
+      <p id="qz-sentence" class="text-base font-bold text-slate-800 leading-relaxed bg-sky-50/60 border border-sky-100 rounded-2xl p-4">${q.s.replace('___', '<span class="gap-fill">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>')}</p>
+      <div class="space-y-2">${qzOpts.map((o, i) => `<button class="opt" id="opt-${i}" onclick="answerQuiz(${i})">${o}</button>`).join('')}</div>
+      <div id="qz-next" class="text-center"></div>
+    </div>`;
+}
+function answerQuiz(i) {
+  if (qzAnswered) return;
+  qzAnswered = true;
+  const q = mcqData[qzIdx];
+  const chosen = qzOpts[i];
+  const btn = document.getElementById(`opt-${i}`);
+  if (chosen === q.ans) { qzScore++; btn.classList.add('right'); }
+  else {
+    btn.classList.add('bad');
+    qzOpts.forEach((o, k) => { if (o === q.ans) document.getElementById(`opt-${k}`).classList.add('right'); });
+  }
+  document.getElementById('qz-sentence').innerHTML = q.s.replace('___', `<span class="gap-fill">${q.ans}</span>`);
+  document.getElementById('qz-next').innerHTML = `<button onclick="nextQuiz()" class="px-6 py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-black rounded-xl text-xs cursor-pointer">${qzIdx === mcqData.length - 1 ? 'See result ➔' : 'Next ➔'}</button>`;
+}
+function nextQuiz() { qzIdx++; loadQuiz(); }
+
+function unlockAndGoToWriting() {
+  document.getElementById('btn-writing').classList.remove('disabled-tab');
+  switchTab('writing');
+}
+
+/* WRITING */
+const writingTasks = [
+  {
+    title: "1. A shop or market you like",
+    task: "Describe a shop or a market you like. Say where it is, why you go there, what you can find or buy, and how you feel when you leave.",
+    chips: [
+      { label: "regular", re: /regular/i }, { label: "bargain", re: /bargain/i }, { label: "off the beaten track", re: /beaten track/i },
+      { label: "empty-handed", re: /empty[- ]handed/i }, { label: "tempt", re: /tempt/i }, { label: "feel guilty", re: /guilty/i }, { label: "persuade", re: /persuad/i }
+    ]
+  },
+  {
+    title: "2. A healthy change you made",
+    task: "Describe one change you made to eat or live more healthily. Say what you decided to do, how you do it, and how it helps you.",
+    chips: [
+      { label: "make up my mind to", re: /(made|make|making) up my mind/i }, { label: "cut down on sugar", re: /cut(ting)? down on/i }, { label: "stay away from", re: /(stay|stayed|staying) away from/i },
+      { label: "balanced diet", re: /balanced diet/i }, { label: "improve my mood", re: /mood/i }, { label: "binge on", re: /binge/i },
+      { label: "home-cooked meals", re: /home[- ]cooked/i }, { label: "maintain a healthy lifestyle", re: /healthy lifestyle/i }
+    ]
+  },
+  {
+    title: "3. Persuade a friend",
+    task: "Write a short message to a friend. Persuade your friend to try a new recipe or a new shop, and give two reasons.",
+    chips: [
+      { label: "persuade", re: /persuad/i }, { label: "tempt", re: /tempt/i }, { label: "bargain", re: /bargain/i },
+      { label: "mouth-watering", re: /mouth[- ]watering/i }, { label: "try out", re: /(try|tried|trying) out/i }, { label: "it's not rocket science", re: /rocket science/i },
+      { label: "go-to", re: /go[- ]to/i }, { label: "local cuisine", re: /local cuisine/i }
+    ]
+  }
+];
+function renderWriting() {
+  document.getElementById('writing-container').innerHTML = writingTasks.map((t, i) => `
+    <div class="bg-white p-5 rounded-2xl border border-sky-100 shadow-sm space-y-3">
+      <h4 class="text-sm font-black text-sky-900">${t.title}</h4>
+      <p class="text-xs text-slate-600 font-bold">${t.task}</p>
+      <div class="flex flex-wrap gap-2">${t.chips.map((c, k) => `<span id="wchip-${i}-${k}" class="text-xs font-bold px-3 py-1.5 rounded-full bg-slate-100 text-slate-500 border border-slate-200">${c.label}</span>`).join('')}</div>
+      <textarea id="w-input-${i}" oninput="onWritingInput(${i})" rows="4" placeholder="Write 3 to 4 sentences here..." class="w-full p-3 bg-sky-50/40 border border-sky-200 rounded-xl text-sm outline-none focus:border-sky-400 font-medium"></textarea>
+    </div>`).join('');
+}
+function onWritingInput(i) {
+  const text = document.getElementById(`w-input-${i}`).value;
+  writingTasks[i].chips.forEach((c, k) => {
+    const el = document.getElementById(`wchip-${i}-${k}`);
+    el.className = c.re.test(text)
+      ? "text-xs font-bold px-3 py-1.5 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-300"
+      : "text-xs font-bold px-3 py-1.5 rounded-full bg-slate-100 text-slate-500 border border-slate-200";
+  });
+  const allFilled = writingTasks.every((t, n) => document.getElementById(`w-input-${n}`).value.trim().length >= 40);
+  const btn = document.getElementById('writing-model-btn');
+  btn.disabled = !allFilled;
+  btn.className = allFilled ? "text-xs text-sky-600 hover:underline font-black cursor-pointer" : "text-xs text-slate-400 font-black cursor-not-allowed";
+  btn.innerText = allFilled ? "👁️ Show suggested answers" : "👁️ Write all 3 answers first to unlock suggested answers";
+}
+const writingModels = [
+  "My favourite place to shop is a small market off the beaten track in my neighbourhood. I go there every Sunday, so the sellers know me as a regular. I usually find a good bargain, such as fresh fruit at half the price. Sometimes I feel guilty because I buy more than I need, but I almost never leave empty-handed.",
+  "Last year I made up my mind to eat more healthily. I started to cut down on sugar and stay away from fast food, and I eat home-cooked meals most days. Now I have a balanced diet, so I feel more energetic. Healthy food also improves my mood, which helps me study better.",
+  "Hi Lan, you should try the new noodle shop near my house! The food is mouth-watering and the prices are a real bargain. I reckon you will love the soup, and it's not rocket science to find the place. I even persuaded my parents to come, and now it is our go-to restaurant at weekends."
+];
+function toggleWritingModel() {
+  const allFilled = writingTasks.every((t, n) => document.getElementById(`w-input-${n}`).value.trim().length >= 40);
+  if (!allFilled) return;
+  const box = document.getElementById('writing-model-box');
+  if (box.classList.contains('hidden')) {
+    box.innerHTML = writingModels.map((p, i) => `<p><b>${writingTasks[i].title}:</b> ${p}</p>`).join('');
+  }
+  box.classList.toggle('hidden');
+}
+function unlockAndGoToSummary() {
+  document.getElementById('btn-summary').classList.remove('disabled-tab');
+  switchTab('summary');
+}
+</script>
+</body>
+</html>
