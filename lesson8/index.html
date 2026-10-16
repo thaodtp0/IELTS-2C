@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IELTS 2C_S5_Lesson 8</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.2.2"></script>
+<style>
+*, body, html, button, span, h1, h2, h3, p, div, input, select, textarea { font-family: 'Quicksand', sans-serif; font-weight: 600; }
+h1, h2, h3, .font-heading { font-family: 'Fredoka', sans-serif; }
+.perspective { perspective: 1000px; }
+.backface-hidden { backface-visibility: hidden; }
+.card-inner { transition: transform 0.5s; transform-style: preserve-3d; }
+.card-flipped { transform: rotateY(180deg); }
+.disabled-tab { opacity: 0.4; cursor: not-allowed !important; pointer-events: none; }
+@keyframes shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-5px)} 40%,80%{transform:translateX(5px)} }
+.shake { animation: shake 0.4s ease-in-out; }
+.audio-btn { display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:999px; background:#FFEDD5; color:#9A3412; font-size:11px; cursor:pointer; border:1px solid #FED7AA; flex-shrink:0; }
+.audio-btn:hover { background:#FED7AA; }
+.opt { width:100%; text-align:left; padding:11px 14px; border-radius:14px; border:2px solid #FED7AA; background:#fff; font-size:0.9rem; font-weight:700; color:#7C2D12; cursor:pointer; }
+.opt:hover { background:#FFF7ED; }
+.opt.right { border-color:#10B981; background:#D1FAE5; color:#065F46; }
+.opt.bad { border-color:#F43F5E; background:#FFE4E6; color:#9F1239; }
+.big { flex:1; padding:16px; border-radius:16px; border:3px solid #FED7AA; background:#fff; font-size:1.05rem; font-weight:800; color:#7C2D12; cursor:pointer; }
+.big:hover { background:#FFF7ED; }
+.big.right { border-color:#10B981; background:#D1FAE5; color:#065F46; }
+.big.bad { border-color:#F43F5E; background:#FFE4E6; color:#9F1239; }
+.chunk { padding:8px 14px; border-radius:12px; border:2px solid #FDBA74; background:#fff; font-size:0.9rem; font-weight:700; color:#9A3412; cursor:pointer; }
+.chunk:hover { background:#FFF7ED; }
+.chunk.used { opacity:0.25; pointer-events:none; }
+.built { min-height:58px; padding:10px 14px; border-radius:16px; border:2px dashed #FDBA74; background:#FFF7ED; font-size:1rem; font-weight:700; color:#7C2D12; }
+.built.good { border-style:solid; border-color:#10B981; background:#D1FAE5; color:#065F46; }
+.gap-fill { display:inline-block; min-width:90px; padding:0 10px; border-bottom:3px dashed #F59E0B; color:#92400E; font-weight:800; text-align:center; }
+.stmt th, .stmt td { padding:6px 10px; border-bottom:1px solid #FED7AA; text-align:left; font-size:0.82rem; }
+.stmt th { background:#FFEDD5; color:#7C2D12; }
+.neg { color:#BE123C; font-weight:800; }
+</style>
+</head>
+<body class="bg-[#FFF7ED] text-slate-700 min-h-screen flex flex-col selection:bg-orange-200 pb-12">
+
+<header class="bg-gradient-to-r from-[#FFEDD5] via-[#FEF9C3] to-[#ECFCCB] border-b-4 border-dashed border-orange-300 shadow-sm p-6 text-center rounded-b-3xl">
+<h1 class="text-3xl md:text-4xl font-black tracking-wide drop-shadow-sm text-orange-950">🍊 IELTS 2C_S5_Lesson 8</h1>
+</header>
+
+<div class="max-w-5xl w-full mx-auto px-4 mt-6">
+<div class="flex bg-orange-100/70 p-1.5 rounded-2xl border border-orange-200 shadow-inner overflow-x-auto">
+<button onclick="switchTab('reference')" id="btn-reference" class="tab-btn flex-1 py-3 px-2 text-xs md:text-sm font-black rounded-xl text-center bg-white text-orange-700 shadow-sm transition cursor-pointer whitespace-nowrap">📚 Vocab Bank</button>
+<button onclick="switchTab('flashcard')" id="btn-flashcard" class="tab-btn flex-1 py-3 px-2 text-xs md:text-sm font-black rounded-xl text-center text-slate-500 transition cursor-pointer whitespace-nowrap">🎴 Flashcards</button>
+<button onclick="switchTab('game')" id="btn-game" class="tab-btn disabled-tab flex-1 py-3 px-2 text-xs md:text-sm font-black rounded-xl text-center text-slate-500 transition whitespace-nowrap">🎮 Word Games</button>
+<button onclick="switchTab('writing')" id="btn-writing" class="tab-btn disabled-tab flex-1 py-3 px-2 text-xs md:text-sm font-black rounded-xl text-center text-slate-500 transition whitespace-nowrap">✍️ Food &amp; Health Writing</button>
+<button onclick="switchTab('summary')" id="btn-summary" class="tab-btn disabled-tab flex-1 py-3 px-2 text-xs md:text-sm font-black rounded-xl text-center text-slate-500 transition whitespace-nowrap">🎉 Completion</button>
+</div>
+</div>
+
+<main class="flex-1 max-w-5xl w-full mx-auto px-4 py-6">
+
+<!-- TAB 1: VOCAB BANK -->
+<section id="tab-reference" class="tab-content block space-y-6">
+<div class="bg-white p-6 rounded-3xl border border-orange-100 shadow-sm space-y-4">
+<div class="flex justify-between items-center flex-wrap gap-2">
+<h2 class="text-2xl font-black text-orange-950 font-heading">📖 Vocabulary Table</h2>
+<span class="text-xs bg-orange-100 text-orange-800 px-3 py-1 rounded-full font-bold">40 Items</span>
+</div>
+<div class="overflow-x-auto rounded-2xl border border-orange-100 max-h-[560px]">
+<table class="w-full text-left border-collapse bg-white">
+<thead class="sticky top-0 bg-orange-50/95 border-b border-orange-200 text-orange-900 text-xs uppercase tracking-wider font-black z-10">
+<tr><th class="p-3.5">Vocabulary</th><th class="p-3.5">Pronunciation</th><th class="p-3.5">Meaning</th><th class="p-3.5">Example Sentence</th></tr>
+</thead>
+<tbody id="reference-table-body" class="divide-y divide-orange-50 text-xs md:text-sm"></tbody>
+</table>
+</div>
+<div class="text-center pt-2">
+<button onclick="switchTab('flashcard')" class="px-8 py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-black rounded-xl text-sm shadow-sm transition cursor-pointer">Start Flashcards ➔</button>
+</div>
+</div>
+</section>
+
+<!-- TAB 2: FLASHCARDS -->
+<section id="tab-flashcard" class="tab-content hidden space-y-6">
+<div class="bg-white p-4 rounded-2xl border-2 border-dashed border-orange-300 shadow-sm flex justify-between items-center flex-wrap gap-2">
+<div class="text-sm font-black text-slate-600">Remaining Queue: <span id="queue-text" class="text-orange-600 font-extrabold">0 cards</span></div>
+<div class="w-full sm:w-1/3 bg-slate-100 h-4 rounded-full overflow-hidden p-0.5 border border-slate-200">
+<div id="progress-bar" class="bg-gradient-to-r from-orange-400 to-lime-400 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+</div>
+<button onclick="resetProgress()" class="text-xs text-orange-600 hover:underline font-black cursor-pointer">🔄 Reset Session</button>
+</div>
+
+<div id="flashcard-container" class="space-y-6">
+<div id="card-arena" class="perspective w-full max-w-md mx-auto h-[420px] cursor-pointer">
+<div id="flashcard-inner" onclick="flipCard()" class="card-inner w-full h-full relative border-4 border-orange-300 rounded-3xl shadow-md bg-white">
+<div class="backface-hidden absolute inset-0 p-6 flex flex-col justify-between items-center text-center bg-orange-50/50 rounded-[20px]">
+<span class="text-xs font-black text-orange-700 uppercase tracking-widest bg-orange-100/80 px-4 py-1.5 rounded-full">Meaning</span>
+<div class="space-y-3 my-auto w-full"><h3 id="f-prompt" class="text-xl md:text-2xl font-black text-orange-950 px-2 leading-snug"></h3></div>
+<p class="text-xs text-orange-600 font-black">👉 Tap card to reveal vocabulary 👈</p>
+</div>
+<div class="backface-hidden w-full h-full absolute inset-0 p-6 flex flex-col justify-between bg-slate-800 text-white rounded-[22px]" style="transform: rotateY(180deg);">
+<span class="text-xs font-black text-orange-300 uppercase tracking-widest bg-slate-700/80 px-4 py-1.5 rounded-full w-max mx-auto">Target Vocabulary</span>
+<div class="my-auto space-y-3 text-center">
+<h2 id="b-answer" class="text-2xl md:text-3xl font-black text-amber-300"></h2>
+<div class="space-y-2 border-t border-slate-700 pt-3">
+<div class="flex justify-center items-center space-x-2">
+<span id="b-ipa" class="text-orange-300 font-bold text-sm font-mono"></span>
+<button onclick="speakIdx(currentCardIdx, event)" class="w-7 h-7 bg-orange-900 hover:bg-orange-800 text-orange-100 rounded-full transition flex items-center justify-center text-xs cursor-pointer shadow-sm">🔊</button>
+</div>
+<p id="b-example" class="text-slate-300 text-xs px-2 font-medium leading-relaxed"></p>
+</div>
+</div>
+<p class="text-xs text-center text-slate-400 font-bold">Rate your recall difficulty 👇</p>
+</div>
+</div>
+</div>
+
+<div class="w-full max-w-md mx-auto bg-white p-4 rounded-2xl border border-orange-100 shadow-sm grid grid-cols-4 gap-2">
+<button onclick="handleAnkiAction('again')" class="p-2 bg-rose-50 hover:bg-rose-100 border border-rose-200 rounded-xl text-center transition cursor-pointer"><span class="block text-xs font-black text-rose-600">Again</span><span class="text-[10px] text-rose-400 font-bold block mt-0.5">&lt; 1m</span></button>
+<button onclick="handleAnkiAction('hard')" class="p-2 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded-xl text-center transition cursor-pointer"><span class="block text-xs font-black text-amber-600">Hard</span><span class="text-[10px] text-amber-400 font-bold block mt-0.5">10m</span></button>
+<button onclick="handleAnkiAction('good')" class="p-2 bg-orange-50 hover:bg-orange-100 border border-orange-200 rounded-xl text-center transition cursor-pointer"><span class="block text-xs font-black text-orange-600">Good</span><span class="text-[10px] text-orange-500 font-bold block mt-0.5">1d</span></button>
+<button onclick="handleAnkiAction('easy')" class="p-2 bg-lime-50 hover:bg-lime-100 border border-lime-200 rounded-xl text-center transition shadow-sm cursor-pointer"><span class="block text-xs font-black text-lime-700">Easy</span><span class="text-[10px] text-lime-600 font-bold block mt-0.5">4d</span></button>
+</div>
+</div>
+
+<div id="flashcard-success-box" class="max-w-md mx-auto bg-emerald-50 border-4 border-emerald-300 p-6 rounded-3xl text-center space-y-4 hidden shadow-sm">
+<span class="text-5xl block animate-bounce">🌟🍊🎉</span>
+<h4 class="text-2xl font-heading font-black text-emerald-900">Flashcards Mastered!</h4>
+<p class="text-sm text-slate-700 font-medium leading-relaxed">Awesome! You have reviewed all 40 vocabulary items.</p>
+<button onclick="unlockAndGo('game')" class="w-full py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-black rounded-xl shadow-md transition cursor-pointer text-sm tracking-wide">Start Word Games ➔</button>
+</div>
+</section>
+
+<!-- TAB 3: WORD GAMES -->
+<section id="tab-game" class="tab-content hidden space-y-6">
+<div class="bg-white p-6 rounded-3xl border border-orange-100 shadow-sm space-y-5">
+<div class="flex justify-between items-center border-b border-orange-50 pb-3 flex-wrap gap-2">
+<div>
+<h3 class="text-xl font-heading font-black text-orange-950">🎮 Word Games</h3>
+<p class="text-xs text-slate-500 mt-0.5">3 rounds, 3 different games. Finish a round to unlock the next one.</p>
+</div>
+<div id="round-pills" class="flex items-center gap-2 flex-wrap"></div>
+</div>
+<div id="round-area"></div>
+<div class="text-center">
+<button id="round-next-btn" onclick="nextRound()" class="hidden px-8 py-3 bg-amber-500 hover:bg-amber-600 text-white font-black rounded-xl text-sm shadow-sm transition cursor-pointer">Next Round ➔</button>
+</div>
+</div>
+<div id="games-success-box" class="max-w-md mx-auto bg-emerald-50 border-4 border-emerald-300 p-6 rounded-3xl text-center space-y-4 hidden shadow-sm">
+<span class="text-5xl block animate-bounce">🎮🏆✨</span>
+<h4 class="text-2xl font-heading font-black text-emerald-900">All 3 Rounds Completed!</h4>
+<p id="games-summary" class="text-sm text-slate-700 font-medium leading-relaxed"></p>
+<button onclick="unlockAndGo('writing')" class="w-full py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-black rounded-xl shadow-md transition cursor-pointer text-sm tracking-wide">Start Writing ➔</button>
+</div>
+</section>
+
+<!-- TAB 4: WRITING -->
+<section id="tab-writing" class="tab-content hidden space-y-6">
+<div class="bg-white p-6 rounded-3xl border border-orange-100 shadow-sm space-y-3">
+<h3 class="text-xl font-black text-orange-950 font-heading">Food &amp; Health Writing</h3>
+<p class="text-xs text-slate-600 font-bold leading-relaxed">Do the 3 tasks. Use the sentence starters to begin each part and use as many vocabulary chips as you can. The chips turn green when you use them. When you reach the minimum number of words in all 3 tasks, you can view the suggested answers.</p>
+</div>
+<div id="writing-container" class="space-y-4"></div>
+<div class="bg-white p-6 rounded-3xl border border-orange-100 shadow-sm space-y-4">
+<button id="writing-model-btn" onclick="toggleWritingModel()" disabled class="text-xs text-slate-400 font-black cursor-not-allowed">👁️ Finish all 3 tasks first to unlock suggested answers</button>
+<div id="writing-model-box" class="hidden space-y-4 text-xs md:text-sm text-slate-700 font-medium bg-emerald-50 border border-emerald-200 p-4 rounded-2xl leading-relaxed"></div>
+<div class="text-center pt-2">
+<button onclick="unlockAndGo('summary')" class="px-8 py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-black rounded-xl text-sm shadow-md transition cursor-pointer">Finish &amp; Go to Summary ➔</button>
+</div>
+</div>
+</section>
+
+<!-- TAB 5: COMPLETION -->
+<section id="tab-summary" class="tab-content hidden space-y-6">
+<div class="max-w-2xl mx-auto bg-white border-4 border-orange-200 p-8 rounded-3xl space-y-6 shadow-xl text-center">
+<div class="space-y-2">
+<span class="text-6xl block animate-bounce">🎓🍊🏦</span>
+<h3 class="text-3xl font-heading font-black text-orange-950">Congratulations!</h3>
+<p class="text-sm text-slate-600 font-bold">You have completed <span class="text-orange-600 font-black">IELTS 2C_S5_Lesson 8</span>.</p>
+</div>
+<div class="bg-orange-50/60 p-5 rounded-2xl border border-orange-200 space-y-3 text-left">
+<h4 class="text-base font-black text-orange-900 border-b border-orange-200 pb-2">💡 Key Takeaways</h4>
+<ul class="space-y-2.5 text-xs md:text-sm text-slate-700 font-bold">
+<li class="flex items-start gap-2"><span class="text-orange-600 font-black">1.</span><span><b>Describing food:</b> have a kick, melt in your mouth, out of this world, make my mouth water, give it a go, exotic, adventurous, daring, be set in your ways.</span></li>
+<li class="flex items-start gap-2"><span class="text-orange-600 font-black">2.</span><span><b>Health and society:</b> be packed with nutrients, high in, lead an active lifestyle, well-being, diet-related illnesses, bring down, keep an eye on, play a key role in, raise health awareness, promote healthy eating habits, set a good example.</span></li>
+<li class="flex items-start gap-2"><span class="text-orange-600 font-black">3.</span><span><b>Money (Listening):</b> account, balance, direct debit, in credit, interest rate, overdraft, savings, deposit, loan, forge, sophisticated, expiry date, key in.</span></li>
+<li class="flex items-start gap-2"><span class="text-orange-600 font-black">4.</span><span><b>Buildings (Listening):</b> vending machine, refurbish, entrance hall, corridor, occupied, state-of-the-art, illuminated.</span></li>
+</ul>
+</div>
+<div class="text-center pt-2">
+<button onclick="location.reload()" class="px-8 py-3.5 bg-orange-500 hover:bg-orange-600 text-white font-black rounded-xl shadow-md transition cursor-pointer text-sm">🔄 Restart Lesson</button>
+</div>
+</div>
+</section>
+
+</main>
+
+<script>
+const vocabularyData = [
+{ w: "have a kick", ipa: "/hæv ə kɪk/", vn: "cay nồng, có vị cay hơn mong đợi", ex: "The sauce had quite a kick, so I drank a lot of water." },
+{ w: "melt in your mouth", ipa: "/melt ɪn jɔː maʊθ/", vn: "mềm, ngon đến mức tan ngay trong miệng", ex: "The beef was so soft that it melted in my mouth." },
+{ w: "out of this world", ipa: "/aʊt əv ðɪs wɜːld/", vn: "tuyệt vời, xuất sắc", ex: "The dessert was out of this world. I wanted a second plate." },
+{ w: "make my mouth water", ipa: "/meɪk maɪ maʊθ ˈwɔːtə/", vn: "thèm chảy nước miếng", ex: "Just thinking about my grandmother's cooking makes my mouth water." },
+{ w: "give it a go", ipa: "/ɡɪv ɪt ə ɡəʊ/", vn: "thử xem sao", ex: "My friend told me to give it a go, so I ordered the snails." },
+{ w: "exotic", ipa: "/ɪɡˈzɒtɪk/", vn: "lạ, đến từ nước ngoài", ex: "On holiday, I like to try exotic fruits that I cannot find at home." },
+{ w: "adventurous", ipa: "/ədˈventʃərəs/", vn: "thích mạo hiểm, thích thử cái mới", ex: "My brother is adventurous, so he orders the strangest dish on the menu." },
+{ w: "daring", ipa: "/ˈdeərɪŋ/", vn: "táo bạo", ex: "Eating raw fish for the first time was a daring choice." },
+{ w: "be set in your ways", ipa: "/biː set ɪn jɔː weɪz/", vn: "khó thay đổi thói quen", ex: "My grandfather is set in his ways and only eats traditional food." },
+{ w: "be packed with nutrients", ipa: "/biː pækt wɪð ˈnjuːtriənts/", vn: "giàu chất dinh dưỡng", ex: "Green vegetables are packed with nutrients." },
+{ w: "high in", ipa: "/haɪ ɪn/", vn: "chứa nhiều (chất béo, đường...)", ex: "Fried snacks are high in fat, so I only eat them sometimes." },
+{ w: "lead an active lifestyle", ipa: "/liːd ən ˈæktɪv ˈlaɪfstaɪl/", vn: "có lối sống năng động", ex: "Many people in my city lead an active lifestyle and jog in the park every morning." },
+{ w: "well-being", ipa: "/ˌwel ˈbiːɪŋ/", vn: "sức khỏe và hạnh phúc", ex: "Good food and enough sleep are important for your well-being." },
+{ w: "diet-related illnesses", ipa: "/ˈdaɪət rɪˌleɪtɪd ˈɪlnəsɪz/", vn: "bệnh liên quan đến chế độ ăn", ex: "Diet-related illnesses are rising because people eat more fast food." },
+{ w: "bring down", ipa: "/brɪŋ daʊn/", vn: "hạ thấp, giảm", ex: "Healthier school meals could help bring down the number of overweight children." },
+{ w: "keep an eye on", ipa: "/kiːp ən aɪ ɒn/", vn: "để mắt tới, theo dõi", ex: "Parents should keep an eye on how much sugar their children eat." },
+{ w: "play a key role in", ipa: "/pleɪ ə kiː rəʊl ɪn/", vn: "đóng vai trò then chốt trong", ex: "Parents play a key role in shaping children's eating habits." },
+{ w: "raise health awareness", ipa: "/reɪz helθ əˈweənəs/", vn: "nâng cao nhận thức về sức khỏe", ex: "TV campaigns can raise health awareness about sugary drinks." },
+{ w: "promote healthy eating habits", ipa: "/prəˈməʊt ˈhelθi ˈiːtɪŋ ˈhæbɪts/", vn: "khuyến khích thói quen ăn uống lành mạnh", ex: "Schools can promote healthy eating habits by selling fresh fruit in the canteen." },
+{ w: "set a good example", ipa: "/set ə ɡʊd ɪɡˈzɑːmpl/", vn: "làm gương tốt", ex: "If parents eat vegetables, they set a good example for their children." },
+{ w: "account", ipa: "/əˈkaʊnt/", vn: "tài khoản (ngân hàng)", ex: "I opened a bank account when I started university." },
+{ w: "balance", ipa: "/ˈbæləns/", vn: "số dư tài khoản", ex: "Check your balance before you pay online." },
+{ w: "direct debit", ipa: "/dəˌrekt ˈdebɪt/", vn: "ghi nợ trực tiếp (tự động trừ tiền định kỳ)", ex: "I pay my phone bill by direct debit every month." },
+{ w: "in credit", ipa: "/ɪn ˈkredɪt/", vn: "tài khoản còn tiền (số dư dương)", ex: "My account is in credit, so I can pay the rent." },
+{ w: "interest rate", ipa: "/ˈɪntrəst reɪt/", vn: "lãi suất", ex: "The bank offers a low interest rate on this loan." },
+{ w: "overdraft", ipa: "/ˈəʊvədrɑːft/", vn: "thấu chi (chi vượt số dư)", ex: "I went into overdraft after I bought a new laptop." },
+{ w: "savings", ipa: "/ˈseɪvɪŋz/", vn: "tiền tiết kiệm", ex: "I put some of my savings into a special account." },
+{ w: "deposit", ipa: "/dɪˈpɒzɪt/", vn: "gửi tiền; khoản tiền gửi", ex: "She deposited her wages in the bank on Friday." },
+{ w: "loan", ipa: "/ləʊn/", vn: "khoản vay", ex: "He took out a loan to buy a motorbike." },
+{ w: "forge", ipa: "/fɔːdʒ/", vn: "làm giả (chữ ký, giấy tờ, tiền)", ex: "Criminals sometimes try to forge signatures on documents." },
+{ w: "sophisticated", ipa: "/səˈfɪstɪkeɪtɪd/", vn: "tinh vi, phức tạp", ex: "Banks use sophisticated systems to stop fraud." },
+{ w: "expiry date", ipa: "/ɪkˈspaɪəri deɪt/", vn: "ngày hết hạn", ex: "Check the expiry date on your card before you shop online." },
+{ w: "key in", ipa: "/kiː ɪn/", vn: "nhập (số, mã) bằng bàn phím", ex: "Key in your PIN number and press enter." },
+{ w: "vending machine", ipa: "/ˈvendɪŋ məˌʃiːn/", vn: "máy bán hàng tự động", ex: "There is a vending machine for drinks in the entrance hall." },
+{ w: "refurbish", ipa: "/ˌriːˈfɜːbɪʃ/", vn: "tu sửa, nâng cấp (tòa nhà)", ex: "The library was refurbished last summer." },
+{ w: "entrance hall", ipa: "/ˈentrəns hɔːl/", vn: "sảnh vào", ex: "Please wait for me in the entrance hall." },
+{ w: "corridor", ipa: "/ˈkɒrɪdɔː/", vn: "hành lang", ex: "The classrooms are along the first-floor corridor." },
+{ w: "occupied", ipa: "/ˈɒkjupaɪd/", vn: "đang có người sử dụng", ex: "The meeting room is occupied until noon." },
+{ w: "state-of-the-art", ipa: "/ˌsteɪt əv ði ˈɑːt/", vn: "hiện đại nhất", ex: "The new gym has state-of-the-art equipment." },
+{ w: "illuminated", ipa: "/ɪˈluːmɪneɪtɪd/", vn: "được chiếu sáng", ex: "The corridor is brightly illuminated at night." }
+];
+
+let cardQueue = [], currentCard = null, currentCardIdx = 0, isFlipped = false;
+const totalCardsCount = vocabularyData.length;
+
+function shuffleArray(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+window.onload = function () {
+  renderVocabTable();
+  initFlashcards();
+  renderWriting();
+};
+
+let gamesStarted = false;
+function switchTab(tabId) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+  document.querySelectorAll('.tab-btn').forEach(btn => { btn.classList.remove('bg-white', 'text-orange-700', 'shadow-sm'); btn.classList.add('text-slate-500'); });
+  document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+  const activeBtn = document.getElementById(`btn-${tabId}`);
+  if (activeBtn) { activeBtn.classList.add('bg-white', 'text-orange-700', 'shadow-sm'); activeBtn.classList.remove('text-slate-500'); }
+  if (tabId === 'game' && !gamesStarted) { gamesStarted = true; gameRound = 1; renderRound(); }
+}
+function unlockAndGo(tab) {
+  document.getElementById(`btn-${tab}`).classList.remove('disabled-tab');
+  switchTab(tab);
+}
+
+/* AUDIO */
+function speakText(text) {
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-GB'; u.rate = 0.9;
+    window.speechSynthesis.speak(u);
+  }
+}
+function speakIdx(i, event) {
+  if (event) event.stopPropagation();
+  speakText(vocabularyData[i].w.replace(/\(.*?\)/g, '').trim());
+}
+
+/* VOCAB BANK */
+function renderVocabTable() {
+  document.getElementById('reference-table-body').innerHTML = vocabularyData.map((item, i) => `
+    <tr class="hover:bg-orange-50/50 transition">
+      <td class="p-3.5 font-black text-orange-950"><span class="inline-flex items-center gap-2"><button class="audio-btn" onclick="speakIdx(${i})">🔊</button>${item.w}</span></td>
+      <td class="p-3.5 font-mono text-xs text-orange-700">${item.ipa}</td>
+      <td class="p-3.5 text-slate-700">${item.vn}</td>
+      <td class="p-3.5 italic text-slate-500">${item.ex}</td>
+    </tr>`).join('');
+}
+
+/* FLASHCARDS */
+function initFlashcards() {
+  cardQueue = vocabularyData.map((v, i) => i);
+  shuffleArray(cardQueue);
+  updateProgressBar();
+  showNextCard();
+}
+function resetProgress() {
+  document.getElementById('flashcard-container').classList.remove('hidden');
+  document.getElementById('flashcard-success-box').classList.add('hidden');
+  initFlashcards();
+}
+function showNextCard() {
+  if (cardQueue.length === 0) {
+    document.getElementById('flashcard-container').classList.add('hidden');
+    document.getElementById('flashcard-success-box').classList.remove('hidden');
+    return;
+  }
+  currentCardIdx = cardQueue[0];
+  currentCard = vocabularyData[currentCardIdx];
+  isFlipped = false;
+  document.getElementById('flashcard-inner').classList.remove('card-flipped');
+  document.getElementById('f-prompt').innerText = currentCard.vn;
+  document.getElementById('b-answer').innerText = currentCard.w;
+  document.getElementById('b-ipa').innerText = currentCard.ipa;
+  document.getElementById('b-example').innerText = `"${currentCard.ex}"`;
+  document.getElementById('queue-text').innerText = `${cardQueue.length} card${cardQueue.length > 1 ? 's' : ''}`;
+  updateProgressBar();
+}
+function flipCard() {
+  isFlipped = !isFlipped;
+  document.getElementById('flashcard-inner').classList.toggle('card-flipped', isFlipped);
+}
+function handleAnkiAction(type) {
+  if (!currentCard) return;
+  if (type === 'again') { const c = cardQueue.shift(); cardQueue.push(c); } else { cardQueue.shift(); }
+  showNextCard();
+}
+function updateProgressBar() {
+  const completed = totalCardsCount - cardQueue.length;
+  document.getElementById('progress-bar').style.width = `${Math.round((completed / totalCardsCount) * 100)}%`;
+}
+
+/* WORD GAMES */
+let gameRound = 1, r1Score = 0, r2Score = 0, r3Score = 0;
+function renderPills() {
+  const names = ['1 Right or Wrong?', '2 Sentence Builder', '3 Read and Answer'];
+  document.getElementById('round-pills').innerHTML = names.map((n, i) => {
+    const active = (i + 1) === gameRound, done = (i + 1) < gameRound;
+    const cls = active ? 'bg-orange-500 text-white' : (done ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-500');
+    return `<span class="text-xs font-black px-3 py-1.5 rounded-full ${cls}">${done ? '✓ ' : ''}${n}</span>`;
+  }).join('');
+}
+function renderRound() {
+  renderPills();
+  document.getElementById('round-next-btn').classList.add('hidden');
+  if (gameRound === 1) initTF(); else if (gameRound === 2) initBuilder(); else initReading();
+}
+function finishRound(msg) {
+  document.getElementById('round-area').innerHTML = `<div class="max-w-md mx-auto text-center space-y-2 py-6"><span class="text-4xl block">🎯</span><p class="text-base font-black text-orange-950">${msg}</p></div>`;
+  const btn = document.getElementById('round-next-btn');
+  btn.innerText = gameRound === 3 ? 'Finish Games ➔' : 'Next Round ➔';
+  btn.classList.remove('hidden');
+}
+function nextRound() {
+  if (gameRound === 3) {
+    document.getElementById('round-next-btn').classList.add('hidden');
+    document.getElementById('games-summary').innerText = `Right or Wrong: ${r1Score}/${tfData.length}. Sentence Builder: ${r2Score}/${builderData.length}. Read and Answer: ${r3Score}/${readData.length}.`;
+    document.getElementById('games-success-box').classList.remove('hidden');
+    return;
+  }
+  gameRound++;
+  renderRound();
+}
+
+/* Round 1: Right or Wrong */
+const tfData = [
+  { s: "If your account is in credit, you owe money to the bank.", ok: false, why: "Sai. In credit nghĩa là tài khoản còn tiền (số dư dương)." },
+  { s: "Your balance shows how much money is in your account.", ok: true, why: "Đúng. Balance là số dư tài khoản." },
+  { s: "A direct debit takes money from your account automatically on a fixed date.", ok: true, why: "Đúng. Direct debit là tự động trừ tiền định kỳ." },
+  { s: "An overdraft lets you spend more money than you have in your account.", ok: true, why: "Đúng. Overdraft là thấu chi, chi vượt số dư." },
+  { s: "The interest rate tells you how many times you can use your card.", ok: false, why: "Sai. Interest rate là lãi suất (phần trăm tiền lãi)." },
+  { s: "Savings are the money you spend every day on food and transport.", ok: false, why: "Sai. Savings là tiền tiết kiệm, tiền để dành." },
+  { s: "When you deposit money, you take it out of your account.", ok: false, why: "Sai. Deposit là gửi tiền vào tài khoản." },
+  { s: "A loan is money you borrow and must pay back.", ok: true, why: "Đúng. Loan là khoản vay." },
+  { s: "To forge a signature means to copy it so that it looks real.", ok: true, why: "Đúng. Forge là làm giả (việc này là phạm pháp)." },
+  { s: "Sophisticated security systems are simple and easy to break.", ok: false, why: "Sai. Sophisticated là tinh vi, phức tạp." },
+  { s: "The expiry date shows the day a card stops working.", ok: true, why: "Đúng. Expiry date là ngày hết hạn." },
+  { s: "To key in your PIN means to say it aloud to the cashier.", ok: false, why: "Sai. Key in là nhập bằng bàn phím." },
+  { s: "A vending machine sells snacks and drinks when you put in money.", ok: true, why: "Đúng. Vending machine là máy bán hàng tự động." },
+  { s: "A refurbished library looks old and has not changed.", ok: false, why: "Sai. Refurbish là tu sửa, nâng cấp cho mới hơn." },
+  { s: "The entrance hall is the area just inside the main door.", ok: true, why: "Đúng. Entrance hall là sảnh vào." },
+  { s: "A corridor is a long, narrow passage inside a building.", ok: true, why: "Đúng. Corridor là hành lang." },
+  { s: "If a room is occupied, nobody is using it.", ok: false, why: "Sai. Occupied là đang có người sử dụng." },
+  { s: "A state-of-the-art laboratory has very old equipment.", ok: false, why: "Sai. State-of-the-art là hiện đại nhất." },
+  { s: "An illuminated corridor is dark and hard to see in.", ok: false, why: "Sai. Illuminated là được chiếu sáng." },
+  { s: "You can open a bank account to keep and manage your money.", ok: true, why: "Đúng. Account là tài khoản ngân hàng." }
+];
+let tfIdx = 0, tfStreak = 0, tfAnswered = false;
+function initTF() { tfIdx = 0; r1Score = 0; tfStreak = 0; loadTF(); }
+function loadTF() {
+  if (tfIdx >= tfData.length) { finishRound(`Round 1 score: ${r1Score} / ${tfData.length}`); return; }
+  tfAnswered = false;
+  const q = tfData[tfIdx];
+  const pct = Math.round((tfIdx / tfData.length) * 100);
+  document.getElementById('round-area').innerHTML = `
+    <div class="max-w-xl mx-auto space-y-4">
+      <div class="flex justify-between text-xs font-black text-orange-800"><span>Statement ${tfIdx + 1} of ${tfData.length}</span><span>Score: ${r1Score} &nbsp; Streak: ${tfStreak} 🔥</span></div>
+      <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden"><div class="bg-gradient-to-r from-orange-400 to-lime-400 h-full rounded-full" style="width:${pct}%"></div></div>
+      <p class="text-base md:text-lg font-bold text-slate-800 leading-relaxed bg-orange-50/60 border border-orange-100 rounded-2xl p-5 text-center">${q.s}</p>
+      <div class="flex gap-3"><button class="big" id="tf-true" onclick="answerTF(true)">✔ Right</button><button class="big" id="tf-false" onclick="answerTF(false)">✘ Wrong</button></div>
+      <p id="tf-why" class="text-sm font-black text-center min-h-[40px]"></p>
+      <div id="tf-next" class="text-center"></div>
+    </div>`;
+}
+function answerTF(val) {
+  if (tfAnswered) return;
+  tfAnswered = true;
+  const q = tfData[tfIdx];
+  const good = val === q.ok;
+  document.getElementById(val ? 'tf-true' : 'tf-false').classList.add(good ? 'right' : 'bad');
+  if (!good) document.getElementById(q.ok ? 'tf-true' : 'tf-false').classList.add('right');
+  if (good) { r1Score++; tfStreak++; } else { tfStreak = 0; }
+  document.getElementById('tf-why').innerHTML = `<span class="${good ? 'text-emerald-700' : 'text-rose-600'}">${good ? '✅' : '❌'} ${q.why}</span>`;
+  document.getElementById('tf-next').innerHTML = `<button onclick="tfIdx++;loadTF()" class="px-6 py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-black rounded-xl text-xs cursor-pointer">${tfIdx === tfData.length - 1 ? 'See result ➔' : 'Next ➔'}</button>`;
+}
+
+/* Round 2: Sentence Builder */
+const builderData = [
+  { vn: "Món cà ri khá cay nên tôi phải uống rất nhiều nước.", chunks: ["The curry", "had quite a kick,", "so I drank", "a lot of water."] },
+  { vn: "Món tráng miệng ngon tuyệt vời và tan ngay trong miệng.", chunks: ["The dessert", "was out of this world", "and melted", "in my mouth."] },
+  { vn: "Bạn tôi bảo tôi thử xem sao, nên tôi gọi một món lạ.", chunks: ["My friend told me", "to give it a go,", "so I ordered", "an exotic dish."] },
+  { vn: "Em trai tôi thích mạo hiểm và luôn có những lựa chọn táo bạo.", chunks: ["My brother", "is adventurous", "and always makes", "daring choices."] },
+  { vn: "Ông tôi khó thay đổi thói quen nên chỉ ăn món truyền thống.", chunks: ["My grandfather", "is set in his ways", "and only eats", "traditional food."] },
+  { vn: "Rau củ giàu chất dinh dưỡng, còn đồ chiên rán chứa nhiều chất béo.", chunks: ["Vegetables", "are packed with nutrients,", "while fried snacks", "are high in fat."] },
+  { vn: "Sống năng động rất tốt cho sức khỏe và hạnh phúc của bạn.", chunks: ["Leading", "an active lifestyle", "is good for", "your well-being."] },
+  { vn: "Bố mẹ nên để mắt tới thói quen ăn uống của con và làm gương tốt.", chunks: ["Parents should", "keep an eye on", "their children's eating habits", "and set a good example."] },
+  { vn: "Nhà trường đóng vai trò then chốt trong việc khuyến khích thói quen ăn uống lành mạnh.", chunks: ["Schools", "play a key role in", "promoting healthy eating habits", "among students."] },
+  { vn: "Các chiến dịch truyền thông có thể nâng cao nhận thức về bệnh liên quan đến chế độ ăn.", chunks: ["Media campaigns", "can raise health awareness", "about", "diet-related illnesses."] },
+  { vn: "Chỉ cần nghĩ đến món ăn của bà là tôi đã thèm chảy nước miếng.", chunks: ["Just thinking about", "my grandmother's cooking", "makes", "my mouth water."] },
+  { vn: "Bữa ăn lành mạnh ở trường có thể giúp giảm số trẻ em thừa cân.", chunks: ["Healthier school meals", "could help", "bring down", "the number of overweight children."] }
+];
+let bdIdx = 0, bdPicked = [], bdOrder = [], bdWrongOnce = false, bdDone = false;
+function initBuilder() { bdIdx = 0; r2Score = 0; loadBuilder(); }
+function loadBuilder() {
+  if (bdIdx >= builderData.length) { finishRound(`Round 2 score: ${r2Score} / ${builderData.length}`); return; }
+  const q = builderData[bdIdx];
+  bdPicked = []; bdWrongOnce = false; bdDone = false;
+  let idx = q.chunks.map((c, i) => i), tries = 0;
+  do { shuffleArray(idx); tries++; } while (idx.every((v, i) => v === i) && tries < 10);
+  bdOrder = idx;
+  renderBuilder();
+}
+function renderBuilder(msg) {
+  const q = builderData[bdIdx];
+  const built = bdPicked.map(i => q.chunks[i]).join(' ');
+  document.getElementById('round-area').innerHTML = `
+    <div class="max-w-2xl mx-auto space-y-4">
+      <div class="flex justify-between text-xs font-black text-orange-800"><span>Sentence ${bdIdx + 1} of ${builderData.length}</span><span>Score: ${r2Score}</span></div>
+      <p class="text-[11px] font-black text-orange-700 uppercase tracking-wide text-center">Translate into English</p>
+      <p class="text-lg font-black text-orange-950 text-center">${q.vn}</p>
+      <div id="built" class="built ${bdDone ? 'good' : ''}">${built || '<span class="text-orange-300">Tap the chunks in the correct order...</span>'}</div>
+      <div class="flex flex-wrap justify-center gap-2">${bdOrder.map(i => `<button class="chunk ${bdPicked.includes(i) ? 'used' : ''}" onclick="pickChunk(${i})">${q.chunks[i]}</button>`).join('')}</div>
+      <p id="bd-msg" class="text-sm font-black text-center min-h-[24px]">${msg || (bdDone ? '<span class="text-emerald-700">✅ Correct!</span>' : '')}</p>
+      <div class="flex justify-center gap-2">
+        ${bdDone ? `<button onclick="bdIdx++;loadBuilder()" class="px-6 py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-black rounded-xl text-xs cursor-pointer">${bdIdx === builderData.length - 1 ? 'See result ➔' : 'Next ➔'}</button>` : `
+        <button onclick="bdUndo()" class="px-4 py-2.5 bg-orange-100 hover:bg-orange-200 text-orange-800 font-black rounded-xl text-xs cursor-pointer">⌫ Undo</button>
+        <button onclick="bdClear()" class="px-4 py-2.5 bg-orange-100 hover:bg-orange-200 text-orange-800 font-black rounded-xl text-xs cursor-pointer">Clear</button>`}
+      </div>
+    </div>`;
+}
+function pickChunk(i) {
+  if (bdDone || bdPicked.includes(i)) return;
+  const q = builderData[bdIdx];
+  bdPicked.push(i);
+  if (bdPicked.length === q.chunks.length) {
+    const ok = bdPicked.every((v, k) => v === k);
+    if (ok) { if (!bdWrongOnce) r2Score++; bdDone = true; renderBuilder(); }
+    else {
+      bdWrongOnce = true;
+      renderBuilder('<span class="text-rose-600">❌ Not quite. Check the order and try again.</span>');
+      document.getElementById('built').classList.add('shake');
+      setTimeout(() => { bdPicked = []; renderBuilder('<span class="text-rose-600">❌ Not quite. Check the order and try again.</span>'); }, 800);
+    }
+  } else renderBuilder();
+}
+function bdUndo() { if (!bdDone) { bdPicked.pop(); renderBuilder(); } }
+function bdClear() { if (!bdDone) { bdPicked = []; renderBuilder(); } }
+
+/* Round 3: Read and Answer */
+const scenes = {
+  bank: `<div class="rounded-2xl border border-orange-200 bg-white p-3 overflow-x-auto"><p class="text-xs font-black text-orange-900 mb-2">🏦 Linh's current account (October)</p>
+    <table class="stmt w-full"><tr><th>Date</th><th>Description</th><th>Out</th><th>In</th><th>Balance</th></tr>
+    <tr><td>1 Oct</td><td>Opening balance</td><td></td><td></td><td>£120</td></tr>
+    <tr><td>2 Oct</td><td>Deposit (cash)</td><td></td><td>£300</td><td>£420</td></tr>
+    <tr><td>5 Oct</td><td>Direct debit: Gym</td><td>£35</td><td></td><td>£385</td></tr>
+    <tr><td>8 Oct</td><td>Card: Supermarket</td><td>£60</td><td></td><td>£325</td></tr>
+    <tr><td>12 Oct</td><td>Direct debit: Phone</td><td>£25</td><td></td><td>£300</td></tr>
+    <tr><td>15 Oct</td><td>Loan repayment</td><td>£150</td><td></td><td>£150</td></tr>
+    <tr><td>18 Oct</td><td>Card: Online shop</td><td>£210</td><td></td><td class="neg">-£60</td></tr>
+    <tr><td>20 Oct</td><td>Deposit (wages)</td><td></td><td>£400</td><td>£340</td></tr></table>
+    <p class="text-xs mt-2">Overdraft limit: £200 &nbsp;|&nbsp; Savings account: £1,000 at 2% interest rate</p></div>`,
+  pay: `<div class="rounded-2xl border border-orange-200 bg-white p-4 text-sm space-y-2"><p class="text-xs font-black text-orange-900">💳 Pay online</p>
+    <div class="grid grid-cols-2 gap-2"><div class="col-span-2 border border-slate-200 rounded-lg px-3 py-2 text-slate-500">Card number: 4929 0000 1234 5678</div>
+    <div class="border border-slate-200 rounded-lg px-3 py-2 text-slate-500">Expiry date: 09/28</div><div class="border border-slate-200 rounded-lg px-3 py-2 text-slate-500">PIN: ****</div></div>
+    <p class="text-xs text-slate-500">Our system uses advanced security to protect your details.</p></div>`,
+  lib: `<div class="rounded-2xl border border-orange-200 bg-white p-4 text-sm leading-relaxed"><p class="text-xs font-black text-orange-900 mb-1">📢 Library news</p>
+    After a six-month refurbishment, the Central Library reopens on Monday. In the entrance hall you will find a new vending machine for drinks and snacks. The long corridor on the ground floor is now brightly illuminated with LED lights. Group study room 2 is occupied on Tuesday mornings by exam classes. The computer area has state-of-the-art equipment.</div>`
+};
+const readData = [
+  { scene: 'bank', q: "What was Linh's balance on 15 October?", opts: ["£300", "£150", "£60"], ans: "£150" },
+  { scene: 'bank', q: "Which payment is a direct debit?", opts: ["Supermarket", "Gym", "Online shop"], ans: "Gym" },
+  { scene: 'bank', q: "What happened to Linh's account on 18 October?", opts: ["It was in credit.", "It went into overdraft.", "It earned interest."], ans: "It went into overdraft." },
+  { scene: 'bank', q: "After 20 October, Linh's account is...", opts: ["in credit", "in overdraft", "closed"], ans: "in credit" },
+  { scene: 'bank', q: "The money Linh puts into her account on 2 and 20 October is called a...", opts: ["loan", "deposit", "direct debit"], ans: "deposit" },
+  { scene: 'bank', q: "The bank lets Linh spend up to £200 more than her balance. This is an...", opts: ["overdraft", "interest rate", "account"], ans: "overdraft" },
+  { scene: 'bank', q: "What is the interest rate on Linh's savings?", opts: ["£1,000", "2%", "£200"], ans: "2%" },
+  { scene: 'bank', q: "Linh pays back money she borrowed from the bank on 15 October. This is a...", opts: ["loan", "balance", "deposit"], ans: "loan" },
+  { scene: 'pay', q: "To pay online, you must ___ your card number.", opts: ["key in", "forge", "refurbish"], ans: "key in" },
+  { scene: 'pay', q: "The card stops working after the ___.", opts: ["expiry date", "entrance hall", "overdraft"], ans: "expiry date" },
+  { scene: 'pay', q: "The website uses ___ security to protect your details.", opts: ["sophisticated", "occupied", "illuminated"], ans: "sophisticated" },
+  { scene: 'pay', q: "It is illegal to ___ a signature or a card.", opts: ["forge", "deposit", "key in"], ans: "forge" },
+  { scene: 'lib', q: "Where can you buy a drink in the library?", opts: ["In the corridor", "In the entrance hall", "In study room 2"], ans: "In the entrance hall" },
+  { scene: 'lib', q: "The library was refurbished. This means it was...", opts: ["closed forever", "repaired and improved", "sold"], ans: "repaired and improved" },
+  { scene: 'lib', q: "What is new about the ground-floor corridor?", opts: ["It is illuminated.", "It is occupied.", "It is a vending machine."], ans: "It is illuminated." },
+  { scene: 'lib', q: "Why can you not use study room 2 on Tuesday mornings?", opts: ["It is occupied.", "It is illuminated.", "It is refurbished."], ans: "It is occupied." },
+  { scene: 'lib', q: "The computer area has state-of-the-art equipment. This means the equipment is...", opts: ["very old", "very modern", "very cheap"], ans: "very modern" },
+  { scene: 'lib', q: "Which word means a long, narrow passage inside a building?", opts: ["corridor", "entrance hall", "vending machine"], ans: "corridor" }
+];
+let rdIdx = 0, rdAnswered = false, rdOpts = [];
+function initReading() { rdIdx = 0; r3Score = 0; loadReading(); }
+function loadReading() {
+  if (rdIdx >= readData.length) { finishRound(`Round 3 score: ${r3Score} / ${readData.length}`); return; }
+  rdAnswered = false;
+  const q = readData[rdIdx];
+  rdOpts = shuffleArray([...q.opts]);
+  const pct = Math.round((rdIdx / readData.length) * 100);
+  document.getElementById('round-area').innerHTML = `
+    <div class="max-w-2xl mx-auto space-y-4">
+      <div class="flex justify-between text-xs font-black text-orange-800"><span>Question ${rdIdx + 1} of ${readData.length}</span><span>Score: ${r3Score}</span></div>
+      <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden"><div class="bg-gradient-to-r from-orange-400 to-lime-400 h-full rounded-full" style="width:${pct}%"></div></div>
+      ${scenes[q.scene]}
+      <p class="text-base font-bold text-slate-800 leading-relaxed bg-orange-50/60 border border-orange-100 rounded-2xl p-4">${q.q}</p>
+      <div class="space-y-2">${rdOpts.map((o, i) => `<button class="opt" id="rd-${i}" onclick="answerReading(${i})">${o}</button>`).join('')}</div>
+      <div id="rd-next" class="text-center"></div>
+    </div>`;
+}
+function answerReading(i) {
+  if (rdAnswered) return;
+  rdAnswered = true;
+  const q = readData[rdIdx];
+  const btn = document.getElementById(`rd-${i}`);
+  if (rdOpts[i] === q.ans) { r3Score++; btn.classList.add('right'); }
+  else { btn.classList.add('bad'); rdOpts.forEach((o, k) => { if (o === q.ans) document.getElementById(`rd-${k}`).classList.add('right'); }); }
+  document.getElementById('rd-next').innerHTML = `<button onclick="rdIdx++;loadReading()" class="px-6 py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-black rounded-xl text-xs cursor-pointer">${rdIdx === readData.length - 1 ? 'See result ➔' : 'Next ➔'}</button>`;
+}
+
+/* WRITING */
+const writingTasks = [
+  { title: "Task 1. Email to a friend", min: 50,
+    prompt: "Your friend Mai wants to eat more healthily. Write her a short email (50 to 80 words) with 3 pieces of advice.",
+    starters: ["Dear Mai,", "I'm glad you want to...", "One thing you could try is...", "It's also a good idea to...", "Let me know how it goes!"],
+    chips: [
+      { label: "be packed with nutrients", re: /packed with/i }, { label: "high in", re: /high in/i }, { label: "give it a go", re: /(give|gave|giving) (it|them|this|that) a go/i },
+      { label: "lead an active lifestyle", re: /(lead|leading|led) an active lifestyle/i }, { label: "well-being", re: /well[- ]being/i },
+      { label: "diet-related illnesses", re: /diet[- ]related/i }, { label: "keep an eye on", re: /keep(ing)? an eye on/i }, { label: "make my mouth water", re: /mouth water/i } ] },
+  { title: "Task 2. Should schools teach children about health?", min: 50,
+    prompt: "Write a short paragraph (5 to 6 sentences). Give your opinion, one reason, one example and one different point.",
+    starters: ["I think schools should...", "This is because...", "For example,...", "However,...", "In conclusion,..."],
+    chips: [
+      { label: "play a key role in", re: /key role/i }, { label: "raise health awareness", re: /health awareness/i }, { label: "promote healthy eating habits", re: /promot(e|es|ing) healthy eating/i },
+      { label: "diet-related illnesses", re: /diet[- ]related/i }, { label: "bring down", re: /bring(ing)? down/i }, { label: "set a good example", re: /set(ting)? a good example/i },
+      { label: "keep an eye on", re: /keep(ing)? an eye on/i }, { label: "well-being", re: /well[- ]being/i } ] },
+  { title: "Task 3. The first time I tried a new food", min: 50,
+    prompt: "Describe a time you tried a new food for the first time (50 to 80 words). Say what it was, where you had it, how it tasted and how you felt.",
+    starters: ["Last year I tried... for the first time.", "I am not very adventurous, but...", "It tasted...", "Now I..."],
+    chips: [
+      { label: "have a kick", re: /a kick/i }, { label: "melt in your mouth", re: /melt(ed|s|ing)? in (my|your|his|her|their) mouth/i }, { label: "out of this world", re: /out of this world/i },
+      { label: "make my mouth water", re: /mouth water/i }, { label: "give it a go", re: /(give|gave|giving) (it|them|this|that) a go/i }, { label: "exotic", re: /exotic/i },
+      { label: "adventurous", re: /adventurous/i }, { label: "daring", re: /daring/i }, { label: "be set in your ways", re: /set in (my|your|his|her|their) ways/i } ] }
+];
+function wordCount(t) { const m = t.trim().match(/\S+/g); return m ? m.length : 0; }
+function renderWriting() {
+  document.getElementById('writing-container').innerHTML = writingTasks.map((t, i) => `
+    <div class="bg-white p-5 rounded-2xl border border-orange-100 shadow-sm space-y-3">
+      <h4 class="text-sm font-black text-orange-900">${t.title}</h4>
+      <p class="text-xs text-slate-600 font-bold">${t.prompt}</p>
+      <p class="text-xs text-slate-500 italic">Sentence starters: ${t.starters.join(' | ')}</p>
+      <div class="flex flex-wrap gap-2">${t.chips.map((c, k) => `<span id="wchip-${i}-${k}" class="text-xs font-bold px-3 py-1.5 rounded-full bg-slate-100 text-slate-500 border border-slate-200">${c.label}</span>`).join('')}</div>
+      <textarea id="w-input-${i}" oninput="onWritingInput(${i})" rows="5" placeholder="Write here..." class="w-full p-3 bg-orange-50/40 border border-orange-200 rounded-xl text-sm outline-none focus:border-orange-400 font-medium"></textarea>
+      <p id="wcount-${i}" class="text-xs font-black text-slate-500">0 words (minimum ${t.min})</p>
+    </div>`).join('');
+}
+function allWritten() { return writingTasks.every((t, n) => wordCount(document.getElementById(`w-input-${n}`).value) >= t.min); }
+function onWritingInput(i) {
+  const text = document.getElementById(`w-input-${i}`).value;
+  writingTasks[i].chips.forEach((c, k) => {
+    document.getElementById(`wchip-${i}-${k}`).className = c.re.test(text)
+      ? "text-xs font-bold px-3 py-1.5 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-300"
+      : "text-xs font-bold px-3 py-1.5 rounded-full bg-slate-100 text-slate-500 border border-slate-200";
+  });
+  const n = wordCount(text), min = writingTasks[i].min;
+  const el = document.getElementById(`wcount-${i}`);
+  el.innerText = `${n} words (minimum ${min})`;
+  el.className = n >= min ? "text-xs font-black text-emerald-600" : "text-xs font-black text-slate-500";
+  const btn = document.getElementById('writing-model-btn');
+  const ok = allWritten();
+  btn.disabled = !ok;
+  btn.className = ok ? "text-xs text-orange-600 hover:underline font-black cursor-pointer" : "text-xs text-slate-400 font-black cursor-not-allowed";
+  btn.innerText = ok ? "👁️ Show suggested answers" : "👁️ Finish all 3 tasks first to unlock suggested answers";
+}
+const writingModels = [
+  "Dear Mai, I'm glad you want to eat more healthily! One thing you could try is adding more vegetables to your meals because they are packed with nutrients. It's also a good idea to avoid snacks that are high in sugar and fat. If you don't like salad, give it a go with a tasty dressing. Try to lead an active lifestyle too, for example by walking to work. It is great for your well-being. Let me know how it goes! Best wishes, Linh",
+  "I think schools should teach children about health. Schools play a key role in helping students learn good habits, so they can raise health awareness early. For example, a class about nutrition can promote healthy eating habits, and children can learn why diet-related illnesses are becoming common. This can also bring down the number of overweight students. However, parents must set a good example at home, too.",
+  "Last summer I tried hot pot for the first time at a restaurant near my house. I am not very adventurous, and I usually avoid exotic food, but my friend told me to give it a go. The soup had quite a kick, and the beef melted in my mouth. It was out of this world! Now just thinking about it makes my mouth water."
+];
+function toggleWritingModel() {
+  if (!allWritten()) return;
+  const box = document.getElementById('writing-model-box');
+  if (box.classList.contains('hidden')) {
+    box.innerHTML = writingModels.map((p, i) => `<p><b>${writingTasks[i].title}</b><br>${p}</p>`).join('');
+  }
+  box.classList.toggle('hidden');
+}
+</script>
+</body>
+</html>
