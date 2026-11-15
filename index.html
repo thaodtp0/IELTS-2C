@@ -21,113 +21,117 @@
         <div class="w-1/2 mx-auto border-b-2 border-slate-300 pt-2"></div>
     </div>
 
-    <!-- Semester blocks are created by the script below -->
-    <div id="semesters" class="max-w-3xl mx-auto space-y-6"></div>
+    <div class="max-w-3xl mx-auto space-y-6">
+
+        <!-- ================= SEMESTER 6 (CURRENT) ================= -->
+        <details open class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden group">
+            <summary class="flex justify-between items-center p-5 bg-amber-50/60 font-bold text-xl text-amber-900 cursor-pointer select-none">
+                <span>📚 Semester 6 <span class="text-xs bg-amber-200 text-amber-800 px-2 py-1 rounded-full ml-2">Current</span></span>
+                <span class="text-sm text-slate-400 group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <div id="semester6-lessons" class="p-4 space-y-2">
+                <div class="p-4 text-center text-slate-400 text-sm animate-pulse">Loading lessons...</div>
+            </div>
+        </details>
+
+        <!-- ================= SEMESTER 5 ================= -->
+        <details class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden group">
+            <summary class="flex justify-between items-center p-5 bg-slate-50 font-bold text-xl text-slate-700 cursor-pointer select-none">
+                <span>📚 Semester 5</span>
+                <span class="text-sm text-slate-400 group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <div id="semester5-lessons" class="p-4 space-y-2">
+                <div class="p-4 text-center text-slate-400 text-sm animate-pulse">Loading lessons...</div>
+            </div>
+        </details>
+
+        <!-- ================= SEMESTER 7 (UPCOMING) ================= -->
+        <details class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden group">
+            <summary class="flex justify-between items-center p-5 bg-slate-50 font-bold text-xl text-slate-700 cursor-pointer select-none">
+                <span>📚 Semester 7</span>
+                <span class="text-sm text-slate-400 group-open:rotate-180 transition-transform">▼</span>
+            </summary>
+            <div id="semester7-lessons" class="p-4 space-y-2">
+                <div class="p-4 text-center text-slate-400 text-sm animate-pulse">Loading lessons...</div>
+            </div>
+        </details>
+
+    </div>
 
     <script>
-        /* ============ SETTINGS ============ */
-        const REPO = 'IELTS-2C';          // repository name
-        const SEMESTERS = [5, 6, 7];      // add a number here (for example 8) to add a new semester block
-        const CACHE_MINUTES = 5;          // how long the folder list is remembered in the browser
-        /* ================================= */
+        const OWNER = window.location.hostname.split('.')[0] || 'thaodtp0';
+        const REPO = 'IELTS-2C';
+        const BRANCH = 'main';
 
-        const host = window.location.hostname;
-        const username = host.endsWith('.github.io') ? host.split('.')[0] : 'thaodtp0';
+        // Folder structure -> semester
+        //   S5: lessonN/index.html            (root folder, old structure)
+        //   S6: s6/lessonN/index.html
+        //   S7: s7/lessonN/index.html  (will appear automatically once you create it)
+        const SEMESTERS = [
+            { prefix: '',    containerId: 'semester5-lessons' },
+            { prefix: 's6/', containerId: 'semester6-lessons' },
+            { prefix: 's7/', containerId: 'semester7-lessons' }
+        ];
 
-        /*
-          Folder names that are recognised:
-            lesson1, lesson2 ...        -> Semester 5 (old names, still work)
-            s5-lesson1, s6-lesson1 ...  -> the semester written after the letter s
-        */
-        function parseFolder(name) {
-            const m = name.match(/^(?:s(\d+)[-_ ]?)?lesson[-_ ]?(\d+)$/i);
-            if (!m) return null;
-            return { sem: m[1] ? parseInt(m[1], 10) : 5, num: parseInt(m[2], 10) };
-        }
+        const EMPTY_HTML = `<div class="p-4 text-center text-slate-400 text-sm italic">No lessons available yet.</div>`;
 
-        function buildShell() {
-            document.getElementById('semesters').innerHTML = SEMESTERS.map(n => `
-                <details id="sem-${n}" data-sem="${n}" class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden group">
-                    <summary id="sum-${n}" class="flex justify-between items-center p-5 bg-slate-50 font-bold text-xl text-slate-700 cursor-pointer select-none">
-                        <span>📚 Semester ${n} <span id="badge-${n}" class="hidden text-xs bg-amber-200 text-amber-800 px-2 py-1 rounded-full ml-2">Current</span></span>
-                        <span class="text-sm text-slate-400 group-open:rotate-180 transition-transform">▼</span>
-                    </summary>
-                    <div id="sem${n}-lessons" class="p-4 space-y-2">
-                        <div class="p-4 text-center text-slate-400 text-sm animate-pulse">Loading lessons...</div>
-                    </div>
-                </details>`).join('');
-        }
+        function renderLessons(containerId, lessons) {
+            const container = document.getElementById(containerId);
+            if (lessons.length === 0) {
+                container.innerHTML = EMPTY_HTML;
+                return;
+            }
 
-        function emptyMessage(text) {
-            return `<div class="p-4 text-center text-slate-400 text-sm italic">${text || 'No lessons available yet.'}</div>`;
-        }
-
-        function renderSemester(sem, folders) {
-            const box = document.getElementById(`sem${sem}-lessons`);
-            if (!box) return;
-            if (!folders.length) { box.innerHTML = emptyMessage(); return; }
-            folders.sort((a, b) => a.num - b.num);
-            box.innerHTML = folders.map((f, i) => {
-                const border = i < folders.length - 1 ? 'border-b border-slate-100' : '';
-                const num = String(f.num).padStart(2, '0');
+            container.innerHTML = lessons.map((lesson, index) => {
+                const formattedNum = String(lesson.num).padStart(2, '0');
+                const borderClass = index < lessons.length - 1 ? 'border-b border-slate-100' : '';
                 return `
-                    <div class="flex items-center justify-between p-4 hover:bg-slate-50 rounded-lg transition ${border}">
+                    <div class="flex items-center justify-between p-4 hover:bg-slate-50 rounded-lg transition ${borderClass}">
                         <div class="flex items-center space-x-4">
-                            <span class="text-lg font-bold text-amber-700 font-mono">${num}</span>
-                            <span class="font-bold text-slate-800">Lesson ${f.num}</span>
+                            <span class="text-lg font-bold text-amber-700 font-mono">${formattedNum}</span>
+                            <span class="font-bold text-slate-800">Lesson ${lesson.num}</span>
                         </div>
-                        <a href="./${f.name}/index.html" class="text-sm font-bold text-slate-700 underline hover:text-sky-600 transition">Open Exercise</a>
-                    </div>`;
+                        <a href="./${lesson.path}" class="text-sm font-bold text-slate-700 underline hover:text-sky-600 transition">Open Exercise</a>
+                    </div>
+                `;
             }).join('');
         }
 
-        /* The newest semester that has lessons becomes "Current" and opens by itself */
-        function markCurrent(current) {
-            SEMESTERS.forEach(n => {
-                const isCur = n === current;
-                const details = document.getElementById(`sem-${n}`);
-                const summary = document.getElementById(`sum-${n}`);
-                document.getElementById(`badge-${n}`).classList.toggle('hidden', !isCur);
-                summary.className = 'flex justify-between items-center p-5 font-bold text-xl cursor-pointer select-none ' +
-                    (isCur ? 'bg-amber-50/60 text-amber-900' : 'bg-slate-50 text-slate-700');
-                if (isCur) details.setAttribute('open', ''); else details.removeAttribute('open');
-            });
-        }
-
-        async function getFolders() {
-            const key = `ielts2c-folders:${username}/${REPO}`;
+        async function loadAllLessons() {
             try {
-                const c = JSON.parse(sessionStorage.getItem(key) || 'null');
-                if (c && Date.now() - c.time < CACHE_MINUTES * 60000) return c.names;
-            } catch (e) {}
-            const res = await fetch(`https://api.github.com/repos/${username}/${REPO}/contents/`);
-            if (!res.ok) throw new Error('GitHub answered ' + res.status);
-            const data = await res.json();
-            const names = data.filter(item => item.type === 'dir').map(item => item.name);
-            try { sessionStorage.setItem(key, JSON.stringify({ time: Date.now(), names })); } catch (e) {}
-            return names;
-        }
+                // One single API request returns every file path in the repo
+                const response = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/git/trees/${BRANCH}?recursive=1`);
+                if (!response.ok) throw new Error('Repo not found or rate limit reached');
+                const data = await response.json();
 
-        async function init() {
-            buildShell();
-            try {
-                const names = await getFolders();
-                const bySem = {};
-                SEMESTERS.forEach(n => { bySem[n] = []; });
-                names.forEach(name => {
-                    const info = parseFolder(name);
-                    if (info && bySem[info.sem]) bySem[info.sem].push({ name, num: info.num });
+                // Keep only paths like "lesson3/index.html" or "s6/lesson1/index.html"
+                const indexFiles = (data.tree || [])
+                    .filter(item => item.type === 'blob')
+                    .map(item => item.path)
+                    .filter(path => /^(s\d+\/)?lesson\d+\/index\.html$/i.test(path));
+
+                SEMESTERS.forEach(sem => {
+                    const lessons = indexFiles
+                        .filter(path => {
+                            const rest = sem.prefix ? (path.toLowerCase().startsWith(sem.prefix) ? path.slice(sem.prefix.length) : null) : (/^lesson/i.test(path) ? path : null);
+                            return rest !== null;
+                        })
+                        .map(path => {
+                            const match = path.match(/lesson(\d+)\/index\.html$/i);
+                            return { num: parseInt(match[1], 10), path };
+                        })
+                        .sort((a, b) => a.num - b.num);
+
+                    renderLessons(sem.containerId, lessons);
                 });
-                SEMESTERS.forEach(n => renderSemester(n, bySem[n]));
-                const withLessons = SEMESTERS.filter(n => bySem[n].length > 0);
-                markCurrent(withLessons.length ? Math.max(...withLessons) : SEMESTERS[0]);
             } catch (error) {
-                SEMESTERS.forEach(n => { document.getElementById(`sem${n}-lessons`).innerHTML = emptyMessage('Could not load the lessons. Please try again in a few minutes.'); });
-                markCurrent(SEMESTERS[0]);
+                SEMESTERS.forEach(sem => {
+                    document.getElementById(sem.containerId).innerHTML = EMPTY_HTML;
+                });
             }
         }
 
-        document.addEventListener('DOMContentLoaded', init);
+        document.addEventListener('DOMContentLoaded', loadAllLessons);
     </script>
 </body>
 </html>
