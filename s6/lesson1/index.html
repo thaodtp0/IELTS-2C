@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IELTS 2C_S6_Lesson 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.2.2"></script>
+<style>
+*, body, html, button, span, h1, h2, h3, p, div, input, select, textarea { font-family: 'Quicksand', sans-serif; font-weight: 600; }
+h1, h2, h3, .font-heading { font-family: 'Fredoka', sans-serif; }
+.perspective { perspective: 1000px; }
+.backface-hidden { backface-visibility: hidden; }
+.card-inner { transition: transform 0.5s; transform-style: preserve-3d; }
+.card-flipped { transform: rotateY(180deg); }
+.disabled-tab { opacity: 0.4; cursor: not-allowed !important; pointer-events: none; }
+@keyframes shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-5px)} 40%,80%{transform:translateX(5px)} }
+.shake { animation: shake 0.4s ease-in-out; }
+.audio-btn { display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:999px; background:#F3E8FF; color:#6B21A8; font-size:11px; cursor:pointer; border:1px solid #E9D5FF; flex-shrink:0; }
+.audio-btn:hover { background:#E9D5FF; }
+.grp td { background:#F3E8FF; color:#6B21A8; font-weight:800; padding:8px 14px; }
+.opt { width:100%; text-align:left; padding:11px 14px; border-radius:14px; border:2px solid #E9D5FF; background:#fff; font-size:0.95rem; font-weight:700; color:#4C1D95; cursor:pointer; }
+.opt:hover { background:#FAF5FF; }
+.opt.right { border-color:#10B981; background:#D1FAE5; color:#065F46; }
+.opt.bad { border-color:#F43F5E; background:#FFE4E6; color:#9F1239; }
+.key { width:36px; height:42px; border-radius:10px; border:2px solid #D8B4FE; background:#fff; font-size:1rem; font-weight:800; color:#6B21A8; text-transform:uppercase; cursor:pointer; padding:0; }
+.key:hover { background:#FAF5FF; }
+.key.hit { background:#D1FAE5; border-color:#10B981; color:#065F46; pointer-events:none; }
+.key.miss { background:#FFE4E6; border-color:#F43F5E; color:#9F1239; pointer-events:none; opacity:.6; }
+.letters { font-family: ui-monospace, Menlo, Consolas, monospace; font-weight:800; font-size:2rem; letter-spacing:.35rem; color:#4C1D95; }
+select.gap { border:2px solid #D8B4FE; border-radius:10px; padding:2px 6px; background:#fff; color:#4C1D95; font-weight:700; font-size:0.9rem; max-width:210px; }
+select.gap.ok { border-color:#10B981; background:#D1FAE5; }
+select.gap.no { border-color:#F43F5E; background:#FFE4E6; }
+.chip { display:inline-block; font-size:0.78rem; font-weight:700; padding:4px 11px; border-radius:999px; background:#F1F5F9; color:#64748B; border:1px solid #E2E8F0; margin:2px; }
+.chip.on { background:#D1FAE5; color:#047857; border-color:#6EE7B7; }
+</style>
+</head>
+<body class="bg-[#FAF5FF] text-slate-700 min-h-screen flex flex-col selection:bg-purple-200 pb-12">
+
+<header class="bg-gradient-to-r from-[#F3E8FF] via-[#FCE7F3] to-[#E0F2FE] border-b-4 border-dashed border-purple-300 shadow-sm p-6 text-center rounded-b-3xl">
+<h1 class="text-3xl md:text-4xl font-black tracking-wide drop-shadow-sm text-purple-950">🌍 IELTS 2C_S6_Lesson 1</h1>
+</header>
+
+<div class="max-w-5xl w-full mx-auto px-4 mt-6">
+<div class="flex bg-purple-100/70 p-1.5 rounded-2xl border border-purple-200 shadow-inner overflow-x-auto">
+<button onclick="switchTab('reference')" id="btn-reference" class="tab-btn flex-1 py-3 px-2 text-xs md:text-sm font-black rounded-xl text-center bg-white text-purple-700 shadow-sm transition cursor-pointer whitespace-nowrap">📚 Vocab Bank</button>
+<button onclick="switchTab('flashcard')" id="btn-flashcard" class="tab-btn flex-1 py-3 px-2 text-xs md:text-sm font-black rounded-xl text-center text-slate-500 transition cursor-pointer whitespace-nowrap">🎴 Flashcards</button>
+<button onclick="switchTab('game')" id="btn-game" class="tab-btn disabled-tab flex-1 py-3 px-2 text-xs md:text-sm font-black rounded-xl text-center text-slate-500 transition whitespace-nowrap">🎯 Word Games</button>
+<button onclick="switchTab('writing')" id="btn-writing" class="tab-btn disabled-tab flex-1 py-3 px-2 text-xs md:text-sm font-black rounded-xl text-center text-slate-500 transition whitespace-nowrap">✍️ Speak &amp; Write</button>
+<button onclick="switchTab('summary')" id="btn-summary" class="tab-btn disabled-tab flex-1 py-3 px-2 text-xs md:text-sm font-black rounded-xl text-center text-slate-500 transition whitespace-nowrap">🎉 Completion</button>
+</div>
+</div>
+
+<main class="flex-1 max-w-5xl w-full mx-auto px-4 py-6">
+
+<!-- TAB 1: VOCAB BANK -->
+<section id="tab-reference" class="tab-content block space-y-6">
+<div class="bg-white p-6 rounded-3xl border border-purple-100 shadow-sm space-y-4">
+<div class="flex justify-between items-center flex-wrap gap-2">
+<h2 class="text-2xl font-black text-purple-950 font-heading">📖 Vocabulary Table</h2>
+<span id="item-count" class="text-xs bg-purple-100 text-purple-800 px-3 py-1 rounded-full font-bold"></span>
+</div>
+<div class="overflow-x-auto rounded-2xl border border-purple-100 max-h-[600px]">
+<table class="w-full text-left border-collapse bg-white">
+<thead class="sticky top-0 bg-purple-50/95 border-b border-purple-200 text-purple-900 text-xs uppercase tracking-wider font-black z-10">
+<tr><th class="p-3.5">Vocabulary</th><th class="p-3.5">Pronunciation</th><th class="p-3.5">Meaning</th><th class="p-3.5">Tiếng Việt</th><th class="p-3.5">Example Sentence</th></tr>
+</thead>
+<tbody id="reference-table-body" class="divide-y divide-purple-50 text-xs md:text-sm"></tbody>
+</table>
+</div>
+<div class="text-center pt-2">
+<button onclick="switchTab('flashcard')" class="px-8 py-3.5 bg-purple-600 hover:bg-purple-700 text-white font-black rounded-xl text-sm shadow-sm transition cursor-pointer">Start Flashcards ➔</button>
+</div>
+</div>
+</section>
+
+<!-- TAB 2: FLASHCARDS -->
+<section id="tab-flashcard" class="tab-content hidden space-y-6">
+<div class="bg-white p-4 rounded-2xl border-2 border-dashed border-purple-300 shadow-sm flex justify-between items-center flex-wrap gap-2">
+<div class="text-sm font-black text-slate-600">Remaining Queue: <span id="queue-text" class="text-purple-600 font-extrabold">0 cards</span></div>
+<div class="w-full sm:w-1/3 bg-slate-100 h-4 rounded-full overflow-hidden p-0.5 border border-slate-200">
+<div id="progress-bar" class="bg-gradient-to-r from-purple-400 to-pink-400 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+</div>
+<button onclick="resetProgress()" class="text-xs text-purple-600 hover:underline font-black cursor-pointer">🔄 Reset Session</button>
+</div>
+
+<div id="flashcard-container" class="space-y-6">
+<div id="card-arena" class="perspective w-full max-w-md mx-auto h-[420px] cursor-pointer">
+<div id="flashcard-inner" onclick="flipCard()" class="card-inner w-full h-full relative border-4 border-purple-300 rounded-3xl shadow-md bg-white">
+<div class="backface-hidden absolute inset-0 p-6 flex flex-col justify-between items-center text-center bg-purple-50/50 rounded-[20px]">
+<span class="text-xs font-black text-purple-700 uppercase tracking-widest bg-purple-100/80 px-4 py-1.5 rounded-full">Meaning</span>
+<div class="space-y-3 my-auto w-full">
+<h3 id="f-prompt" class="text-lg md:text-xl font-black text-purple-950 px-2 leading-snug"></h3>
+<p id="f-vn" class="text-sm text-slate-500 font-medium px-3"></p>
+</div>
+<p class="text-xs text-purple-600 font-black">👉 Tap card to reveal vocabulary 👈</p>
+</div>
+<div class="backface-hidden w-full h-full absolute inset-0 p-6 flex flex-col justify-between bg-slate-800 text-white rounded-[22px]" style="transform: rotateY(180deg);">
+<span class="text-xs font-black text-purple-300 uppercase tracking-widest bg-slate-700/80 px-4 py-1.5 rounded-full w-max mx-auto">Target Vocabulary</span>
+<div class="my-auto space-y-3 text-center">
+<h2 id="b-answer" class="text-2xl md:text-3xl font-black text-amber-300"></h2>
+<div class="space-y-2 border-t border-slate-700 pt-3">
+<div class="flex justify-center items-center space-x-2">
+<span id="b-ipa" class="text-purple-300 font-bold text-sm font-mono"></span>
+<button onclick="speakIdx(currentCardIdx, event)" class="w-7 h-7 bg-purple-900 hover:bg-purple-800 text-purple-100 rounded-full transition flex items-center justify-center text-xs cursor-pointer shadow-sm">🔊</button>
+</div>
+<p id="b-example" class="text-slate-300 text-xs px-2 font-medium leading-relaxed"></p>
+</div>
+</div>
+<p class="text-xs text-center text-slate-400 font-bold">Rate your recall difficulty 👇</p>
+</div>
+</div>
+</div>
+
+<div class="w-full max-w-md mx-auto bg-white p-4 rounded-2xl border border-purple-100 shadow-sm grid grid-cols-4 gap-2">
+<button onclick="handleAnkiAction('again')" class="p-2 bg-rose-50 hover:bg-rose-100 border border-rose-200 rounded-xl text-center transition cursor-pointer"><span class="block text-xs font-black text-rose-600">Again</span><span class="text-[10px] text-rose-400 font-bold block mt-0.5">&lt; 1m</span></button>
+<button onclick="handleAnkiAction('hard')" class="p-2 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded-xl text-center transition cursor-pointer"><span class="block text-xs font-black text-amber-600">Hard</span><span class="text-[10px] text-amber-400 font-bold block mt-0.5">10m</span></button>
+<button onclick="handleAnkiAction('good')" class="p-2 bg-purple-50 hover:bg-purple-100 border border-purple-200 rounded-xl text-center transition cursor-pointer"><span class="block text-xs font-black text-purple-600">Good</span><span class="text-[10px] text-purple-500 font-bold block mt-0.5">1d</span></button>
+<button onclick="handleAnkiAction('easy')" class="p-2 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 rounded-xl text-center transition shadow-sm cursor-pointer"><span class="block text-xs font-black text-emerald-600">Easy</span><span class="text-[10px] text-emerald-500 font-bold block mt-0.5">4d</span></button>
+</div>
+</div>
+
+<div id="flashcard-success-box" class="max-w-md mx-auto bg-emerald-50 border-4 border-emerald-300 p-6 rounded-3xl text-center space-y-4 hidden shadow-sm">
+<span class="text-5xl block animate-bounce">🌟🌍🎉</span>
+<h4 class="text-2xl font-heading font-black text-emerald-900">Flashcards Mastered!</h4>
+<p id="flash-done-text" class="text-sm text-slate-700 font-medium leading-relaxed"></p>
+<button onclick="unlockAndGo('game')" class="w-full py-3.5 bg-purple-600 hover:bg-purple-700 text-white font-black rounded-xl shadow-md transition cursor-pointer text-sm tracking-wide">Start Word Games ➔</button>
+</div>
+</section>
+
+<!-- TAB 3: WORD GAMES -->
+<section id="tab-game" class="tab-content hidden space-y-6">
+<div class="bg-white p-6 rounded-3xl border border-purple-100 shadow-sm space-y-5">
+<div class="flex justify-between items-center border-b border-purple-50 pb-3 flex-wrap gap-2">
+<div>
+<h3 class="text-xl font-heading font-black text-purple-950">🎯 Word Games</h3>
+<p class="text-xs text-slate-500 mt-0.5">3 rounds, 3 different games. Finish a round to unlock the next one.</p>
+</div>
+<div id="round-pills" class="flex items-center gap-2 flex-wrap"></div>
+</div>
+<div id="round-area"></div>
+<div class="text-center">
+<button id="round-next-btn" onclick="nextRound()" class="hidden px-8 py-3 bg-pink-500 hover:bg-pink-600 text-white font-black rounded-xl text-sm shadow-sm transition cursor-pointer">Next Round ➔</button>
+</div>
+</div>
+<div id="games-success-box" class="max-w-md mx-auto bg-emerald-50 border-4 border-emerald-300 p-6 rounded-3xl text-center space-y-4 hidden shadow-sm">
+<span class="text-5xl block animate-bounce">🎯🏆✨</span>
+<h4 class="text-2xl font-heading font-black text-emerald-900">All 3 Rounds Completed!</h4>
+<p id="games-summary" class="text-sm text-slate-700 font-medium leading-relaxed"></p>
+<button onclick="unlockAndGo('writing')" class="w-full py-3.5 bg-purple-600 hover:bg-purple-700 text-white font-black rounded-xl shadow-md transition cursor-pointer text-sm tracking-wide">Start Speak &amp; Write ➔</button>
+</div>
+</section>
+
+<!-- TAB 4: SPEAK AND WRITE -->
+<section id="tab-writing" class="tab-content hidden space-y-6">
+<div class="bg-white p-6 rounded-3xl border border-purple-100 shadow-sm space-y-3">
+<h3 class="text-xl font-black text-purple-950 font-heading">Speak &amp; Write</h3>
+<p class="text-xs text-slate-600 font-bold leading-relaxed">Plan your spoken answers in writing. Write 4 to 6 short sentences for each task. Use the vocabulary chips. They turn green when you use them. Reach the minimum words in all 3 tasks to unlock the suggested answers, then say your answers aloud to a partner.</p>
+</div>
+<div id="writing-container" class="space-y-4"></div>
+<div class="bg-white p-6 rounded-3xl border border-purple-100 shadow-sm space-y-4">
+<button id="writing-model-btn" onclick="toggleWritingModel()" disabled class="text-xs text-slate-400 font-black cursor-not-allowed">👁️ Finish all 3 tasks first to unlock suggested answers</button>
+<div id="writing-model-box" class="hidden space-y-4 text-xs md:text-sm text-slate-700 font-medium bg-emerald-50 border border-emerald-200 p-4 rounded-2xl leading-relaxed"></div>
+<div class="text-center pt-2">
+<button onclick="unlockAndGo('summary')" class="px-8 py-3.5 bg-purple-600 hover:bg-purple-700 text-white font-black rounded-xl text-sm shadow-md transition cursor-pointer">Finish &amp; Go to Summary ➔</button>
+</div>
+</div>
+</section>
+
+<!-- TAB 5: COMPLETION -->
+<section id="tab-summary" class="tab-content hidden space-y-6">
+<div class="max-w-2xl mx-auto bg-white border-4 border-purple-200 p-8 rounded-3xl space-y-6 shadow-xl text-center">
+<div class="space-y-2">
+<span class="text-6xl block animate-bounce">🎓🌍✈️</span>
+<h3 class="text-3xl font-heading font-black text-purple-950">Congratulations!</h3>
+<p class="text-sm text-slate-600 font-bold">You have completed <span class="text-purple-600 font-black">IELTS 2C_S6_Lesson 1</span>.</p>
+</div>
+<div class="bg-purple-50/60 p-5 rounded-2xl border border-purple-200 space-y-3 text-left">
+<h4 class="text-base font-black text-purple-900 border-b border-purple-200 pb-2">💡 Key Takeaways</h4>
+<ul class="space-y-2.5 text-xs md:text-sm text-slate-700 font-bold">
+<li class="flex items-start gap-2"><span class="text-purple-600 font-black">1.</span><span><b>Change and effects (reading):</b> knock-on effect, ramification, spin-offs, subtle changes, take off, soar, halt, persist, downfall, entail.</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-600 font-black">2.</span><span><b>Resources and nature (reading):</b> abundance, a wealth of, distribution, deplete, exploit, extract sth from sth, yield, colony, reproduce.</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-600 font-black">3.</span><span><b>Opinions and language (reading):</b> solely, superior, novelty, be inclined to, prevalence, simultaneous, solemn respect, lingua franca.</span></li>
+<li class="flex items-start gap-2"><span class="text-purple-600 font-black">4.</span><span><b>Travel and transport (speaking):</b> vehicle, commute, traffic jam, reckless, squash, worn out, roll out of bed, in-flight, on-board, immerse myself in, isolated, intriguing, packed with, stop by, check out, attract, broaden my horizons and more.</span></li>
+</ul>
+</div>
+<div class="text-center pt-2">
+<button onclick="location.reload()" class="px-8 py-3.5 bg-purple-600 hover:bg-purple-700 text-white font-black rounded-xl shadow-md transition cursor-pointer text-sm">🔄 Restart Lesson</button>
+</div>
+</div>
+</section>
+
+</main>
+
+<script>
+const groups = [
+["Reading vocabulary", [
+{ w: "knock-on effect", ipa: "/ˈnɒk ɒn ɪˌfekt/", en: "a further result that follows from an earlier event", vn: "hiệu ứng dây chuyền, hệ quả kéo theo", ex: "The closure of the factory had a knock-on effect on local shops." },
+{ w: "halt", ipa: "/hɔːlt/", en: "to stop, or to make something stop", vn: "dừng lại, ngừng", ex: "Heavy snow halted all trains in the north." },
+{ w: "reproduce", ipa: "/ˌriːprəˈdjuːs/", en: "to produce young animals or plants; to copy", vn: "sinh sản; sao chép", ex: "Fish reproduce in shallow, warm water." },
+{ w: "abundance", ipa: "/əˈbʌndəns/", en: "a very large amount of something", vn: "sự dồi dào, phong phú", ex: "The island has an abundance of fresh fruit." },
+{ w: "distribution", ipa: "/ˌdɪstrɪˈbjuːʃn/", en: "the way something is shared or spread", vn: "sự phân bố, phân phối", ex: "The unfair distribution of wealth causes anger." },
+{ w: "subtle changes", ipa: "/ˈsʌtl ˈtʃeɪndʒɪz/", en: "small changes that are hard to notice", vn: "những thay đổi tinh tế, khó nhận ra", ex: "Subtle changes in temperature can affect crops." },
+{ w: "downfall", ipa: "/ˈdaʊnfɔːl/", en: "the loss of power, success or wealth, or its cause", vn: "sự sụp đổ, nguyên nhân thất bại", ex: "Greed was his downfall." },
+{ w: "extract sth from sth", say: "extract something from something", ipa: "/ɪkˈstrækt/", en: "to take something out of something else", vn: "chiết xuất, lấy ra từ", ex: "Oil is extracted from olives." },
+{ w: "solely", ipa: "/ˈsəʊlli/", en: "only; not involving anything else", vn: "chỉ, duy nhất", ex: "The decision was based solely on cost." },
+{ w: "colony", ipa: "/ˈkɒləni/", en: "a group of animals living together; a country ruled by another", vn: "đàn, tập đoàn (ong, kiến); thuộc địa", ex: "A colony of ants can contain thousands of insects." },
+{ w: "a wealth of", ipa: "/ə welθ əv/", en: "a large amount of something good or useful", vn: "rất nhiều (thông tin, kinh nghiệm...)", ex: "The museum offers a wealth of information." },
+{ w: "exploit", ipa: "/ɪkˈsplɔɪt/", en: "to use something fully; to use someone unfairly", vn: "khai thác; lợi dụng", ex: "Farmers exploit the rich soil near the river." },
+{ w: "soar", ipa: "/sɔː/", en: "to rise quickly to a high level", vn: "tăng vọt, bay vút lên", ex: "Prices have soared this year." },
+{ w: "yield", ipa: "/jiːld/", en: "to produce a result or a crop", vn: "mang lại, cho sản lượng", ex: "The experiment yielded surprising results." },
+{ w: "superior", ipa: "/suːˈpɪəriə/", en: "better than others", vn: "vượt trội, cao cấp hơn", ex: "This product is superior to cheaper brands." },
+{ w: "ramification", ipa: "/ˌræmɪfɪˈkeɪʃn/", en: "a complicated result of an action", vn: "hệ quả phức tạp", ex: "The new law has serious ramifications for small businesses." },
+{ w: "spin-offs", ipa: "/ˈspɪn ɒfs/", en: "useful new things that develop from something else", vn: "sản phẩm phái sinh, thành quả phụ", ex: "Space research led to many useful spin-offs." },
+{ w: "deplete", ipa: "/dɪˈpliːt/", en: "to use up so that very little is left", vn: "làm cạn kiệt", ex: "Overfishing has depleted fish stocks." },
+{ w: "novelty", ipa: "/ˈnɒvlti/", en: "the quality of being new and unusual", vn: "sự mới lạ", ex: "At first, the novelty of the app made it very popular." },
+{ w: "be inclined to", ipa: "/bi ɪnˈklaɪnd tuː/", en: "to tend to do something", vn: "có xu hướng, thiên về", ex: "Young people are inclined to try new things." },
+{ w: "entail", ipa: "/ɪnˈteɪl/", en: "to involve something as a necessary result", vn: "kéo theo, đòi hỏi", ex: "The job entails a lot of travel." },
+{ w: "prevalence", ipa: "/ˈprevələns/", en: "how common something is", vn: "sự phổ biến, mức độ phổ biến", ex: "The prevalence of smartphones has changed daily life." },
+{ w: "simultaneous", ipa: "/ˌsɪmlˈteɪniəs/", en: "happening at the same time", vn: "đồng thời", ex: "Simultaneous translation helps people follow speeches in other languages." },
+{ w: "take off", say: "take off", ipa: "/teɪk ɒf/", en: "to become successful or grow quickly", vn: "phát triển nhanh, cất cánh (nghĩa bóng)", ex: "Online shopping took off in the early 2000s." },
+{ w: "solemn respect", ipa: "/ˈsɒləm rɪˈspekt/", en: "serious and deep respect", vn: "sự tôn kính trang nghiêm", ex: "The crowd stood in solemn respect during the ceremony." },
+{ w: "lingua franca", ipa: "/ˌlɪŋɡwə ˈfræŋkə/", en: "a language used between people who speak different first languages", vn: "ngôn ngữ chung (giao tiếp quốc tế)", ex: "English is the lingua franca of international business." },
+{ w: "persist", ipa: "/pəˈsɪst/", en: "to continue even when it is difficult", vn: "kiên trì; tiếp diễn dai dẳng", ex: "The problem persisted for several months." }
+]],
+["Speaking: transport and problems", [
+{ w: "vehicle", ipa: "/ˈviːəkl/", en: "a means of transport", vn: "phương tiện, xe cộ", ex: "Trains are safer than other vehicles." },
+{ w: "commute", ipa: "/kəˈmjuːt/", en: "to travel regularly to work or school", vn: "đi làm, đi học hằng ngày", ex: "I usually take a bus to commute to school." },
+{ w: "traffic jam → heavy congestion / bumper-to-bumper traffic", say: "traffic jam", ipa: "/ˈtræfɪk dʒæm/", en: "a long line of vehicles that cannot move", vn: "tắc đường → ùn tắc nghiêm trọng", ex: "We were stuck in bumper-to-bumper traffic for two hours." },
+{ w: "reckless → dangerous → deadly / fatal", say: "reckless", ipa: "/ˈrekləs/ /ˈdedli/ /ˈfeɪtl/", en: "reckless = dangerous and careless; deadly or fatal = causing death", vn: "liều lĩnh → nguy hiểm → chết người", ex: "Reckless driving can lead to fatal accidents." },
+{ w: "squash", ipa: "/skwɒʃ/", en: "to press or squeeze something so it fits into a small space", vn: "ép, nén, chen chúc", ex: "I was squashed between two strangers on the crowded bus." },
+]],
+["Speaking: travel activities", [
+{ w: "stop by", ipa: "/stɒp baɪ/", en: "to visit a place for a short time", vn: "ghé qua", ex: "We stopped by a café on the way." },
+{ w: "check out", ipa: "/tʃek aʊt/", en: "to look at something interesting", vn: "xem, tham quan", ex: "I would like to check out the local markets." },
+{ w: "attract", ipa: "/əˈtrækt/", en: "to make people come or feel interested", vn: "thu hút", ex: "The city attracts millions of tourists." },
+{ w: "broaden my horizons", ipa: "/ˈbrɔːdn maɪ həˈraɪznz/", en: "to expand your knowledge and experience", vn: "mở mang tầm mắt", ex: "Travelling abroad can broaden my horizons." },
+{ w: "have no choice but to", ipa: "/hæv nəʊ tʃɔɪs bət tuː/", en: "must do something because there is no other option", vn: "không còn cách nào khác ngoài", ex: "I had no choice but to take a taxi because I was late." }
+]],
+["Speaking: feelings and air travel", [
+{ w: "worn out", ipa: "/wɔːn aʊt/", en: "extremely tired", vn: "kiệt sức, mệt lử", ex: "My daily commute is so long that I feel worn out." },
+{ w: "roll out of bed", ipa: "/rəʊl aʊt əv bed/", en: "to get up from bed, often unwillingly", vn: "lồm cồm bò dậy khỏi giường", ex: "I have to roll out of bed at six to catch the bus." },
+{ w: "in-flight", ipa: "/ˈɪn flaɪt/", en: "provided or happening during a journey on a plane", vn: "trên chuyến bay", ex: "In-flight entertainment makes long journeys more enjoyable." },
+{ w: "on-board", ipa: "/ˌɒn ˈbɔːd/", en: "on a ship, aircraft or vehicle", vn: "trên tàu, xe, máy bay", ex: "Trains have on-board restroom facilities." }
+]],
+["Speaking: travel experience", [
+{ w: "immerse myself in", ipa: "/ɪˈmɜːs maɪˈself ɪn/", en: "to become completely involved in something", vn: "hòa mình vào, đắm mình trong", ex: "When I travel abroad, I like to immerse myself in the local culture." },
+{ w: "see for yourself", ipa: "/siː fə jɔːˈself/", en: "to experience something directly", vn: "tận mắt thấy", ex: "You should visit the place to see for yourself." },
+{ w: "isolated", ipa: "/ˈaɪsəleɪtɪd/", en: "far from other places or people", vn: "biệt lập, hẻo lánh", ex: "We stayed in an isolated village with no shops." },
+{ w: "intriguing", ipa: "/ɪnˈtriːɡɪŋ/", en: "very interesting in a mysterious way", vn: "hấp dẫn, gợi tò mò", ex: "The old temple has an intriguing history." },
+{ w: "packed with", ipa: "/pækt wɪð/", en: "full of", vn: "chứa đầy, đầy ắp", ex: "The city is packed with tourists in summer." },
+{ w: "tons of things", ipa: "/tʌnz əv θɪŋz/", en: "a lot of things", vn: "rất nhiều thứ", ex: "There are tons of things to do in Bangkok." },
+]],
+];
+const vocabularyData = [];
+groups.forEach(g => g[1].forEach(v => vocabularyData.push(v)));
+
+let cardQueue = [], currentCard = null, currentCardIdx = 0, isFlipped = false;
+const totalCardsCount = vocabularyData.length;
+function shuffleArray(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+window.onload = function () {
+  renderVocabTable();
+  initFlashcards();
+  renderWriting();
+  document.getElementById('item-count').innerText = totalCardsCount + ' Items';
+  document.getElementById('flash-done-text').innerText = 'Awesome! You have reviewed all ' + totalCardsCount + ' vocabulary items.';
+};
+
+let gamesStarted = false;
+function switchTab(tabId) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+  document.querySelectorAll('.tab-btn').forEach(btn => { btn.classList.remove('bg-white', 'text-purple-700', 'shadow-sm'); btn.classList.add('text-slate-500'); });
+  document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+  const activeBtn = document.getElementById(`btn-${tabId}`);
+  if (activeBtn) { activeBtn.classList.add('bg-white', 'text-purple-700', 'shadow-sm'); activeBtn.classList.remove('text-slate-500'); }
+  if (tabId === 'game' && !gamesStarted) { gamesStarted = true; gameRound = 1; renderRound(); }
+}
+function unlockAndGo(tab) {
+  document.getElementById(`btn-${tab}`).classList.remove('disabled-tab');
+  switchTab(tab);
+}
+
+/* AUDIO */
+function speakText(text) {
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-GB'; u.rate = 0.9;
+    window.speechSynthesis.speak(u);
+  }
+}
+function speakIdx(i, event) {
+  if (event) event.stopPropagation();
+  const item = vocabularyData[i];
+  speakText(item.say || item.w.replace(/\(.*?\)/g, '').trim());
+}
+
+/* VOCAB BANK */
+function renderVocabTable() {
+  let i = 0, html = '';
+  groups.forEach(g => {
+    html += `<tr class="grp"><td colspan="5">${g[0]}</td></tr>`;
+    g[1].forEach(item => {
+      html += `<tr class="hover:bg-purple-50/50 transition">
+        <td class="p-3.5 font-black text-purple-950"><span class="inline-flex items-center gap-2"><button class="audio-btn" onclick="speakIdx(${i})">🔊</button>${item.w}</span></td>
+        <td class="p-3.5 font-mono text-xs text-purple-700">${item.ipa}</td>
+        <td class="p-3.5 text-slate-700">${item.en}</td>
+        <td class="p-3.5 text-slate-700">${item.vn}</td>
+        <td class="p-3.5 italic text-slate-500">${item.ex}</td></tr>`;
+      i++;
+    });
+  });
+  document.getElementById('reference-table-body').innerHTML = html;
+}
+
+/* FLASHCARDS */
+function initFlashcards() {
+  cardQueue = vocabularyData.map((v, i) => i);
+  shuffleArray(cardQueue);
+  updateProgressBar();
+  showNextCard();
+}
+function resetProgress() {
+  document.getElementById('flashcard-container').classList.remove('hidden');
+  document.getElementById('flashcard-success-box').classList.add('hidden');
+  initFlashcards();
+}
+function showNextCard() {
+  if (cardQueue.length === 0) {
+    document.getElementById('flashcard-container').classList.add('hidden');
+    document.getElementById('flashcard-success-box').classList.remove('hidden');
+    return;
+  }
+  currentCardIdx = cardQueue[0];
+  currentCard = vocabularyData[currentCardIdx];
+  isFlipped = false;
+  document.getElementById('flashcard-inner').classList.remove('card-flipped');
+  document.getElementById('f-prompt').innerText = currentCard.en;
+  document.getElementById('f-vn').innerText = currentCard.vn;
+  document.getElementById('b-answer').innerText = currentCard.w;
+  document.getElementById('b-ipa').innerText = currentCard.ipa;
+  document.getElementById('b-example').innerText = `"${currentCard.ex}"`;
+  document.getElementById('queue-text').innerText = `${cardQueue.length} card${cardQueue.length > 1 ? 's' : ''}`;
+  updateProgressBar();
+}
+function flipCard() {
+  isFlipped = !isFlipped;
+  document.getElementById('flashcard-inner').classList.toggle('card-flipped', isFlipped);
+}
+function handleAnkiAction(type) {
+  if (!currentCard) return;
+  if (type === 'again') { const c = cardQueue.shift(); cardQueue.push(c); } else { cardQueue.shift(); }
+  showNextCard();
+}
+function updateProgressBar() {
+  const completed = totalCardsCount - cardQueue.length;
+  document.getElementById('progress-bar').style.width = `${Math.round((completed / totalCardsCount) * 100)}%`;
+}
+
+/* WORD GAMES */
+let gameRound = 1, r1Score = 0, r2Score = 0, r3Score = 0;
+function renderPills() {
+  const names = ['1 Hangman', '2 Odd One Out', '3 Passage Cloze'];
+  document.getElementById('round-pills').innerHTML = names.map((n, i) => {
+    const active = (i + 1) === gameRound, done = (i + 1) < gameRound;
+    const cls = active ? 'bg-purple-600 text-white' : (done ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-500');
+    return `<span class="text-xs font-black px-3 py-1.5 rounded-full ${cls}">${done ? '✓ ' : ''}${n}</span>`;
+  }).join('');
+}
+function renderRound() {
+  renderPills();
+  document.getElementById('round-next-btn').classList.add('hidden');
+  if (gameRound === 1) initHangman(); else if (gameRound === 2) initOdd(); else initCloze();
+}
+function finishRound(msg) {
+  document.getElementById('round-area').innerHTML = `<div class="max-w-md mx-auto text-center space-y-2 py-6"><span class="text-4xl block">🎯</span><p class="text-base font-black text-purple-950">${msg}</p></div>`;
+  const btn = document.getElementById('round-next-btn');
+  btn.innerText = gameRound === 3 ? 'Finish Games ➔' : 'Next Round ➔';
+  btn.classList.remove('hidden');
+}
+function nextRound() {
+  if (gameRound === 3) {
+    document.getElementById('round-next-btn').classList.add('hidden');
+    document.getElementById('games-summary').innerText = `Hangman: ${r1Score}/${hmData.length}. Odd One Out: ${r2Score}/${oddData.length}. Passage Cloze: ${r3Score}/${clozeGaps.length}.`;
+    document.getElementById('games-success-box').classList.remove('hidden');
+    return;
+  }
+  gameRound++;
+  renderRound();
+}
+
+/* Round 1: Hangman */
+const hmData = [
+  { w: "halt", vn: "dừng lại, ngừng", s: "Heavy snow can ___ all trains in the north." },
+  { w: "abundance", vn: "sự dồi dào, phong phú", s: "The island has an ___ of fresh fruit." },
+  { w: "downfall", vn: "sự sụp đổ, nguyên nhân thất bại", s: "Greed was his ___." },
+  { w: "solely", vn: "chỉ, duy nhất", s: "The decision was based ___ on cost." },
+  { w: "colony", vn: "đàn, tập đoàn (ong, kiến)", s: "A ___ of ants can contain thousands of insects." },
+  { w: "soar", vn: "tăng vọt", s: "Prices may ___ if the weather stays dry." },
+  { w: "yield", vn: "mang lại, cho sản lượng", s: "Good soil can ___ a large harvest." },
+  { w: "deplete", vn: "làm cạn kiệt", s: "Overfishing can ___ fish stocks quickly." },
+  { w: "novelty", vn: "sự mới lạ", s: "At first, the ___ of the app made it popular." },
+  { w: "entail", vn: "kéo theo, đòi hỏi", s: "This job will ___ a lot of travel." },
+  { w: "persist", vn: "kiên trì, tiếp diễn dai dẳng", s: "If the pain continues to ___, see a doctor." },
+];
+let hmIdx = 0, hmGuessed = [], hmWrong = 0, hmDone = false;
+const hmMax = 6;
+function initHangman() { hmIdx = 0; r1Score = 0; loadHM(); }
+function loadHM() {
+  if (hmIdx >= hmData.length) { finishRound(`Round 1 score: ${r1Score} / ${hmData.length}`); return; }
+  hmGuessed = []; hmWrong = 0; hmDone = false;
+  renderHM();
+}
+function renderHM() {
+  const q = hmData[hmIdx];
+  const won = q.w.split('').every(c => hmGuessed.includes(c));
+  const lost = hmWrong >= hmMax;
+  const shown = q.w.split('').map(c => (hmGuessed.includes(c) || lost) ? c : '_').join(' ');
+  const keys = 'abcdefghijklmnopqrstuvwxyz'.split('').map(c => {
+    const hit = hmGuessed.includes(c) && q.w.includes(c), miss = hmGuessed.includes(c) && !q.w.includes(c);
+    return `<button class="key ${hit ? 'hit' : (miss ? 'miss' : '')}" onclick="hmGuess('${c}')">${c}</button>`;
+  }).join('');
+  const lives = '❤️'.repeat(hmMax - hmWrong) + '🖤'.repeat(hmWrong);
+  document.getElementById('round-area').innerHTML = `
+    <div class="max-w-xl mx-auto space-y-4 text-center">
+      <div class="flex justify-between text-xs font-black text-purple-800"><span>Word ${hmIdx + 1} of ${hmData.length}</span><span>Score: ${r1Score}</span></div>
+      <p class="text-[11px] font-black text-purple-700 uppercase tracking-wide">Vietnamese meaning</p>
+      <h3 class="text-xl font-black text-purple-950">${q.vn}</h3>
+      <p class="text-sm font-bold text-slate-700 bg-purple-50/60 border border-purple-100 rounded-2xl p-3">${q.s.replace('___', '<b>_____</b>')}</p>
+      <p class="letters" id="hm-word">${shown}</p>
+      <p class="text-lg">${lives}</p>
+      <div class="flex flex-wrap justify-center gap-1.5">${keys}</div>
+      <p class="text-sm font-black min-h-[24px]">${won ? '<span class="text-emerald-700">✅ Correct!</span>' : (lost ? '<span class="text-rose-600">❌ The word was "' + q.w + '".</span>' : '')}</p>
+      ${(won || lost) ? `<button onclick="hmIdx++;loadHM()" class="px-6 py-2.5 bg-pink-500 hover:bg-pink-600 text-white font-black rounded-xl text-xs cursor-pointer">${hmIdx === hmData.length - 1 ? 'See result ➔' : 'Next word ➔'}</button>` : ''}
+    </div>`;
+}
+function hmGuess(c) {
+  if (gameRound !== 1 || hmIdx >= hmData.length) return;
+  const q = hmData[hmIdx];
+  const won = q.w.split('').every(x => hmGuessed.includes(x));
+  if (won || hmWrong >= hmMax || hmGuessed.includes(c)) return;
+  hmGuessed.push(c);
+  if (!q.w.includes(c)) hmWrong++;
+  if (q.w.split('').every(x => hmGuessed.includes(x))) r1Score++;
+  renderHM();
+}
+document.addEventListener('keydown', e => {
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
+  if (/^[a-z]$/i.test(e.key) && document.getElementById('hm-word') && !document.getElementById('tab-game').classList.contains('hidden')) hmGuess(e.key.toLowerCase());
+});
+
+/* Round 2: Odd One Out */
+const oddData = [
+  { o: ["soar", "rise", "skyrocket", "plunge"], a: "plunge", why: "Plunge là giảm mạnh. Các từ còn lại nghĩa là tăng." },
+  { o: ["deplete", "use up", "run out of", "replenish"], a: "replenish", why: "Replenish là bổ sung lại. Các từ còn lại nghĩa là làm cạn." },
+  { o: ["persist", "continue", "carry on", "give up"], a: "give up", why: "Give up là bỏ cuộc. Các từ còn lại nghĩa là tiếp tục." },
+  { o: ["halt", "stop", "end", "start"], a: "start", why: "Start là bắt đầu. Các từ còn lại nghĩa là dừng." },
+  { o: ["solely", "only", "merely", "mostly"], a: "mostly", why: "Mostly là phần lớn. Các từ còn lại nghĩa là chỉ." },
+  { o: ["abundance", "plenty", "shortage", "a wealth of"], a: "shortage", why: "Shortage là sự thiếu hụt. Các từ còn lại nghĩa là rất nhiều." },
+  { o: ["superior", "better", "finer", "worse"], a: "worse", why: "Worse là tệ hơn. Các từ còn lại nghĩa là tốt hơn." },
+  { o: ["novelty", "something new", "innovation", "tradition"], a: "tradition", why: "Tradition là truyền thống. Các từ còn lại liên quan đến cái mới." },
+  { o: ["knock-on effect", "consequence", "result", "cause"], a: "cause", why: "Cause là nguyên nhân. Các từ còn lại là kết quả." },
+  { o: ["downfall", "collapse", "ruin", "success"], a: "success", why: "Success là thành công. Các từ còn lại nói về sự sụp đổ." },
+  { o: ["yield", "produce", "give", "take away"], a: "take away", why: "Take away là lấy đi. Các từ còn lại nghĩa là tạo ra, mang lại." },
+  { o: ["exploit", "make use of", "take advantage of", "ignore"], a: "ignore", why: "Ignore là phớt lờ. Các từ còn lại nghĩa là tận dụng." },
+  { o: ["entail", "involve", "require", "avoid"], a: "avoid", why: "Avoid là tránh. Các từ còn lại nghĩa là bao gồm, đòi hỏi." },
+  { o: ["extract", "take out", "remove", "insert"], a: "insert", why: "Insert là đưa vào. Các từ còn lại nghĩa là lấy ra." },
+  { o: ["be inclined to", "tend to", "be likely to", "refuse to"], a: "refuse to", why: "Refuse to là từ chối. Các từ còn lại nghĩa là có xu hướng." },
+  { o: ["simultaneous", "at the same time", "together", "one after another"], a: "one after another", why: "One after another là lần lượt. Các từ còn lại nghĩa là cùng lúc." },
+  { o: ["subtle changes", "slight changes", "small differences", "sudden changes"], a: "sudden changes", why: "Sudden changes là thay đổi đột ngột. Các từ còn lại là thay đổi nhỏ, khó nhận ra." },
+  { o: ["spin-offs", "by-products", "side benefits", "main goal"], a: "main goal", why: "Main goal là mục tiêu chính. Các từ còn lại là thành quả phụ." },
+  { o: ["solemn respect", "deep respect", "serious respect", "casual attitude"], a: "casual attitude", why: "Casual attitude là thái độ tùy tiện. Các từ còn lại là sự tôn kính." },
+  { o: ["worn out", "exhausted", "tired", "energetic"], a: "energetic", why: "Energetic là đầy năng lượng. Các từ còn lại nghĩa là mệt." },
+  { o: ["isolated", "remote", "crowded", "cut off"], a: "crowded", why: "Crowded là đông đúc. Các từ còn lại nghĩa là hẻo lánh, biệt lập." },
+  { o: ["squash", "press", "crush", "stretch"], a: "stretch", why: "Stretch là kéo dài ra. Các từ còn lại nghĩa là ép, nén." },
+  { o: ["reckless", "careless", "dangerous", "careful"], a: "careful", why: "Careful là cẩn thận. Các từ còn lại nói về hành vi liều lĩnh." },
+];
+let odIdx = 0, odAnswered = false, odOpts = [];
+function initOdd() { odIdx = 0; r2Score = 0; loadOdd(); }
+function loadOdd() {
+  if (odIdx >= oddData.length) { finishRound(`Round 2 score: ${r2Score} / ${oddData.length}`); return; }
+  odAnswered = false;
+  const q = oddData[odIdx];
+  odOpts = shuffleArray([...q.o]);
+  const pct = Math.round((odIdx / oddData.length) * 100);
+  document.getElementById('round-area').innerHTML = `
+    <div class="max-w-xl mx-auto space-y-4">
+      <div class="flex justify-between text-xs font-black text-purple-800"><span>Set ${odIdx + 1} of ${oddData.length}</span><span>Score: ${r2Score}</span></div>
+      <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden"><div class="bg-gradient-to-r from-purple-400 to-pink-400 h-full rounded-full" style="width:${pct}%"></div></div>
+      <p class="text-[11px] font-black text-purple-700 uppercase tracking-wide text-center">Which one is different in meaning?</p>
+      <div class="grid grid-cols-2 gap-2">${odOpts.map((o, i) => `<button class="opt text-center" id="od-${i}" onclick="answerOdd(${i})">${o}</button>`).join('')}</div>
+      <p id="od-why" class="text-sm font-black text-center min-h-[40px]"></p>
+      <div id="od-next" class="text-center"></div>
+    </div>`;
+}
+function answerOdd(i) {
+  if (odAnswered) return;
+  odAnswered = true;
+  const q = oddData[odIdx];
+  const good = odOpts[i] === q.a;
+  document.getElementById(`od-${i}`).classList.add(good ? 'right' : 'bad');
+  if (!good) odOpts.forEach((o, k) => { if (o === q.a) document.getElementById(`od-${k}`).classList.add('right'); });
+  if (good) r2Score++;
+  document.getElementById('od-why').innerHTML = `<span class="${good ? 'text-emerald-700' : 'text-rose-600'}">${good ? '✅' : '❌'} ${q.why}</span>`;
+  document.getElementById('od-next').innerHTML = `<button onclick="odIdx++;loadOdd()" class="px-6 py-2.5 bg-pink-500 hover:bg-pink-600 text-white font-black rounded-xl text-xs cursor-pointer">${odIdx === oddData.length - 1 ? 'See result ➔' : 'Next ➔'}</button>`;
+}
+
+/* Round 3: Passage Cloze */
+const clozeParts = [
+  "Over the last fifty years, international travel has ", 0, ". Cheap flights have helped tourism to ", 1, " in many countries. English has become the ", 2,
+  " of the industry, and its ", 3, " in airports and hotels means visitors rarely feel lost. For many tourists, the ", 4, " of a new place is exciting, and resorts offer an ", 5,
+  " of activities. Local communities enjoy ", 6, " economic benefits. However, there are ", 7, " that people did not expect. The unfair ", 8,
+  " of tourist income causes anger, and local water supplies can be ", 9, ". Some businesses ", 10, " visitors by raising prices. A sudden crisis can ", 11,
+  " travel completely, and the ", 12, " on jobs is serious. Even so, problems often ", 13, " for years unless governments act. Poor planning could be the ", 14, " of the whole industry."
+];
+const clozeGaps = [
+  { a: "taken off", o: ["taken off", "halted", "extracted", "reproduced"] },
+  { a: "soar", o: ["soar", "deplete", "entail", "halt"] },
+  { a: "lingua franca", o: ["lingua franca", "colony", "ramification", "yield"] },
+  { a: "prevalence", o: ["prevalence", "extract", "halt", "solemn respect"] },
+  { a: "novelty", o: ["novelty", "prevalence", "downfall", "yield"] },
+  { a: "abundance", o: ["abundance", "distribution", "prevalence", "novelty"] },
+  { a: "a wealth of", o: ["a wealth of", "solely", "simultaneous", "superior"] },
+  { a: "ramifications", o: ["ramifications", "colonies", "novelties", "distributions"] },
+  { a: "distribution", o: ["distribution", "novelty", "entail", "downfall"] },
+  { a: "depleted", o: ["depleted", "reproduced", "persisted", "inclined"] },
+  { a: "exploit", o: ["exploit", "yield", "entail", "persist"] },
+  { a: "halt", o: ["halt", "soar", "exploit", "reproduce"] },
+  { a: "knock-on effect", o: ["knock-on effect", "downfall", "colony", "novelty"] },
+  { a: "persist", o: ["persist", "halt", "soar", "deplete"] },
+  { a: "downfall", o: ["downfall", "yield", "novelty", "abundance"] }
+];
+let clozeChecked = false;
+function initCloze() {
+  clozeChecked = false;
+  const text = clozeParts.map(p => {
+    if (typeof p === 'string') return p;
+    const g = clozeGaps[p];
+    const opts = shuffleArray([...g.o]);
+    return `<select class="gap" id="cz-${p}" aria-label="gap ${p + 1}"><option value="">(${p + 1}) choose</option>${opts.map(o => `<option value="${o}">${o}</option>`).join('')}</select>`;
+  }).join('');
+  document.getElementById('round-area').innerHTML = `
+    <div class="max-w-3xl mx-auto space-y-4">
+      <p class="text-xs text-slate-600 font-bold">Read the short text about tourism. Choose the best word or phrase for each gap.</p>
+      <div class="text-sm md:text-base leading-[2.4] bg-purple-50/60 border border-purple-100 rounded-2xl p-4 font-bold text-slate-800">${text}</div>
+      <div class="flex items-center gap-3 flex-wrap">
+        <button onclick="checkCloze()" class="px-6 py-2.5 bg-purple-600 hover:bg-purple-700 text-white font-black rounded-xl text-xs cursor-pointer">✅ Check</button>
+        <button onclick="showClozeKey()" class="px-6 py-2.5 bg-purple-100 hover:bg-purple-200 text-purple-800 font-black rounded-xl text-xs cursor-pointer">Show answers</button>
+        <span id="cz-score" class="text-sm font-black text-purple-800"></span>
+      </div>
+    </div>`;
+}
+function checkCloze() {
+  let ok = 0;
+  clozeGaps.forEach((g, i) => {
+    const el = document.getElementById(`cz-${i}`);
+    const good = el.value === g.a;
+    el.className = 'gap' + (el.value === '' ? '' : (good ? ' ok' : ' no'));
+    if (good) ok++;
+  });
+  r3Score = ok;
+  document.getElementById('cz-score').innerText = `Score: ${ok} / ${clozeGaps.length}`;
+  document.getElementById('round-next-btn').classList.remove('hidden');
+  document.getElementById('round-next-btn').innerText = 'Finish Games ➔';
+}
+function showClozeKey() {
+  clozeGaps.forEach((g, i) => { const el = document.getElementById(`cz-${i}`); el.value = g.a; el.className = 'gap ok'; });
+  r3Score = clozeGaps.length;
+  document.getElementById('cz-score').innerText = 'Answers shown.';
+  document.getElementById('round-next-btn').classList.remove('hidden');
+  document.getElementById('round-next-btn').innerText = 'Finish Games ➔';
+}
+
+/* SPEAK AND WRITE */
+const writingTasks = [
+  { title: "Task 1. Part 2 style: a long journey", min: 50,
+    prompt: "Describe a long journey that you remember. Say where you went, how you travelled, what problems you had and how you felt.",
+    starters: ["Last year I took a... trip to...", "At first,...", "After that,...", "In the end,..."],
+    chips: [
+      { label: "worn out", re: /worn out/i }, { label: "squash", re: /squash/i }, { label: "traffic jam", re: /traffic jam|congestion|bumper/i },
+      { label: "packed with", re: /packed with/i }, { label: "have no choice but to", re: /no choice but to/i }, { label: "isolated", re: /isolated/i },
+      { label: "immerse myself in", re: /immers/i }, { label: "tons of things", re: /tons of/i }, { label: "commute", re: /commut/i } ] },
+  { title: "Task 2. Part 3: how tourism changes places", min: 50,
+    prompt: "How has tourism changed the places that people visit? Give your opinion with reasons and examples.",
+    starters: ["In my opinion,...", "One positive effect is...", "However,...", "As a result,..."],
+    chips: [
+      { label: "take off", re: /take(s|n)? off|took off|taken off/i }, { label: "soar", re: /soar/i }, { label: "a wealth of", re: /wealth of/i }, { label: "knock-on effect", re: /knock-on/i },
+      { label: "spin-offs", re: /spin-off/i }, { label: "ramification", re: /ramification/i }, { label: "deplete", re: /deplet/i }, { label: "exploit", re: /exploit/i },
+      { label: "distribution", re: /distribution/i }, { label: "abundance", re: /abundan/i } ] },
+  { title: "Task 3. Part 3: English around the world", min: 50,
+    prompt: "Why is English so widely used around the world? Do you think this is a good thing?",
+    starters: ["I think the main reason is...", "Many people are inclined to...", "In fact,...", "Even so,..."],
+    chips: [
+      { label: "lingua franca", re: /lingua franca/i }, { label: "prevalence", re: /prevalen/i }, { label: "be inclined to", re: /inclined to/i }, { label: "entail", re: /entail/i },
+      { label: "superior", re: /superior/i }, { label: "persist", re: /persist/i }, { label: "solely", re: /solely/i }, { label: "novelty", re: /novelty/i },
+      { label: "simultaneous", re: /simultaneous/i } ] }
+];
+function wordCount(t) { const m = t.trim().match(/\S+/g); return m ? m.length : 0; }
+function renderWriting() {
+  document.getElementById('writing-container').innerHTML = writingTasks.map((t, i) => `
+    <div class="bg-white p-5 rounded-2xl border border-purple-100 shadow-sm space-y-3">
+      <h4 class="text-sm font-black text-purple-900">${t.title}</h4>
+      <p class="text-xs text-slate-600 font-bold">${t.prompt}</p>
+      <p class="text-xs text-slate-500 italic">Sentence starters: ${t.starters.join(' | ')}</p>
+      <div class="flex flex-wrap">${t.chips.map((c, k) => `<span id="wchip-${i}-${k}" class="chip">${c.label}</span>`).join('')}</div>
+      <textarea id="w-input-${i}" oninput="onWritingInput(${i})" rows="5" placeholder="Write here..." class="w-full p-3 bg-purple-50/40 border border-purple-200 rounded-xl text-sm outline-none focus:border-purple-400 font-medium"></textarea>
+      <p id="wcount-${i}" class="text-xs font-black text-slate-500">0 words (minimum ${t.min})</p>
+    </div>`).join('');
+}
+function allWritten() { return writingTasks.every((t, n) => wordCount(document.getElementById(`w-input-${n}`).value) >= t.min); }
+function onWritingInput(i) {
+  const text = document.getElementById(`w-input-${i}`).value;
+  writingTasks[i].chips.forEach((c, k) => document.getElementById(`wchip-${i}-${k}`).classList.toggle('on', c.re.test(text)));
+  const n = wordCount(text), min = writingTasks[i].min;
+  const el = document.getElementById(`wcount-${i}`);
+  el.innerText = `${n} words (minimum ${min})`;
+  el.className = n >= min ? 'text-xs font-black text-emerald-600' : 'text-xs font-black text-slate-500';
+  const btn = document.getElementById('writing-model-btn');
+  const ok = allWritten();
+  btn.disabled = !ok;
+  btn.className = ok ? 'text-xs text-purple-600 hover:underline font-black cursor-pointer' : 'text-xs text-slate-400 font-black cursor-not-allowed';
+  btn.innerText = ok ? '👁️ Show suggested answers' : '👁️ Finish all 3 tasks first to unlock suggested answers';
+}
+const writingModels = [
+  "Last year I took a ten-hour bus trip to Da Lat with my cousins. The road was packed with vehicles, so we had no choice but to sit in a long traffic jam. I was squashed between two bags. I felt worn out when we arrived. After a good sleep, we visited an isolated village in the mountains. I tried to immerse myself in the local culture, and we found tons of things to do there.",
+  "Tourism has taken off in many countries, and visitor numbers have soared. Local people gain a wealth of new jobs, and shops and restaurants benefit from the knock-on effect. There are spin-offs too, such as better roads and airports. However, the ramifications can be serious. Popular beaches and water supplies may be depleted, and some businesses exploit tourists by raising prices. A fair distribution of income would help local communities.",
+  "English is widely seen as the lingua franca of business and travel. Its prevalence on the internet and in films encourages people to learn it. Many learners are inclined to choose English because it opens doors to jobs and study. Learning a language entails years of effort, but the rewards are great. Some people believe English is superior to other languages. In fact, a language is usually chosen solely for practical reasons. Even so, local languages persist and should be protected."
+];
+function toggleWritingModel() {
+  if (!allWritten()) return;
+  const box = document.getElementById('writing-model-box');
+  if (box.classList.contains('hidden')) {
+    box.innerHTML = writingModels.map((p, i) => `<p><b>${writingTasks[i].title}</b><br>${p}</p>`).join('');
+  }
+  box.classList.toggle('hidden');
+}
+</script>
+</body>
+</html>
