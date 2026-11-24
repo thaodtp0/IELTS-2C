@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IELTS 2C_S6_Lesson 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.2.2"></script>
+<style>
+*, body, html, button, span, h1, h2, h3, p, div, input, select, textarea { font-family: 'Quicksand', sans-serif; font-weight: 600; }
+h1, h2, h3, .font-heading { font-family: 'Fredoka', sans-serif; }
+.perspective { perspective: 1000px; }
+.backface-hidden { backface-visibility: hidden; }
+.card-inner { transition: transform 0.5s; transform-style: preserve-3d; }
+.card-flipped { transform: rotateY(180deg); }
+.disabled-tab { opacity: 0.4; cursor: not-allowed !important; pointer-events: none; }
+.audio-btn { display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:999px; background:#D1FAE5; color:#047857; font-size:11px; cursor:pointer; border:1px solid #A7F3D0; flex-shrink:0; }
+.audio-btn:hover { background:#A7F3D0; }
+.grp td { background:#D1FAE5; color:#065F46; font-weight:800; padding:8px 14px; }
+.opt { width:100%; text-align:left; padding:11px 14px; border-radius:14px; border:2px solid #A7F3D0; background:#fff; font-size:0.95rem; font-weight:700; color:#064E3B; cursor:pointer; }
+.opt:hover { background:#ECFDF5; }
+.opt.right { border-color:#10B981; background:#D1FAE5; color:#065F46; }
+.opt.bad { border-color:#F43F5E; background:#FFE4E6; color:#9F1239; }
+.mem { height:84px; perspective:600px; cursor:pointer; }
+.mem > div { position:relative; width:100%; height:100%; transition:transform .4s; transform-style:preserve-3d; }
+.mem.up > div, .mem.done > div { transform:rotateY(180deg); }
+.mem .f, .mem .b { position:absolute; inset:0; backface-visibility:hidden; border-radius:14px; display:flex; align-items:center; justify-content:center; text-align:center; padding:6px; font-size:.72rem; line-height:1.25; font-weight:700; }
+.mem .f { background:linear-gradient(135deg,#34D399,#38BDF8); color:#fff; font-size:1.6rem; }
+.mem .b { transform:rotateY(180deg); background:#fff; border:2px solid #6EE7B7; color:#064E3B; }
+.mem.done .b { background:#D1FAE5; border-color:#10B981; }
+.mem.bad .b { background:#FFE4E6; border-color:#F43F5E; }
+.gapbox { display:inline-block; min-width:110px; border-bottom:3px dashed #34D399; background:#ECFDF5; border-radius:8px; padding:0 8px; margin:0 2px; text-align:center; cursor:pointer; line-height:1.9; }
+.gapbox.act { border-bottom-color:#0EA5E9; background:#E0F2FE; }
+.gapbox.ok { border-bottom:3px solid #10B981; background:#D1FAE5; color:#065F46; }
+.gapbox.no { border-bottom:3px solid #F43F5E; background:#FFE4E6; color:#9F1239; }
+.wchip { display:inline-block; padding:6px 13px; border-radius:999px; background:#fff; border:2px solid #6EE7B7; color:#065F46; font-weight:800; font-size:.85rem; cursor:pointer; margin:3px; }
+.wchip:hover { background:#ECFDF5; }
+.wchip.used { opacity:.3; pointer-events:none; }
+.chip { display:inline-block; font-size:0.78rem; font-weight:700; padding:4px 11px; border-radius:999px; background:#F1F5F9; color:#64748B; border:1px solid #E2E8F0; margin:2px; }
+.chip.on { background:#D1FAE5; color:#047857; border-color:#6EE7B7; }
+@keyframes shrink { from{width:100%} to{width:0%} }
+</style>
+</head>
+<body class="bg-[#F0FDF4] text-slate-700 min-h-screen flex flex-col selection:bg-emerald-200 pb-12">
+
+<header class="bg-gradient-to-r from-[#D1FAE5] via-[#CCFBF1] to-[#E0F2FE] border-b-4 border-dashed border-emerald-300 shadow-sm p-6 text-center rounded-b-3xl">
+<h1 class="text-3xl md:text-4xl font-black tracking-wide drop-shadow-sm text-emerald-950">🌿 IELTS 2C_S6_Lesson 2</h1>
+</header>
+
+<div class="max-w-5xl w-full mx-auto px-4 mt-6">
+<div class="flex bg-emerald-100/70 p-1.5 rounded-2xl border border-emerald-200 shadow-inner overflow-x-auto">
+<button onclick="switchTab('reference')" id="btn-reference" class="tab-btn flex-1 py-3 px-2 text-xs md:text-sm font-black rounded-xl text-center bg-white text-emerald-700 shadow-sm transition cursor-pointer whitespace-nowrap">📚 Vocab Bank</button>
+<button onclick="switchTab('flashcard')" id="btn-flashcard" class="tab-btn flex-1 py-3 px-2 text-xs md:text-sm font-black rounded-xl text-center text-slate-500 transition cursor-pointer whitespace-nowrap">🎴 Flashcards</button>
+<button onclick="switchTab('game')" id="btn-game" class="tab-btn disabled-tab flex-1 py-3 px-2 text-xs md:text-sm font-black rounded-xl text-center text-slate-500 transition whitespace-nowrap">🎯 Word Games</button>
+<button onclick="switchTab('writing')" id="btn-writing" class="tab-btn disabled-tab flex-1 py-3 px-2 text-xs md:text-sm font-black rounded-xl text-center text-slate-500 transition whitespace-nowrap">🎤 Speaking Studio</button>
+<button onclick="switchTab('summary')" id="btn-summary" class="tab-btn disabled-tab flex-1 py-3 px-2 text-xs md:text-sm font-black rounded-xl text-center text-slate-500 transition whitespace-nowrap">🎉 Completion</button>
+</div>
+</div>
+
+<main class="flex-1 max-w-5xl w-full mx-auto px-4 py-6">
+
+<section id="tab-reference" class="tab-content block space-y-6">
+<div class="bg-white p-6 rounded-3xl border border-emerald-100 shadow-sm space-y-4">
+<div class="flex justify-between items-center flex-wrap gap-2">
+<h2 class="text-2xl font-black text-emerald-950 font-heading">📖 Vocabulary Table</h2>
+<span id="item-count" class="text-xs bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full font-bold"></span>
+</div>
+<div class="overflow-x-auto rounded-2xl border border-emerald-100 max-h-[600px]">
+<table class="w-full text-left border-collapse bg-white">
+<thead class="sticky top-0 bg-emerald-50/95 border-b border-emerald-200 text-emerald-900 text-xs uppercase tracking-wider font-black z-10">
+<tr><th class="p-3.5">Vocabulary</th><th class="p-3.5">Pronunciation</th><th class="p-3.5">Meaning</th><th class="p-3.5">Vietnamese meaning</th><th class="p-3.5">Example Sentence</th></tr>
+</thead>
+<tbody id="reference-table-body" class="divide-y divide-emerald-50 text-xs md:text-sm"></tbody>
+</table>
+</div>
+<div class="text-center pt-2">
+<button onclick="switchTab('flashcard')" class="px-8 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-xl text-sm shadow-sm transition cursor-pointer">Start Flashcards ➔</button>
+</div>
+</div>
+</section>
+
+<section id="tab-flashcard" class="tab-content hidden space-y-6">
+<div class="bg-white p-4 rounded-2xl border-2 border-dashed border-emerald-300 shadow-sm flex justify-between items-center flex-wrap gap-2">
+<div class="text-sm font-black text-slate-600">Remaining Queue: <span id="queue-text" class="text-emerald-600 font-extrabold">0 cards</span></div>
+<div class="w-full sm:w-1/3 bg-slate-100 h-4 rounded-full overflow-hidden p-0.5 border border-slate-200">
+<div id="progress-bar" class="bg-gradient-to-r from-emerald-400 to-sky-400 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+</div>
+<button onclick="resetProgress()" class="text-xs text-emerald-600 hover:underline font-black cursor-pointer">🔄 Reset Session</button>
+</div>
+<div id="flashcard-container" class="space-y-6">
+<div id="card-arena" class="perspective w-full max-w-md mx-auto h-[420px] cursor-pointer">
+<div id="flashcard-inner" onclick="flipCard()" class="card-inner w-full h-full relative border-4 border-emerald-300 rounded-3xl shadow-md bg-white">
+<div class="backface-hidden absolute inset-0 p-6 flex flex-col justify-between items-center text-center bg-emerald-50/50 rounded-[20px]">
+<span class="text-xs font-black text-emerald-700 uppercase tracking-widest bg-emerald-100/80 px-4 py-1.5 rounded-full">Meaning</span>
+<div class="space-y-3 my-auto w-full">
+<h3 id="f-prompt" class="text-lg md:text-xl font-black text-emerald-950 px-2 leading-snug"></h3>
+<p id="f-vn" class="text-sm text-slate-500 font-medium px-3"></p>
+</div>
+<p class="text-xs text-emerald-600 font-black">👉 Tap card to reveal vocabulary 👈</p>
+</div>
+<div class="backface-hidden w-full h-full absolute inset-0 p-6 flex flex-col justify-between bg-slate-800 text-white rounded-[22px]" style="transform: rotateY(180deg);">
+<span class="text-xs font-black text-emerald-300 uppercase tracking-widest bg-slate-700/80 px-4 py-1.5 rounded-full w-max mx-auto">Target Vocabulary</span>
+<div class="my-auto space-y-3 text-center">
+<h2 id="b-answer" class="text-2xl md:text-3xl font-black text-amber-300"></h2>
+<div class="space-y-2 border-t border-slate-700 pt-3">
+<div class="flex justify-center items-center space-x-2">
+<span id="b-ipa" class="text-emerald-300 font-bold text-sm font-mono"></span>
+<button onclick="speakIdx(currentCardIdx, event)" class="w-7 h-7 bg-emerald-900 hover:bg-emerald-800 text-emerald-100 rounded-full transition flex items-center justify-center text-xs cursor-pointer shadow-sm">🔊</button>
+</div>
+<p id="b-example" class="text-slate-300 text-xs px-2 font-medium leading-relaxed"></p>
+</div>
+</div>
+<p class="text-xs text-center text-slate-400 font-bold">Rate your recall difficulty 👇</p>
+</div>
+</div>
+</div>
+<div class="w-full max-w-md mx-auto bg-white p-4 rounded-2xl border border-emerald-100 shadow-sm grid grid-cols-4 gap-2">
+<button onclick="handleAnkiAction('again')" class="p-2 bg-rose-50 hover:bg-rose-100 border border-rose-200 rounded-xl text-center transition cursor-pointer"><span class="block text-xs font-black text-rose-600">Again</span><span class="text-[10px] text-rose-400 font-bold block mt-0.5">&lt; 1m</span></button>
+<button onclick="handleAnkiAction('hard')" class="p-2 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded-xl text-center transition cursor-pointer"><span class="block text-xs font-black text-amber-600">Hard</span><span class="text-[10px] text-amber-400 font-bold block mt-0.5">10m</span></button>
+<button onclick="handleAnkiAction('good')" class="p-2 bg-sky-50 hover:bg-sky-100 border border-sky-200 rounded-xl text-center transition cursor-pointer"><span class="block text-xs font-black text-sky-600">Good</span><span class="text-[10px] text-sky-500 font-bold block mt-0.5">1d</span></button>
+<button onclick="handleAnkiAction('easy')" class="p-2 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 rounded-xl text-center transition shadow-sm cursor-pointer"><span class="block text-xs font-black text-emerald-600">Easy</span><span class="text-[10px] text-emerald-500 font-bold block mt-0.5">4d</span></button>
+</div>
+</div>
+<div id="flashcard-success-box" class="max-w-md mx-auto bg-emerald-50 border-4 border-emerald-300 p-6 rounded-3xl text-center space-y-4 hidden shadow-sm">
+<span class="text-5xl block animate-bounce">🌟🌿🎉</span>
+<h4 class="text-2xl font-heading font-black text-emerald-900">Flashcards Mastered!</h4>
+<p id="flash-done-text" class="text-sm text-slate-700 font-medium leading-relaxed"></p>
+<button onclick="unlockAndGo('game')" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-xl shadow-md transition cursor-pointer text-sm tracking-wide">Start Word Games ➔</button>
+</div>
+</section>
+
+<section id="tab-game" class="tab-content hidden space-y-6">
+<div class="bg-white p-6 rounded-3xl border border-emerald-100 shadow-sm space-y-5">
+<div class="flex justify-between items-center border-b border-emerald-50 pb-3 flex-wrap gap-2">
+<div>
+<h3 class="text-xl font-heading font-black text-emerald-950">🎯 Word Games</h3>
+<p class="text-xs text-slate-500 mt-0.5">3 rounds, 3 different games. Finish a round to unlock the next one.</p>
+</div>
+<div id="round-pills" class="flex items-center gap-2 flex-wrap"></div>
+</div>
+<div id="round-area"></div>
+<div class="text-center">
+<button id="round-next-btn" onclick="nextRound()" class="hidden px-8 py-3 bg-sky-500 hover:bg-sky-600 text-white font-black rounded-xl text-sm shadow-sm transition cursor-pointer">Next Round ➔</button>
+</div>
+</div>
+<div id="games-success-box" class="max-w-md mx-auto bg-emerald-50 border-4 border-emerald-300 p-6 rounded-3xl text-center space-y-4 hidden shadow-sm">
+<span class="text-5xl block animate-bounce">🎯🏆✨</span>
+<h4 class="text-2xl font-heading font-black text-emerald-900">All 3 Rounds Completed!</h4>
+<p id="games-summary" class="text-sm text-slate-700 font-medium leading-relaxed"></p>
+<button onclick="unlockAndGo('writing')" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-xl shadow-md transition cursor-pointer text-sm tracking-wide">Start Speaking Studio ➔</button>
+</div>
+</section>
+
+<section id="tab-writing" class="tab-content hidden space-y-6">
+<div class="bg-white p-6 rounded-3xl border border-emerald-100 shadow-sm space-y-3">
+<h3 class="text-xl font-black text-emerald-950 font-heading">🎤 Speaking Studio</h3>
+<p class="text-xs text-slate-600 font-bold leading-relaxed">Plan your answers in writing, then say them aloud to a partner. Use the vocabulary chips. They turn green when you use them. Reach the minimum words in every box to unlock the suggested answers.</p>
+</div>
+<div id="writing-container" class="space-y-4"></div>
+<div class="bg-white p-6 rounded-3xl border border-emerald-100 shadow-sm space-y-4">
+<button id="writing-model-btn" onclick="toggleWritingModel()" disabled class="text-xs text-slate-400 font-black cursor-not-allowed">👁️ Finish all boxes first to unlock suggested answers</button>
+<div id="writing-model-box" class="hidden space-y-4 text-xs md:text-sm text-slate-700 font-medium bg-emerald-50 border border-emerald-200 p-4 rounded-2xl leading-relaxed"></div>
+<div class="text-center pt-2">
+<button onclick="unlockAndGo('summary')" class="px-8 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-xl text-sm shadow-md transition cursor-pointer">Finish &amp; Go to Summary ➔</button>
+</div>
+</div>
+</section>
+
+<section id="tab-summary" class="tab-content hidden space-y-6">
+<div class="max-w-2xl mx-auto bg-white border-4 border-emerald-200 p-8 rounded-3xl space-y-6 shadow-xl text-center">
+<div class="space-y-2">
+<span class="text-6xl block animate-bounce">🎓🌿🦁</span>
+<h3 class="text-3xl font-heading font-black text-emerald-950">Congratulations!</h3>
+<p class="text-sm text-slate-600 font-bold">You have completed <span class="text-emerald-600 font-black">IELTS 2C_S6_Lesson 2</span>.</p>
+</div>
+<div class="bg-emerald-50/60 p-5 rounded-2xl border border-emerald-200 space-y-3 text-left">
+<h4 class="text-base font-black text-emerald-900 border-b border-emerald-200 pb-2">💡 Key Takeaways</h4>
+<ul class="space-y-2.5 text-xs md:text-sm text-slate-700 font-bold">
+<li class="flex items-start gap-2"><span class="text-emerald-600 font-black">1.</span><span><b>Weather and plants (speaking):</b> bathe in the sun, sweltering, gloomy, pour, potted plant, water, thrive, bouquet, affection.</span></li>
+<li class="flex items-start gap-2"><span class="text-emerald-600 font-black">2.</span><span><b>Pets and wild animals (speaking):</b> feed, keep an eye on, predator, massive, inhabit, blend in.</span></li>
+<li class="flex items-start gap-2"><span class="text-emerald-600 font-black">3.</span><span><b>Birth order and personality (reading):</b> shape character, authoritative, unyielding, wield, dominance, superiority, dethrone, pamper, mediator, negotiator, diplomatic skills, rebel, diligent, cerebral, optimistic, high achiever and more.</span></li>
+<li class="flex items-start gap-2"><span class="text-emerald-600 font-black">4.</span><span><b>Lie detection (reading):</b> hold a conversation, deception, intentional deceit, skepticism, compelling evidence, tell-tale signs, tell the difference, consistent, avert your eyes, haunt and more.</span></li>
+</ul>
+</div>
+<div class="text-center pt-2">
+<button onclick="location.reload()" class="px-8 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-xl shadow-md transition cursor-pointer text-sm">🔄 Restart Lesson</button>
+</div>
+</div>
+</section>
+</main>
+
+<script>
+const groups = [["Speaking: Weather & Nature", [{"w": "bathe in the sun", "ipa": "/ˌbeɪð ɪn ðə ˈsʌn/", "en": "to sit or lie in the sun to enjoy the warmth", "vn": "tắm nắng", "ex": "On sunny days, I like to go to the park by the lake and bathe in the sun for a while."}, {"w": "sweltering", "ipa": "/ˈsweltərɪŋ/", "en": "extremely hot and uncomfortable", "vn": "oi ả, nóng bức", "ex": "In the sweltering heat of July, I usually stay indoors and only go out in the evening."}, {"w": "gloomy", "ipa": "/ˈɡluːmi/", "en": "dark and grey, making you feel sad or tired", "vn": "u ám, ảm đạm", "ex": "On gloomy days, I often feel tired, so I prefer to stay at home and watch films."}, {"w": "pour", "ipa": "/pɔː(r)/", "en": "(of rain) to fall very heavily", "vn": "mưa như trút nước", "ex": "If it pours at the weekend, I have to cancel my plan to go cycling."}, {"w": "potted plant", "ipa": "/ˌpɒtɪd ˈplɑːnt/", "en": "a plant that grows in a pot, often kept indoors", "vn": "cây trồng trong chậu", "ex": "I keep a few potted plants on my balcony, and I take care of them every day."}, {"w": "water (v)", "ipa": "/ˈwɔːtə(r)/", "en": "to give water to plants", "vn": "tưới nước", "ex": "I water my plants every morning before class, and it helps me feel relaxed.", "say": "water"}, {"w": "thrive", "ipa": "/θraɪv/", "en": "to grow strongly and stay healthy", "vn": "phát triển mạnh, sinh trưởng tốt", "ex": "Plants thrive when they get enough sunlight and water, so I check mine regularly."}, {"w": "bouquet", "ipa": "/bʊˈkeɪ/", "en": "a bunch of flowers arranged nicely, often given as a gift", "vn": "bó hoa", "ex": "I once gave my mother a bouquet of roses on her birthday, and she was really touched."}, {"w": "affection", "ipa": "/əˈfekʃn/", "en": "a feeling of love and care for someone or something", "vn": "tình cảm, sự yêu mến", "ex": "Flowers are a simple way to show affection to the people you care about."}, {"w": "feed", "ipa": "/fiːd/", "en": "to give food to a person or an animal", "vn": "cho ăn", "ex": "When I was ten, I raised a puppy, and I had to feed it twice a day."}, {"w": "keep an eye on", "ipa": "/ˌkiːp ən ˈaɪ ɒn/", "en": "to watch someone or something carefully", "vn": "để mắt tới, trông chừng", "ex": "I always had to keep an eye on my puppy because it loved chewing my shoes."}, {"w": "predator", "ipa": "/ˈpredətə(r)/", "en": "an animal that hunts and eats other animals", "vn": "động vật săn mồi", "ex": "Eagles are skilled predators that can spot small animals from far away."}, {"w": "massive", "ipa": "/ˈmæsɪv/", "en": "extremely large", "vn": "to lớn, khổng lồ", "ex": "Polar bears are massive animals, and an adult male can weigh more than 400 kilograms."}, {"w": "inhabit", "ipa": "/ɪnˈhæbɪt/", "en": "to live in a particular place (used for animals and people)", "vn": "sinh sống, cư trú", "ex": "Polar bears inhabit the icy regions around the Arctic."}, {"w": "blend in", "ipa": "/ˌblend ˈɪn/", "en": "to look so similar to the surroundings that you are hard to see", "vn": "hòa nhập, hòa hợp với (môi trường xung quanh)", "ex": "A chameleon can change colour to blend in with its surroundings, which helps it avoid predators."}]], ["Reading 1: Birth order & personality", [{"w": "shape character", "ipa": "/ʃeɪp ˈkærəktə(r)/", "en": "to influence the way a person's personality develops", "vn": "hình thành / định hình tính cách", "ex": "Family experiences can shape a child's character for life."}, {"w": "re-enact", "ipa": "/ˌriː ɪˈnækt/", "en": "to act out something that happened before", "vn": "tái hiện, diễn lại", "ex": "Children often re-enact family arguments when they play."}, {"w": "authoritative", "ipa": "/ɔːˈθɒrətətɪv/", "en": "showing confidence and the power to be obeyed", "vn": "có thẩm quyền", "ex": "The eldest child often takes an authoritative role at home."}, {"w": "unyielding", "ipa": "/ʌnˈjiːldɪŋ/", "en": "firm and refusing to change your mind", "vn": "cứng rắn, không nhượng bộ", "ex": "Her unyielding attitude made it hard to reach a compromise."}, {"w": "wield (v)", "ipa": "/wiːld/", "en": "to hold and use power or influence", "vn": "sử dụng, nắm giữ (quyền lực/ảnh hưởng)", "ex": "Older siblings often wield a lot of power over younger ones.", "say": "wield"}, {"w": "harsh criticisms", "ipa": "/hɑːʃ ˈkrɪtɪsɪzmz/", "en": "very strong and unkind comments about someone", "vn": "những lời chỉ trích gay gắt", "ex": "Harsh criticisms from parents can damage a child's confidence."}, {"w": "flinch (n)", "ipa": "/flɪntʃ/", "en": "a sudden small movement of the body because of fear or pain", "vn": "sự giật mình / phản ứng sợ hãi", "ex": "He answered the angry question without a flinch.", "say": "flinch"}, {"w": "grow tired of", "ipa": "/ɡrəʊ ˈtaɪəd əv/", "en": "to slowly become bored with something", "vn": "trở nên chán / mệt mỏi với", "ex": "Younger children may grow tired of being told what to do."}, {"w": "dominance", "ipa": "/ˈdɒmɪnəns/", "en": "power and influence over other people", "vn": "sự thống trị, sự chiếm ưu thế", "ex": "The dominance of older children in family games is common."}, {"w": "instigate", "ipa": "/ˈɪnstɪɡeɪt/", "en": "to make something happen, especially something bad", "vn": "kích động, khơi mào", "ex": "Who instigated the argument, you or your brother?"}, {"w": "inevitably", "ipa": "/ɪnˈevɪtəbli/", "en": "in a way that cannot be avoided", "vn": "không thể tránh khỏi", "ex": "Brothers and sisters inevitably compete for their parents' attention."}, {"w": "objection to", "ipa": "/əbˈdʒekʃn tuː/", "en": "a reason for disagreeing with something", "vn": "sự phản đối đối với", "ex": "I have no objection to sharing a room with my sister."}, {"w": "superiority", "ipa": "/suːˌpɪəriˈɒrəti/", "en": "the state of being better or more powerful than others", "vn": "sự vượt trội, ưu thế", "ex": "Some firstborns feel a sense of superiority over their siblings."}, {"w": "shrug off", "ipa": "/ʃrʌɡ ɒf/", "en": "to treat something as unimportant", "vn": "phớt lờ, bỏ ngoài tai", "ex": "He shrugged off the criticism and carried on working."}, {"w": "the controversy has raged", "ipa": "/ðə ˈkɒntrəvɜːsi həz reɪdʒd/", "en": "people have argued strongly about it for a long time", "vn": "cuộc tranh cãi đã diễn ra gay gắt", "ex": "The controversy has raged for years over whether birth order affects personality.", "say": "the controversy has raged"}, {"w": "dethrone", "ipa": "/diːˈθrəʊn/", "en": "to remove someone from a position of power", "vn": "lật đổ (khỏi vị trí quyền lực)", "ex": "A new baby can dethrone the eldest child as the centre of attention."}, {"w": "hamper", "ipa": "/ˈhæmpə(r)/", "en": "to make it difficult for something to happen", "vn": "cản trở, gây trở ngại", "ex": "Bad weather can hamper outdoor activities."}, {"w": "pamper", "ipa": "/ˈpæmpə(r)/", "en": "to treat someone with too much care and kindness", "vn": "nuông chiều", "ex": "The youngest child is often pampered by the whole family."}, {"w": "proponent", "ipa": "/prəˈpəʊnənt/", "en": "a person who supports an idea", "vn": "người ủng hộ, người đề xuất", "ex": "Proponents of birth-order theory believe it shapes personality."}, {"w": "personality traits", "ipa": "/ˌpɜːsəˈnæləti treɪts/", "en": "the qualities that make up a person's character", "vn": "đặc điểm tính cách", "ex": "Being kind and patient are positive personality traits."}, {"w": "conscientiousness", "ipa": "/ˌkɒnʃiˈenʃəsnəs/", "en": "the quality of working hard and doing things carefully", "vn": "tính tận tâm, tính có trách nhiệm", "ex": "Conscientiousness helps students finish their work on time."}, {"w": "well-organized", "ipa": "/ˌwel ˈɔːɡənaɪzd/", "en": "planning things carefully and keeping them neat", "vn": "có tổ chức, ngăn nắp", "ex": "My sister is well-organized, so her desk is always tidy."}, {"w": "high achiever", "ipa": "/ˌhaɪ əˈtʃiːvə(r)/", "en": "someone who does very well at school or work", "vn": "người đạt thành tích cao", "ex": "Many firstborn children grow up to be high achievers."}, {"w": "rivalry", "ipa": "/ˈraɪvlri/", "en": "competition between people or groups", "vn": "sự cạnh tranh, kình địch", "ex": "There is a lot of rivalry between my two brothers."}, {"w": "mediator", "ipa": "/ˈmiːdieɪtə(r)/", "en": "a person who helps two sides to agree", "vn": "người hòa giải", "ex": "The middle child often acts as a mediator in family arguments."}, {"w": "negotiator", "ipa": "/nɪˈɡəʊʃieɪtə(r)/", "en": "a person who talks with others to reach an agreement", "vn": "người đàm phán", "ex": "Middle children are often good negotiators."}, {"w": "diplomatic skills", "ipa": "/ˌdɪpləˈmætɪk skɪlz/", "en": "the ability to deal with people politely and carefully", "vn": "kỹ năng ngoại giao / ứng xử khéo léo", "ex": "She used her diplomatic skills to calm the argument."}, {"w": "rebel", "ipa": "/ˈrebl/", "en": "a person who refuses to follow rules", "vn": "nổi loạn; người nổi loạn", "ex": "The youngest child is sometimes the family rebel."}, {"w": "naughty", "ipa": "/ˈnɔːti/", "en": "behaving badly, especially a child", "vn": "nghịch ngợm", "ex": "Our puppy is naughty and chews everything."}, {"w": "diligent", "ipa": "/ˈdɪlɪdʒənt/", "en": "working hard and carefully", "vn": "chăm chỉ, cần cù", "ex": "Bees are diligent insects that work all day."}, {"w": "cerebral", "ipa": "/ˈserəbrəl/", "en": "using the mind and logic more than emotions", "vn": "thiên về trí tuệ, lý trí", "ex": "He is a cerebral person who prefers to think before he acts."}, {"w": "saddle", "ipa": "/ˈsædl/", "en": "a seat for a rider on the back of a horse", "vn": "yên ngựa", "ex": "She put the saddle on the horse before riding."}, {"w": "attributed to", "ipa": "/əˈtrɪbjuːtɪd tuː/", "en": "believed to be caused by", "vn": "được cho là do, được quy cho", "ex": "His success is attributed to hard work."}, {"w": "optimistic", "ipa": "/ˌɒptɪˈmɪstɪk/", "en": "hopeful about the future", "vn": "lạc quan", "ex": "I feel optimistic about tomorrow's weather."}]], ["Reading 2: Lie detection", [{"w": "hold a conversation", "ipa": "/həʊld ə ˌkɒnvəˈseɪʃn/", "en": "to talk with someone for some time", "vn": "duy trì một cuộc trò chuyện", "ex": "Some parrots can hold a simple conversation with their owners."}, {"w": "profound", "ipa": "/prəˈfaʊnd/", "en": "very deep or strong", "vn": "sâu sắc", "ex": "The experiment had a profound effect on how we see animals."}, {"w": "uncover", "ipa": "/ʌnˈkʌvə(r)/", "en": "to discover something that was hidden", "vn": "khám phá, phát hiện", "ex": "Scientists uncovered the truth about the strange noise."}, {"w": "linguistic skills", "ipa": "/lɪŋˈɡwɪstɪk skɪlz/", "en": "abilities connected with language", "vn": "kỹ năng ngôn ngữ", "ex": "Reading every day improves your linguistic skills."}, {"w": "intentional deceit", "ipa": "/ɪnˈtenʃənl dɪˈsiːt/", "en": "lying on purpose to trick someone", "vn": "sự lừa dối có chủ ý", "ex": "Hiding the truth was clearly intentional deceit."}, {"w": "breakage", "ipa": "/ˈbreɪkɪdʒ/", "en": "the act of breaking something, or things that are broken", "vn": "sự vỡ, hỏng (đồ vật)", "ex": "The shop will pay for any breakage during delivery."}, {"w": "skepticism", "ipa": "/ˈskeptɪsɪzəm/", "en": "doubt about whether something is true", "vn": "sự hoài nghi", "ex": "Many people greeted the news with skepticism."}, {"w": "deception", "ipa": "/dɪˈsepʃn/", "en": "making someone believe something that is not true", "vn": "sự lừa dối", "ex": "Some animals use deception to catch their prey."}, {"w": "take a peek at", "ipa": "/teɪk ə ˈpiːk æt/", "en": "to look quickly, often secretly", "vn": "nhìn lén, nhìn nhanh", "ex": "He took a peek at his birthday present before the party."}, {"w": "elaborate (adj)", "ipa": "/ɪˈlæbərət/", "en": "with many small details; complicated", "vn": "chi tiết, công phu", "ex": "The bird built an elaborate nest from twigs and leaves.", "say": "elaborate"}, {"w": "compelling evidence", "ipa": "/kəmˈpelɪŋ ˈevɪdəns/", "en": "evidence that makes you strongly believe something", "vn": "bằng chứng thuyết phục", "ex": "There is compelling evidence that the climate is changing."}, {"w": "emerge", "ipa": "/ɪˈmɜːdʒ/", "en": "to come out of a place, or to become known", "vn": "xuất hiện, lộ ra", "ex": "Frogs emerge from the pond when it starts to rain."}, {"w": "tell-tale signs", "ipa": "/ˈtelteɪl saɪnz/", "en": "signs that clearly show something is happening", "vn": "dấu hiệu rõ ràng", "ex": "Dark clouds are tell-tale signs of a coming storm."}, {"w": "tell the difference", "ipa": "/tel ðə ˈdɪfrəns/", "en": "to see how two things are different", "vn": "phân biệt sự khác nhau", "ex": "It is hard to tell the difference between the two snakes."}, {"w": "experiment", "ipa": "/ɪkˈsperɪmənt/", "en": "a scientific test to find out if something is true", "vn": "thí nghiệm", "ex": "The students did an experiment to test how plants grow."}, {"w": "consistent", "ipa": "/kənˈsɪstənt/", "en": "always behaving or happening in the same way", "vn": "nhất quán", "ex": "Her answers were consistent, so I believed her."}, {"w": "lie detection", "ipa": "/laɪ dɪˈtekʃn/", "en": "finding out whether someone is lying", "vn": "phát hiện nói dối", "ex": "Lie detection is difficult even for experts."}, {"w": "toss a coin", "ipa": "/tɒs ə ˈkɔɪn/", "en": "to throw a coin in the air to decide something", "vn": "tung đồng xu", "ex": "We tossed a coin to decide who would walk the dog."}, {"w": "associate with", "ipa": "/əˈsəʊsieɪt wɪð/", "en": "to connect something with something else in your mind", "vn": "liên hệ với", "ex": "I associate sunny weather with the beach."}, {"w": "avert your eyes/gaze", "ipa": "/əˈvɜːt jɔː(r) ˈaɪz/", "en": "to look away from someone or something", "vn": "tránh né (ánh mắt)", "ex": "People may avert their gaze when they feel nervous.", "say": "avert your eyes"}, {"w": "haunt (v)", "ipa": "/hɔːnt/", "en": "to stay in your mind and worry you for a long time", "vn": "ám ảnh", "ex": "The memory of the storm still haunts me.", "say": "haunt"}]]];
+const vocabularyData = [];
+groups.forEach(g => g[1].forEach(v => vocabularyData.push(v)));
+const totalCardsCount = vocabularyData.length;
+let cardQueue = [], currentCard = null, currentCardIdx = 0, isFlipped = false, hardSeen = {};
+function shuffleArray(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function byW(w) { return vocabularyData.findIndex(v => v.w === w); }
+
+window.onload = function () {
+  renderVocabTable(); initFlashcards(); renderWriting();
+  document.getElementById('item-count').innerText = totalCardsCount + ' Items';
+  document.getElementById('flash-done-text').innerText = 'Awesome! You have reviewed all ' + totalCardsCount + ' vocabulary items.';
+};
+
+let gamesStarted = false;
+function switchTab(tabId) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+  document.querySelectorAll('.tab-btn').forEach(btn => { btn.classList.remove('bg-white', 'text-emerald-700', 'shadow-sm'); btn.classList.add('text-slate-500'); });
+  document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+  const activeBtn = document.getElementById(`btn-${tabId}`);
+  if (activeBtn) { activeBtn.classList.add('bg-white', 'text-emerald-700', 'shadow-sm'); activeBtn.classList.remove('text-slate-500'); }
+  if (tabId === 'game' && !gamesStarted) { gamesStarted = true; gameRound = 1; renderRound(); }
+}
+function unlockAndGo(tab) { document.getElementById(`btn-${tab}`).classList.remove('disabled-tab'); switchTab(tab); }
+
+function speakText(text) {
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text); u.lang = 'en-GB'; u.rate = 0.9;
+    window.speechSynthesis.speak(u);
+  }
+}
+function speakIdx(i, event) {
+  if (event) event.stopPropagation();
+  const item = vocabularyData[i];
+  speakText(item.say || item.w.replace(/\(.*?\)/g, '').trim());
+}
+
+function renderVocabTable() {
+  let i = 0, html = '';
+  groups.forEach(g => {
+    html += `<tr class="grp"><td colspan="5">${g[0]}</td></tr>`;
+    g[1].forEach(item => {
+      html += `<tr class="hover:bg-emerald-50/50 transition">
+        <td class="p-3.5 font-black text-emerald-950"><span class="inline-flex items-center gap-2"><button class="audio-btn" onclick="speakIdx(${i})">🔊</button>${item.w}</span></td>
+        <td class="p-3.5 font-mono text-xs text-emerald-700">${item.ipa}</td>
+        <td class="p-3.5 text-slate-700">${item.en}</td>
+        <td class="p-3.5 text-slate-700">${item.vn}</td>
+        <td class="p-3.5 italic text-slate-500">${item.ex}</td></tr>`;
+      i++;
+    });
+  });
+  document.getElementById('reference-table-body').innerHTML = html;
+}
+
+/* FLASHCARDS (spaced repetition) */
+function initFlashcards() { cardQueue = shuffleArray(vocabularyData.map((v, i) => i)); hardSeen = {}; updateProgressBar(); showNextCard(); }
+function resetProgress() {
+  document.getElementById('flashcard-container').classList.remove('hidden');
+  document.getElementById('flashcard-success-box').classList.add('hidden');
+  initFlashcards();
+}
+function showNextCard() {
+  if (cardQueue.length === 0) {
+    document.getElementById('flashcard-container').classList.add('hidden');
+    document.getElementById('flashcard-success-box').classList.remove('hidden');
+    return;
+  }
+  currentCardIdx = cardQueue[0]; currentCard = vocabularyData[currentCardIdx]; isFlipped = false;
+  document.getElementById('flashcard-inner').classList.remove('card-flipped');
+  document.getElementById('f-prompt').innerText = currentCard.en;
+  document.getElementById('f-vn').innerText = currentCard.vn;
+  document.getElementById('b-answer').innerText = currentCard.w;
+  document.getElementById('b-ipa').innerText = currentCard.ipa;
+  document.getElementById('b-example').innerText = `"${currentCard.ex}"`;
+  document.getElementById('queue-text').innerText = `${cardQueue.length} card${cardQueue.length > 1 ? 's' : ''}`;
+  updateProgressBar();
+}
+function flipCard() { isFlipped = !isFlipped; document.getElementById('flashcard-inner').classList.toggle('card-flipped', isFlipped); }
+function handleAnkiAction(type) {
+  if (!currentCard) return;
+  const c = cardQueue.shift();
+  if (type === 'again') { cardQueue.splice(Math.min(3, cardQueue.length), 0, c); }
+  else if (type === 'hard' && !hardSeen[c]) { hardSeen[c] = true; cardQueue.splice(Math.min(10, cardQueue.length), 0, c); }
+  showNextCard();
+}
+function updateProgressBar() {
+  const done = totalCardsCount - new Set(cardQueue).size;
+  document.getElementById('progress-bar').style.width = `${Math.round((done / totalCardsCount) * 100)}%`;
+}
+
+/* WORD GAMES */
+let gameRound = 1, r1Score = 0, r2Score = 0, r3Score = 0, raceTimer = null;
+function renderPills() {
+  const names = ['1 Memory Match', '2 Tap & Fill', '3 Meaning Race'];
+  document.getElementById('round-pills').innerHTML = names.map((n, i) => {
+    const active = (i + 1) === gameRound, done = (i + 1) < gameRound;
+    const cls = active ? 'bg-emerald-600 text-white' : (done ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-500');
+    return `<span class="text-xs font-black px-3 py-1.5 rounded-full ${cls}">${done ? '✓ ' : ''}${n}</span>`;
+  }).join('');
+}
+function renderRound() {
+  clearInterval(raceTimer); renderPills();
+  document.getElementById('round-next-btn').classList.add('hidden');
+  if (gameRound === 1) initMemory(); else if (gameRound === 2) initFill(); else initRace();
+}
+function finishRound(msg) {
+  clearInterval(raceTimer);
+  document.getElementById('round-area').innerHTML = `<div class="max-w-md mx-auto text-center space-y-2 py-6"><span class="text-4xl block">🎯</span><p class="text-base font-black text-emerald-950">${msg}</p></div>`;
+  const btn = document.getElementById('round-next-btn');
+  btn.innerText = gameRound === 3 ? 'Finish Games ➔' : 'Next Round ➔';
+  btn.classList.remove('hidden');
+}
+function nextRound() {
+  if (gameRound === 3) {
+    document.getElementById('round-next-btn').classList.add('hidden');
+    document.getElementById('games-summary').innerText = `Memory Match: ${r1Score} boards. Tap & Fill: ${r2Score}/${fillData.length}. Meaning Race: ${r3Score}/${RACE_N}.`;
+    document.getElementById('games-success-box').classList.remove('hidden');
+    return;
+  }
+  gameRound++; renderRound();
+}
+
+/* Round 1: Memory Match (word <-> English meaning) */
+let memCards = [], memOpen = [], memMatched = 0, memMoves = 0, memBoard = 0, memLock = false;
+const MEM_BOARDS = 2, MEM_PAIRS = 6;
+function initMemory() { memBoard = 0; r1Score = 0; newMemBoard(); }
+function newMemBoard() {
+  memBoard++; memOpen = []; memMatched = 0; memMoves = 0; memLock = false;
+  const idx = shuffleArray(vocabularyData.map((v, i) => i)).slice(0, MEM_PAIRS);
+  memCards = [];
+  idx.forEach(i => { memCards.push({ p: i, t: 'w' }); memCards.push({ p: i, t: 'd' }); });
+  shuffleArray(memCards);
+  renderMem();
+}
+function renderMem() {
+  const cells = memCards.map((c, k) => {
+    const v = vocabularyData[c.p];
+    const txt = c.t === 'w' ? `<b class="text-sm">${v.w}</b>` : v.en;
+    return `<div class="mem ${c.done ? 'done' : (c.up ? 'up' : '')}" id="mem-${k}" onclick="flipMem(${k})"><div><div class="f">🌿</div><div class="b">${txt}</div></div></div>`;
+  }).join('');
+  document.getElementById('round-area').innerHTML = `
+    <div class="max-w-3xl mx-auto space-y-4">
+      <div class="flex justify-between text-xs font-black text-emerald-800"><span>Board ${memBoard} of ${MEM_BOARDS}</span><span id="mem-moves">Moves: ${memMoves}</span></div>
+      <p class="text-xs text-slate-600 font-bold text-center">Match each word with its English meaning.</p>
+      <div class="grid grid-cols-3 md:grid-cols-4 gap-2.5">${cells}</div>
+    </div>`;
+}
+function flipMem(k) {
+  if (memLock) return;
+  const c = memCards[k];
+  if (c.up || c.done) return;
+  c.up = true; document.getElementById('mem-' + k).classList.add('up');
+  memOpen.push(k);
+  if (memOpen.length === 2) {
+    memMoves++; document.getElementById('mem-moves').innerText = 'Moves: ' + memMoves;
+    const [a, b] = memOpen, A = memCards[a], B = memCards[b];
+    memLock = true;
+    if (A.p === B.p && A.t !== B.t) {
+      A.done = B.done = true; memMatched++;
+      memOpen = []; memLock = false;
+      document.getElementById('mem-' + a).classList.add('done'); document.getElementById('mem-' + b).classList.add('done');
+      if (memMatched === MEM_PAIRS) setTimeout(() => {
+        r1Score++;
+        if (memBoard >= MEM_BOARDS) finishRound(`Both boards cleared! Last board: ${memMoves} moves.`); else newMemBoard();
+      }, 700);
+    } else {
+      document.getElementById('mem-' + a).classList.add('bad'); document.getElementById('mem-' + b).classList.add('bad');
+      setTimeout(() => {
+        [a, b].forEach(x => { memCards[x].up = false; const el = document.getElementById('mem-' + x); el.classList.remove('up', 'bad'); });
+        memOpen = []; memLock = false;
+      }, 1000);
+    }
+  }
+}
+
+/* Round 2: Tap & Fill */
+const fillData = [
+  { s: "A new baby can ___ the eldest child as the centre of attention.", a: "dethrone" },
+  { s: "The youngest child is often ___ by grandparents, who give in to every wish.", a: "pampered" },
+  { s: "Dark clouds are ___ of a coming storm.", a: "tell-tale signs" },
+  { s: "In the ___ heat of July, we stayed indoors all afternoon.", a: "sweltering" },
+  { s: "The middle child often acts as a ___ when brothers and sisters argue.", a: "mediator" },
+  { s: "Eagles are skilled ___ that hunt small animals from the sky.", a: "predators" },
+  { s: "There is ___ that the climate is changing.", a: "compelling evidence" },
+  { s: "A chameleon can change colour to ___ with its surroundings.", a: "blend in" },
+  { s: "He ___ the harsh comments and kept smiling.", a: "shrugged off" },
+  { s: "Polar bears ___ the icy regions near the Arctic.", a: "inhabit" },
+  { s: "I always had to ___ my puppy because it loved chewing shoes.", a: "keep an eye on" },
+  { s: "Many firstborn children grow up to be ___.", a: "high achievers" }
+];
+let fillAns = [], fillActive = 0, fillBank = [];
+function initFill() {
+  fillAns = fillData.map(() => ''); fillActive = 0; fillBank = shuffleArray(fillData.map(d => d.a));
+  renderFill();
+}
+function renderFill() {
+  const items = fillData.map((d, i) => {
+    const parts = d.s.split('___');
+    const cls = 'gapbox' + (i === fillActive ? ' act' : '');
+    return `<p class="leading-[2.2] text-sm md:text-base"><b class="text-emerald-700">${i + 1}.</b> ${parts[0]}<span class="${cls}" id="fg-${i}" onclick="pickGap(${i})">${fillAns[i] || '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'}</span>${parts[1]}</p>`;
+  }).join('');
+  const chips = fillBank.map((w, k) => `<span class="wchip ${fillAns.includes(w) ? 'used' : ''}" onclick="putWord(${k})">${w}</span>`).join('');
+  document.getElementById('round-area').innerHTML = `
+    <div class="max-w-3xl mx-auto space-y-4">
+      <p class="text-xs text-slate-600 font-bold">Tap a gap, then tap a word from the bank. Tap a filled gap to clear it.</p>
+      <div class="bg-sky-50/70 border border-sky-100 rounded-2xl p-3 text-center">${chips}</div>
+      <div class="space-y-1">${items}</div>
+      <div class="flex items-center gap-3 flex-wrap">
+        <button onclick="checkFill()" class="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-xl text-xs cursor-pointer">✅ Check</button>
+        <span id="fill-score" class="text-sm font-black text-emerald-800"></span>
+      </div>
+    </div>`;
+}
+function pickGap(i) { if (fillAns[i]) fillAns[i] = ''; fillActive = i; renderFill(); }
+function putWord(k) {
+  const w = fillBank[k];
+  if (fillAns.includes(w)) return;
+  fillAns[fillActive] = w;
+  const next = fillAns.findIndex(x => !x);
+  if (next >= 0) fillActive = next;
+  renderFill();
+}
+function checkFill() {
+  if (fillAns.some(x => !x)) { document.getElementById('fill-score').innerText = 'Fill every gap first.'; return; }
+  let ok = 0;
+  fillData.forEach((d, i) => { const el = document.getElementById('fg-' + i); const good = fillAns[i] === d.a; el.className = 'gapbox ' + (good ? 'ok' : 'no'); el.onclick = null; if (good) ok++; });
+  r2Score = ok;
+  document.getElementById('fill-score').innerText = `Score: ${ok} / ${fillData.length}` + (ok < fillData.length ? ' (red = wrong, try to remember the right word)' : ' 🎉');
+  document.getElementById('round-next-btn').classList.remove('hidden');
+}
+
+/* Round 3: Meaning Race */
+const RACE_N = 12, RACE_SEC = 12;
+let raceQs = [], raceIdx = 0, raceAnswered = false;
+function initRace() {
+  r3Score = 0; raceIdx = 0;
+  const idx = shuffleArray(vocabularyData.map((v, i) => i)).slice(0, RACE_N);
+  raceQs = idx.map(i => {
+    const wrong = shuffleArray(vocabularyData.map((v, k) => k).filter(k => k !== i)).slice(0, 3);
+    return { i, opts: shuffleArray([i, ...wrong]) };
+  });
+  loadRace();
+}
+function loadRace() {
+  clearInterval(raceTimer);
+  if (raceIdx >= RACE_N) { finishRound(`Meaning Race score: ${r3Score} / ${RACE_N}`); return; }
+  raceAnswered = false;
+  const q = raceQs[raceIdx], v = vocabularyData[q.i];
+  document.getElementById('round-area').innerHTML = `
+    <div class="max-w-xl mx-auto space-y-4">
+      <div class="flex justify-between text-xs font-black text-emerald-800"><span>Question ${raceIdx + 1} of ${RACE_N}</span><span>Score: ${r3Score}</span></div>
+      <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden"><div id="race-bar" class="bg-gradient-to-r from-emerald-400 to-sky-400 h-full rounded-full" style="width:100%"></div></div>
+      <p class="text-[11px] font-black text-emerald-700 uppercase tracking-wide text-center">Which word or phrase matches this meaning?</p>
+      <p class="text-base font-black text-emerald-950 text-center bg-emerald-50/70 border border-emerald-100 rounded-2xl p-4">${v.en}</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">${q.opts.map((o, k) => `<button class="opt" id="rc-${k}" onclick="answerRace(${k})">${vocabularyData[o].w}</button>`).join('')}</div>
+      <p id="rc-msg" class="text-sm font-black text-center min-h-[24px]"></p>
+      <div id="rc-next" class="text-center"></div>
+    </div>`;
+  const t0 = Date.now();
+  raceTimer = setInterval(() => {
+    const left = RACE_SEC - (Date.now() - t0) / 1000;
+    const bar = document.getElementById('race-bar'); if (bar) bar.style.width = Math.max(0, left / RACE_SEC * 100) + '%';
+    if (left <= 0) { clearInterval(raceTimer); answerRace(-1); }
+  }, 100);
+}
+function answerRace(k) {
+  if (raceAnswered) return;
+  raceAnswered = true; clearInterval(raceTimer);
+  const q = raceQs[raceIdx];
+  const good = k >= 0 && q.opts[k] === q.i;
+  if (k >= 0) document.getElementById('rc-' + k).classList.add(good ? 'right' : 'bad');
+  q.opts.forEach((o, n) => { if (o === q.i) document.getElementById('rc-' + n).classList.add('right'); });
+  if (good) r3Score++;
+  document.getElementById('rc-msg').innerHTML = good ? '<span class="text-emerald-700">✅ Correct!</span>' : `<span class="text-rose-600">${k < 0 ? '⏰ Time is up.' : '❌ Not quite.'} The answer is "${vocabularyData[q.i].w}".</span>`;
+  document.getElementById('rc-next').innerHTML = `<button onclick="raceIdx++;loadRace()" class="px-6 py-2.5 bg-sky-500 hover:bg-sky-600 text-white font-black rounded-xl text-xs cursor-pointer">${raceIdx === RACE_N - 1 ? 'See result ➔' : 'Next ➔'}</button>`;
+}
+
+/* SPEAKING STUDIO */
+const writingTasks = [
+  { title: "Part 1: Quick answers", note: "Answer each question in 2 to 3 sentences.", fields: [
+    { q: "Where is a good place to go on a sunny day?", min: 15, chips: [["bathe in the sun", /bathe in the sun|bathing in the sun/i], ["sweltering", /sweltering/i], ["associate with", /associate/i], ["optimistic", /optimistic/i]] },
+    { q: "Does the weather affect the things you do?", min: 15, chips: [["gloomy", /gloomy/i], ["pour", /pour/i], ["sweltering", /sweltering/i], ["hamper", /hamper/i], ["grow tired of", /grow tired of|grew tired of/i]] },
+    { q: "Do you take care of any flowers or plants?", min: 15, chips: [["potted plant", /potted plant/i], ["water", /water/i], ["thrive", /thrive/i], ["diligent", /diligent/i]] },
+    { q: "Do you like giving flowers as a gift?", min: 15, chips: [["bouquet", /bouquet/i], ["affection", /affection/i], ["shape character", /shape/i], ["well-organized", /well-organi[sz]ed/i]] },
+    { q: "Have you ever raised a pet?", min: 15, chips: [["feed", /feed|fed/i], ["keep an eye on", /keep an eye on|kept an eye on/i], ["naughty", /naughty/i], ["pamper", /pamper/i]] }
+  ]},
+  { title: "Part 2: Describe an interesting wild animal", note: "Build your talk in four boxes. Then speak for up to 2 minutes.", timer: true, fields: [
+    { q: "1. What animal is it, and where did you first see or hear about it?", min: 12, chips: [["inhabit", /inhabit/i], ["emerge", /emerge/i], ["take a peek at", /peek/i]] },
+    { q: "2. What does it look like, and where does it live?", min: 15, chips: [["massive", /massive/i], ["inhabit", /inhabit/i], ["blend in", /blend in/i], ["elaborate", /elaborate/i]] },
+    { q: "3. What does it eat, and how does it behave?", min: 15, chips: [["predator", /predator/i], ["diligent", /diligent/i], ["authoritative", /authoritative/i], ["consistent", /consistent/i]] },
+    { q: "4. Why do you find it interesting, and how do you feel about it?", min: 15, chips: [["profound", /profound/i], ["intriguing", /intriguing/i], ["haunt", /haunt/i], ["optimistic", /optimistic/i]] }
+  ]},
+  { title: "Part 3: Discussion", note: "Give an opinion, a reason and an example (3 to 4 sentences).", fields: [
+    { q: "Do you think the order in which children are born shapes their personality?", min: 25, chips: [["shape character", /shape/i], ["personality traits", /personality traits?/i], ["attributed to", /attributed to/i], ["dominance", /dominan/i], ["mediator", /mediator/i], ["the controversy has raged", /controversy/i]] },
+    { q: "Is it easy to tell when someone is lying? Why or why not?", min: 25, chips: [["tell the difference", /tell the difference/i], ["tell-tale signs", /tell-tale/i], ["avert your eyes", /avert/i], ["skepticism", /skeptic/i], ["compelling evidence", /compelling/i], ["deception", /decepti/i]] }
+  ]}
+];
+const writingModels = [
+  ["On sunny days, I love going to the park by the lake to bathe in the sun. In the sweltering heat of summer, though, I prefer to go in the early evening.",
+   "Yes, a lot. On gloomy days I often feel tired, and if it pours at the weekend, bad weather can hamper my plans, so I just stay home and watch films.",
+   "Yes, I keep a few potted plants on my balcony. I water them every morning, and they thrive when they get enough sunlight.",
+   "Yes, I do. A bouquet of roses is a simple way to show affection to people I care about, especially my mother on her birthday.",
+   "Yes, when I was ten I raised a puppy. I had to feed it twice a day and keep an eye on it because it was so naughty."],
+  ["Let me talk about the polar bear. I first saw one on a nature programme, when a bear emerged from the snow. It inhabits the icy regions around the Arctic, and it is a massive animal with thick white fur that helps it blend in with the snow. It is a skilled predator that hunts seals and waits patiently for hours. I find it intriguing because it survives in such a harsh place, and the thought of its shrinking home still haunts me."],
+  ["I think it plays a part, but not a big one. Some people attribute personality traits to birth order, for example, the eldest child is often seen as a high achiever, and the middle child as a mediator. However, the controversy has raged for years, and I believe parents and friends shape character just as much.",
+   "Not really. Many people think they can spot tell-tale signs, such as someone who averts their gaze. In fact, researchers say it is hard to tell the difference, so I would need compelling evidence before I believed anyone was lying."]
+];
+function wordCount(t) { const m = t.trim().match(/\S+/g); return m ? m.length : 0; }
+function renderWriting() {
+  document.getElementById('writing-container').innerHTML = writingTasks.map((t, ti) => `
+    <div class="bg-white p-5 rounded-2xl border border-emerald-100 shadow-sm space-y-4">
+      <div class="flex items-center justify-between flex-wrap gap-2"><h4 class="text-sm font-black text-emerald-900">${t.title}</h4>${t.timer ? `<span class="flex items-center gap-2"><span id="tm-disp" class="text-sm font-black text-sky-700 font-mono">02:00</span><button onclick="startTimer()" class="px-3 py-1.5 bg-sky-100 hover:bg-sky-200 text-sky-800 text-xs font-black rounded-lg cursor-pointer">⏱️ Start 2-min timer</button></span>` : ''}</div>
+      <p class="text-xs text-slate-500 italic">${t.note}</p>
+      ${t.fields.map((f, fi) => `
+        <div class="space-y-2">
+          <p class="text-xs md:text-sm font-black text-slate-700">${f.q}</p>
+          <div>${f.chips.map((c, k) => `<span id="wchip-${ti}-${fi}-${k}" class="chip">${c[0]}</span>`).join('')}</div>
+          <textarea id="w-${ti}-${fi}" oninput="onWritingInput(${ti},${fi})" rows="3" placeholder="Write here..." class="w-full p-3 bg-emerald-50/40 border border-emerald-200 rounded-xl text-sm outline-none focus:border-emerald-400 font-medium"></textarea>
+          <p id="wc-${ti}-${fi}" class="text-xs font-black text-slate-500">0 words (minimum ${f.min})</p>
+        </div>`).join('')}
+    </div>`).join('');
+}
+function allWritten() {
+  return writingTasks.every((t, ti) => t.fields.every((f, fi) => wordCount(document.getElementById(`w-${ti}-${fi}`).value) >= f.min));
+}
+function onWritingInput(ti, fi) {
+  const f = writingTasks[ti].fields[fi];
+  const text = document.getElementById(`w-${ti}-${fi}`).value;
+  f.chips.forEach((c, k) => document.getElementById(`wchip-${ti}-${fi}-${k}`).classList.toggle('on', c[1].test(text)));
+  const n = wordCount(text), el = document.getElementById(`wc-${ti}-${fi}`);
+  el.innerText = `${n} words (minimum ${f.min})`;
+  el.className = n >= f.min ? 'text-xs font-black text-emerald-600' : 'text-xs font-black text-slate-500';
+  const btn = document.getElementById('writing-model-btn'), ok = allWritten();
+  btn.disabled = !ok;
+  btn.className = ok ? 'text-xs text-emerald-600 hover:underline font-black cursor-pointer' : 'text-xs text-slate-400 font-black cursor-not-allowed';
+  btn.innerText = ok ? '👁️ Show suggested answers' : '👁️ Finish all boxes first to unlock suggested answers';
+}
+function toggleWritingModel() {
+  if (!allWritten()) return;
+  const box = document.getElementById('writing-model-box');
+  if (box.classList.contains('hidden')) {
+    box.innerHTML = writingTasks.map((t, ti) => `<div><b>${t.title}</b>${t.fields.length > 1 && ti !== 1 ? writingModels[ti].map((m, i) => `<p class="mt-1"><i>${t.fields[i].q}</i><br>${m}</p>`).join('') : `<p class="mt-1">${writingModels[ti][0]}</p>`}</div>`).join('');
+  }
+  box.classList.toggle('hidden');
+}
+let tmInt = null;
+function startTimer() {
+  clearInterval(tmInt);
+  let s = 120; const el = document.getElementById('tm-disp');
+  el.innerText = '02:00';
+  tmInt = setInterval(() => {
+    s--; el.innerText = String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
+    if (s <= 0) { clearInterval(tmInt); el.innerText = "Time's up!"; }
+  }, 1000);
+}
+</script>
+</body>
+</html>
