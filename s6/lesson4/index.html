@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IELTS 2C_S6_Lesson 3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.2.2"></script>
+<style>
+*, body, html, button, span, h1, h2, h3, p, div, input, select, textarea { font-family: 'Quicksand', sans-serif; font-weight: 600; }
+h1, h2, h3, .font-heading { font-family: 'Fredoka', sans-serif; }
+.perspective { perspective: 1000px; }
+.backface-hidden { backface-visibility: hidden; }
+.card-inner { transition: transform 0.5s; transform-style: preserve-3d; }
+.card-flipped { transform: rotateY(180deg); }
+.disabled-tab { opacity: 0.4; cursor: not-allowed !important; pointer-events: none; }
+.audio-btn { display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:999px; background:#DBEAFE; color:#1D4ED8; font-size:11px; cursor:pointer; border:1px solid #BFDBFE; flex-shrink:0; }
+.audio-btn:hover { background:#BFDBFE; }
+.grp td { background:#DBEAFE; color:#1E3A8A; font-weight:800; padding:8px 14px; }
+@keyframes shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-5px)} 40%,80%{transform:translateX(5px)} }
+.shake { animation: shake 0.4s ease-in-out; }
+/* collocation match */
+.cm { width:100%; text-align:center; padding:10px 8px; border-radius:14px; border:2px solid #BFDBFE; background:#fff; font-size:1rem; font-weight:800; color:#1E3A8A; cursor:pointer; }
+.cm:hover { background:#EFF6FF; }
+.cm.sel { border-color:#F59E0B; background:#FEF3C7; }
+.cm.ok { border-color:#10B981; background:#D1FAE5; color:#065F46; pointer-events:none; }
+.cm.no { border-color:#F43F5E; background:#FFE4E6; color:#9F1239; }
+/* word search */
+.ws { display:grid; grid-template-columns:repeat(12,1fr); gap:3px; max-width:440px; margin:0 auto; user-select:none; }
+.wc { aspect-ratio:1; display:flex; align-items:center; justify-content:center; border-radius:8px; background:#EFF6FF; border:1px solid #BFDBFE; font-weight:800; font-size:.95rem; text-transform:uppercase; color:#1E3A8A; cursor:pointer; padding:0; }
+.wc:hover { background:#DBEAFE; }
+.wc.st { background:#FEF3C7; border-color:#F59E0B; }
+.wc.fd { background:#D1FAE5; border-color:#10B981; color:#065F46; }
+.clue { font-size:.85rem; padding:6px 10px; border-radius:10px; background:#EFF6FF; border:1px solid #BFDBFE; color:#1E3A8A; }
+.clue.done { background:#D1FAE5; border-color:#6EE7B7; color:#065F46; text-decoration:line-through; opacity:.8; }
+/* sort it */
+.cat { padding:14px 10px; border-radius:16px; border:2px solid #BFDBFE; background:#fff; font-size:.95rem; font-weight:800; color:#1E3A8A; cursor:pointer; }
+.cat:hover { background:#EFF6FF; }
+.cat.right { border-color:#10B981; background:#D1FAE5; color:#065F46; }
+.cat.bad { border-color:#F43F5E; background:#FFE4E6; color:#9F1239; }
+.chip { display:inline-block; font-size:0.78rem; font-weight:700; padding:4px 11px; border-radius:999px; background:#F1F5F9; color:#64748B; border:1px solid #E2E8F0; margin:2px; }
+.chip.on { background:#D1FAE5; color:#047857; border-color:#6EE7B7; }
+</style>
+</head>
+<body class="bg-[#EFF6FF] text-slate-700 min-h-screen flex flex-col selection:bg-blue-200 pb-12">
+
+<header class="bg-gradient-to-r from-[#DBEAFE] via-[#E0E7FF] to-[#FEF3C7] border-b-4 border-dashed border-blue-300 shadow-sm p-6 text-center rounded-b-3xl">
+<h1 class="text-3xl md:text-4xl font-black tracking-wide drop-shadow-sm text-blue-950">🌦️ IELTS 2C_S6_Lesson 3</h1>
+</header>
+
+<div class="max-w-5xl w-full mx-auto px-4 mt-6">
+<div class="flex bg-blue-100/70 p-1.5 rounded-2xl border border-blue-200 shadow-inner overflow-x-auto">
+<button onclick="switchTab('reference')" id="btn-reference" class="tab-btn flex-1 py-3 px-2 text-xs md:text-sm font-black rounded-xl text-center bg-white text-blue-700 shadow-sm transition cursor-pointer whitespace-nowrap">📚 Vocab Bank</button>
+<button onclick="switchTab('flashcard')" id="btn-flashcard" class="tab-btn flex-1 py-3 px-2 text-xs md:text-sm font-black rounded-xl text-center text-slate-500 transition cursor-pointer whitespace-nowrap">🎴 Flashcards</button>
+<button onclick="switchTab('game')" id="btn-game" class="tab-btn disabled-tab flex-1 py-3 px-2 text-xs md:text-sm font-black rounded-xl text-center text-slate-500 transition whitespace-nowrap">🎯 Word Games</button>
+<button onclick="switchTab('writing')" id="btn-writing" class="tab-btn disabled-tab flex-1 py-3 px-2 text-xs md:text-sm font-black rounded-xl text-center text-slate-500 transition whitespace-nowrap">✍️ Speak &amp; Write</button>
+<button onclick="switchTab('summary')" id="btn-summary" class="tab-btn disabled-tab flex-1 py-3 px-2 text-xs md:text-sm font-black rounded-xl text-center text-slate-500 transition whitespace-nowrap">🎉 Completion</button>
+</div>
+</div>
+
+<main class="flex-1 max-w-5xl w-full mx-auto px-4 py-6">
+
+<section id="tab-reference" class="tab-content block space-y-6">
+<div class="bg-white p-6 rounded-3xl border border-blue-100 shadow-sm space-y-4">
+<div class="flex justify-between items-center flex-wrap gap-2">
+<h2 class="text-2xl font-black text-blue-950 font-heading">📖 Vocabulary Table</h2>
+<span id="item-count" class="text-xs bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-bold"></span>
+</div>
+<div class="overflow-x-auto rounded-2xl border border-blue-100 max-h-[600px]">
+<table class="w-full text-left border-collapse bg-white">
+<thead class="sticky top-0 bg-blue-50/95 border-b border-blue-200 text-blue-900 text-xs uppercase tracking-wider font-black z-10">
+<tr><th class="p-3.5">Vocabulary</th><th class="p-3.5">Pronunciation</th><th class="p-3.5">Meaning</th><th class="p-3.5">Vietnamese meaning</th><th class="p-3.5">Example Sentence</th></tr>
+</thead>
+<tbody id="reference-table-body" class="divide-y divide-blue-50 text-xs md:text-sm"></tbody>
+</table>
+</div>
+<div class="text-center pt-2">
+<button onclick="switchTab('flashcard')" class="px-8 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-black rounded-xl text-sm shadow-sm transition cursor-pointer">Start Flashcards ➔</button>
+</div>
+</div>
+</section>
+
+<section id="tab-flashcard" class="tab-content hidden space-y-6">
+<div class="bg-white p-4 rounded-2xl border-2 border-dashed border-blue-300 shadow-sm flex justify-between items-center flex-wrap gap-2">
+<div class="text-sm font-black text-slate-600">Remaining Queue: <span id="queue-text" class="text-blue-600 font-extrabold">0 cards</span></div>
+<div class="w-full sm:w-1/3 bg-slate-100 h-4 rounded-full overflow-hidden p-0.5 border border-slate-200">
+<div id="progress-bar" class="bg-gradient-to-r from-blue-400 to-amber-300 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+</div>
+<button onclick="resetProgress()" class="text-xs text-blue-600 hover:underline font-black cursor-pointer">🔄 Reset Session</button>
+</div>
+<div id="flashcard-container" class="space-y-6">
+<div id="card-arena" class="perspective w-full max-w-md mx-auto h-[420px] cursor-pointer">
+<div id="flashcard-inner" onclick="flipCard()" class="card-inner w-full h-full relative border-4 border-blue-300 rounded-3xl shadow-md bg-white">
+<div class="backface-hidden absolute inset-0 p-6 flex flex-col justify-between items-center text-center bg-blue-50/50 rounded-[20px]">
+<span class="text-xs font-black text-blue-700 uppercase tracking-widest bg-blue-100/80 px-4 py-1.5 rounded-full">Meaning</span>
+<div class="space-y-3 my-auto w-full">
+<h3 id="f-prompt" class="text-lg md:text-xl font-black text-blue-950 px-2 leading-snug"></h3>
+<p id="f-vn" class="text-sm text-slate-500 font-medium px-3"></p>
+</div>
+<p class="text-xs text-blue-600 font-black">👉 Tap card to reveal vocabulary 👈</p>
+</div>
+<div class="backface-hidden w-full h-full absolute inset-0 p-6 flex flex-col justify-between bg-slate-800 text-white rounded-[22px]" style="transform: rotateY(180deg);">
+<span class="text-xs font-black text-blue-300 uppercase tracking-widest bg-slate-700/80 px-4 py-1.5 rounded-full w-max mx-auto">Target Vocabulary</span>
+<div class="my-auto space-y-3 text-center">
+<h2 id="b-answer" class="text-2xl md:text-3xl font-black text-amber-300"></h2>
+<div class="space-y-2 border-t border-slate-700 pt-3">
+<div class="flex justify-center items-center space-x-2">
+<span id="b-ipa" class="text-blue-300 font-bold text-sm font-mono"></span>
+<button onclick="speakIdx(currentCardIdx, event)" class="w-7 h-7 bg-blue-900 hover:bg-blue-800 text-blue-100 rounded-full transition flex items-center justify-center text-xs cursor-pointer shadow-sm">🔊</button>
+</div>
+<p id="b-example" class="text-slate-300 text-xs px-2 font-medium leading-relaxed"></p>
+</div>
+</div>
+<p class="text-xs text-center text-slate-400 font-bold">Rate your recall difficulty 👇</p>
+</div>
+</div>
+</div>
+<div class="w-full max-w-md mx-auto bg-white p-4 rounded-2xl border border-blue-100 shadow-sm grid grid-cols-4 gap-2">
+<button onclick="handleAnkiAction('again')" class="p-2 bg-rose-50 hover:bg-rose-100 border border-rose-200 rounded-xl text-center transition cursor-pointer"><span class="block text-xs font-black text-rose-600">Again</span><span class="text-[10px] text-rose-400 font-bold block mt-0.5">&lt; 1m</span></button>
+<button onclick="handleAnkiAction('hard')" class="p-2 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded-xl text-center transition cursor-pointer"><span class="block text-xs font-black text-amber-600">Hard</span><span class="text-[10px] text-amber-400 font-bold block mt-0.5">10m</span></button>
+<button onclick="handleAnkiAction('good')" class="p-2 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-xl text-center transition cursor-pointer"><span class="block text-xs font-black text-blue-600">Good</span><span class="text-[10px] text-blue-500 font-bold block mt-0.5">1d</span></button>
+<button onclick="handleAnkiAction('easy')" class="p-2 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 rounded-xl text-center transition shadow-sm cursor-pointer"><span class="block text-xs font-black text-emerald-600">Easy</span><span class="text-[10px] text-emerald-500 font-bold block mt-0.5">4d</span></button>
+</div>
+</div>
+<div id="flashcard-success-box" class="max-w-md mx-auto bg-emerald-50 border-4 border-emerald-300 p-6 rounded-3xl text-center space-y-4 hidden shadow-sm">
+<span class="text-5xl block animate-bounce">🌟👖🎉</span>
+<h4 class="text-2xl font-heading font-black text-emerald-900">Flashcards Mastered!</h4>
+<p id="flash-done-text" class="text-sm text-slate-700 font-medium leading-relaxed"></p>
+<button onclick="unlockAndGo('game')" class="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-black rounded-xl shadow-md transition cursor-pointer text-sm tracking-wide">Start Word Games ➔</button>
+</div>
+</section>
+
+<section id="tab-game" class="tab-content hidden space-y-6">
+<div class="bg-white p-6 rounded-3xl border border-blue-100 shadow-sm space-y-5">
+<div class="flex justify-between items-center border-b border-blue-50 pb-3 flex-wrap gap-2">
+<div>
+<h3 class="text-xl font-heading font-black text-blue-950">🎯 Word Games</h3>
+<p class="text-xs text-slate-500 mt-0.5">3 rounds, 3 different games. Finish a round to unlock the next one.</p>
+</div>
+<div id="round-pills" class="flex items-center gap-2 flex-wrap"></div>
+</div>
+<div id="round-area"></div>
+<div class="text-center">
+<button id="round-next-btn" onclick="nextRound()" class="hidden px-8 py-3 bg-amber-500 hover:bg-amber-600 text-white font-black rounded-xl text-sm shadow-sm transition cursor-pointer">Next Round ➔</button>
+</div>
+</div>
+<div id="games-success-box" class="max-w-md mx-auto bg-emerald-50 border-4 border-emerald-300 p-6 rounded-3xl text-center space-y-4 hidden shadow-sm">
+<span class="text-5xl block animate-bounce">🎯🏆✨</span>
+<h4 class="text-2xl font-heading font-black text-emerald-900">All 3 Rounds Completed!</h4>
+<p id="games-summary" class="text-sm text-slate-700 font-medium leading-relaxed"></p>
+<button onclick="unlockAndGo('writing')" class="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-black rounded-xl shadow-md transition cursor-pointer text-sm tracking-wide">Start Speak &amp; Write ➔</button>
+</div>
+</section>
+
+<section id="tab-writing" class="tab-content hidden space-y-6">
+<div class="bg-white p-6 rounded-3xl border border-blue-100 shadow-sm space-y-3">
+<h3 class="text-xl font-black text-blue-950 font-heading">✍️ Speak &amp; Write</h3>
+<p class="text-xs text-slate-600 font-bold leading-relaxed">Plan your answers in writing, then say them aloud to a partner. Use the vocabulary chips. They turn green when you use them. Reach the minimum words in every box to unlock the suggested answers.</p>
+</div>
+<div id="writing-container" class="space-y-4"></div>
+<div class="bg-white p-6 rounded-3xl border border-blue-100 shadow-sm space-y-4">
+<button id="writing-model-btn" onclick="toggleWritingModel()" disabled class="text-xs text-slate-400 font-black cursor-not-allowed">👁️ Finish all boxes first to unlock suggested answers</button>
+<div id="writing-model-box" class="hidden space-y-4 text-xs md:text-sm text-slate-700 font-medium bg-emerald-50 border border-emerald-200 p-4 rounded-2xl leading-relaxed"></div>
+<div class="text-center pt-2">
+<button onclick="unlockAndGo('summary')" class="px-8 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-black rounded-xl text-sm shadow-md transition cursor-pointer">Finish &amp; Go to Summary ➔</button>
+</div>
+</div>
+</section>
+
+<section id="tab-summary" class="tab-content hidden space-y-6">
+<div class="max-w-2xl mx-auto bg-white border-4 border-blue-200 p-8 rounded-3xl space-y-6 shadow-xl text-center">
+<div class="space-y-2">
+<span class="text-6xl block animate-bounce">🎓🧵👖</span>
+<h3 class="text-3xl font-heading font-black text-blue-950">Congratulations!</h3>
+<p class="text-sm text-slate-600 font-bold">You have completed <span class="text-blue-600 font-black">IELTS 2C_S6_Lesson 3</span>.</p>
+</div>
+<div class="bg-blue-50/60 p-5 rounded-2xl border border-blue-200 space-y-3 text-left">
+<h4 class="text-base font-black text-blue-900 border-b border-blue-200 pb-2">💡 Key Takeaways</h4>
+<ul class="space-y-2.5 text-xs md:text-sm text-slate-700 font-bold">
+<li class="flex items-start gap-2"><span class="text-blue-600 font-black">1.</span><span><b>Weather and nature (speaking):</b> soak, energetic, in charge of, be taken aback, put in, make matters worse, at the last minute, politics, remark, tropical, crisp, slippery, loyal, unpredictable, call off.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-600 font-black">2.</span><span><b>Fashion and jeans (listening):</b> contemporary fashion, synonymous with, universal agreement, evolve, plantation, rivet, fastener, purely, off duty, teenage rebel, enormously, flared jeans and more.</span></li>
+<li class="flex items-start gap-2"><span class="text-blue-600 font-black">3.</span><span><b>Textiles and making (listening):</b> textile, stitching, quilted covers, bitter climate, fibre plants, weave, hard-wearing, dye, fabric, bulky, thread, waistcoat, garment, hood, mould, genuine, embroider, vertical, horizontal, stripe, ceramics, coincidence and more.</span></li>
+</ul>
+</div>
+<div class="text-center pt-2">
+<button onclick="location.reload()" class="px-8 py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-black rounded-xl shadow-md transition cursor-pointer text-sm">🔄 Restart Lesson</button>
+</div>
+</div>
+</section>
+</main>
+
+<script>
+const groups = [["Speaking: Weather & Nature", [{"w": "soak", "ipa": "/səʊk/", "en": "to make something completely wet", "vn": "ngâm, làm ướt sũng", "ex": "I got soaked to the skin because I forgot my raincoat when the storm started."}, {"w": "energetic", "ipa": "/ˌenəˈdʒetɪk/", "en": "full of energy and ready to be active", "vn": "tràn đầy năng lượng, năng động", "ex": "Dogs are very energetic, so you need to take them for a walk every day."}, {"w": "in charge of", "ipa": "/ɪn ˈtʃɑːdʒ əv/", "en": "having the responsibility for looking after someone or something", "vn": "chịu trách nhiệm về, phụ trách", "ex": "In my family, I'm in charge of feeding our cat, so I've learnt to be responsible."}, {"w": "be taken aback", "ipa": "/bi ˌteɪkən əˈbæk/", "en": "to be very surprised or shocked", "vn": "bị bất ngờ, sửng sốt", "ex": "I was taken aback when the sunny sky suddenly turned dark."}, {"w": "put in", "ipa": "/pʊt ˈɪn/", "en": "to spend time or effort on something", "vn": "đặt vào; dành (thời gian/công sức)", "ex": "Having a pet means you have to put in a lot of time and effort every day."}, {"w": "make matters worse", "ipa": "/ˌmeɪk ˈmætəz wɜːs/", "en": "to make a bad situation even worse", "vn": "làm tình hình tệ hơn", "ex": "To make matters worse, the road was slippery, so we had to drive very slowly."}, {"w": "at the last minute", "ipa": "/æt ðə ˌlɑːst ˈmɪnɪt/", "en": "very late, just before something starts", "vn": "vào phút chót", "ex": "We had to cancel the picnic at the last minute because of the storm."}, {"w": "politics", "ipa": "/ˈpɒlətɪks/", "en": "the activities and ideas connected with governing a country", "vn": "chính trị", "ex": "People avoid arguing about politics, so they often talk about the weather instead."}, {"w": "remark", "ipa": "/rɪˈmɑːk/", "en": "something that you say; a comment", "vn": "nhận xét, lời nói", "ex": "Making a remark about the weather is an easy way to start talking to a stranger."}, {"w": "tropical", "ipa": "/ˈtrɒpɪkl/", "en": "hot and wet, like the weather near the equator", "vn": "nhiệt đới", "ex": "Vietnam has a tropical climate, so the weather changes quickly and people talk about it a lot."}, {"w": "crisp", "ipa": "/krɪsp/", "en": "(of weather or air) cold, dry and fresh", "vn": "khô và se lạnh, trong lành (buổi sáng, không khí, mùa đông)", "ex": "On a crisp autumn morning, many people in Hanoi enjoy having coffee outside."}, {"w": "slippery", "ipa": "/ˈslɪpəri/", "en": "smooth or wet, so that it is difficult to stand or drive on", "vn": "trơn trượt", "ex": "The roads were so slippery after the rain that I could hardly ride my motorbike."}, {"w": "loyal", "ipa": "/ˈlɔɪəl/", "en": "always supporting and staying with someone", "vn": "trung thành", "ex": "Dogs are loyal, so they wait at the door for their owners to come home."}, {"w": "unpredictable", "ipa": "/ˌʌnprɪˈdɪktəbl/", "en": "changing in a way that is difficult to know in advance", "vn": "khó đoán, thất thường", "ex": "The weather in Hanoi is so unpredictable that people always check the forecast before going out."}, {"w": "call off", "ipa": "/ˌkɔːl ˈɒf/", "en": "to cancel something that was planned", "vn": "hủy bỏ (một kế hoạch, sự kiện)", "ex": "We had to call off the trip because a typhoon was coming."}]], ["Listening 1: Fashion and jeans", [{"w": "contemporary fashion", "ipa": "/kənˈtemprəri ˈfæʃn/", "en": "styles of clothes that are popular now", "vn": "thời trang đương đại / hiện đại", "ex": "Contemporary fashion is often influenced by social media."}, {"w": "synonymous with", "ipa": "/sɪˈnɒnɪməs wɪð/", "en": "so closely connected with something that you think of one when you hear the other", "vn": "đồng nghĩa với", "ex": "For many people, jeans are synonymous with comfort."}, {"w": "universal agreement", "ipa": "/ˌjuːnɪˈvɜːsl əˈɡriːmənt/", "en": "when everyone has the same opinion", "vn": "sự đồng thuận chung", "ex": "There is no universal agreement about who invented jeans."}, {"w": "evolve", "ipa": "/ɪˈvɒlv/", "en": "to develop slowly and change over time", "vn": "phát triển, tiến hóa, dần thay đổi", "ex": "Jeans have evolved from work clothes into a fashion item."}, {"w": "roughly at the same time", "ipa": "/ˈrʌfli ət ðə seɪm taɪm/", "en": "at about the same moment", "vn": "gần như cùng một thời điểm", "ex": "Two designers had the same idea roughly at the same time."}, {"w": "plantation", "ipa": "/plɑːnˈteɪʃn/", "en": "a very large farm where crops such as cotton, coffee or rubber are grown", "vn": "đồn điền (trồng bông, cà phê, cao su...)", "ex": "Workers on the cotton plantation picked the plants by hand."}, {"w": "tear (v)", "ipa": "/teə(r)/", "en": "to pull something apart so that it has a hole in it", "vn": "xé, làm rách", "ex": "I tore my jeans when I fell off my bike.", "say": "tear"}, {"w": "rivet", "ipa": "/ˈrɪvɪt/", "en": "a small metal pin that holds pieces of cloth or metal together", "vn": "đinh tán", "ex": "Metal rivets make jeans stronger around the pockets."}, {"w": "fastener", "ipa": "/ˈfɑːsnə(r)/", "en": "something that closes clothes, such as a button or a zip", "vn": "vật dùng để cài / khóa (khuy, khóa kéo, nút bấm...)", "ex": "A zip is a common fastener on jackets."}, {"w": "purely", "ipa": "/ˈpjʊəli/", "en": "only; completely", "vn": "hoàn toàn, thuần túy", "ex": "At first, jeans were made purely for work, not for fashion."}, {"w": "off duty", "ipa": "/ˌɒf ˈdjuːti/", "en": "not working at the moment", "vn": "ngoài giờ làm việc", "ex": "When he is off duty, he likes to wear jeans and a T-shirt."}, {"w": "teenage rebel", "ipa": "/ˈtiːneɪdʒ ˈrebl/", "en": "a young person who refuses to follow rules", "vn": "nổi loạn vị thành niên", "ex": "Jeans became a symbol of the teenage rebel in the 1950s."}, {"w": "enormously", "ipa": "/ɪˈnɔːməsli/", "en": "very much; to a very great degree", "vn": "cực kỳ, rất nhiều", "ex": "Fashion has changed enormously in the last fifty years."}, {"w": "flared jeans", "ipa": "/fleəd dʒiːnz/", "en": "jeans that get wider below the knee", "vn": "quần jean ống loe", "ex": "Flared jeans were very popular in the 1970s."}]], ["Listening 2: Textiles and making", [{"w": "textile", "ipa": "/ˈtekstaɪl/", "en": "cloth or material made by weaving", "vn": "hàng dệt may, vải dệt", "ex": "The country is famous for its textile industry."}, {"w": "stitching", "ipa": "/ˈstɪtʃɪŋ/", "en": "the small lines of thread you can see where cloth is sewn together", "vn": "việc khâu, may", "ex": "The stitching on this bag is very neat."}, {"w": "quilted covers", "ipa": "/ˈkwɪltɪd ˈkʌvəz/", "en": "bed covers made of layers of cloth sewn together with a soft filling", "vn": "chăn phủ được chần bông", "ex": "Quilted covers keep people warm on cold nights."}, {"w": "bitter climate", "ipa": "/ˈbɪtə ˈklaɪmət/", "en": "a very cold and harsh climate", "vn": "khí hậu khắc nghiệt, rất lạnh", "ex": "People who live in a bitter climate need thick clothes."}, {"w": "fibre plants", "ipa": "/ˈfaɪbə plɑːnts/", "en": "plants that give the fibres used to make cloth", "vn": "cây lấy sợi", "ex": "Cotton and hemp are fibre plants."}, {"w": "weave (v)", "ipa": "/wiːv/", "en": "to make cloth by passing threads over and under each other", "vn": "dệt", "ex": "She learnt to weave cloth on a wooden machine.", "say": "weave"}, {"w": "hard-wearing", "ipa": "/ˌhɑːd ˈweərɪŋ/", "en": "strong and able to last for a long time", "vn": "bền, khó hỏng", "ex": "Jeans are hard-wearing, so they last for years."}, {"w": "dye (v)", "ipa": "/daɪ/", "en": "to change the colour of cloth", "vn": "nhuộm", "ex": "People used leaves to dye the cloth blue.", "say": "dye"}, {"w": "fabric", "ipa": "/ˈfæbrɪk/", "en": "cloth", "vn": "vải", "ex": "I prefer soft fabric because it feels comfortable."}, {"w": "bulky", "ipa": "/ˈbʌlki/", "en": "large and heavy, so it is difficult to carry or wear", "vn": "cồng kềnh", "ex": "A bulky coat is hard to wear on a crowded bus."}, {"w": "thread", "ipa": "/θred/", "en": "a long thin line of cotton used for sewing", "vn": "sợi chỉ", "ex": "She used red thread to sew on the button."}, {"w": "waistcoat", "ipa": "/ˈweɪskəʊt/", "en": "a short jacket without sleeves, worn over a shirt", "vn": "áo ghi-lê", "ex": "He wore a waistcoat to the wedding."}, {"w": "garment", "ipa": "/ˈɡɑːmənt/", "en": "a piece of clothing", "vn": "quần áo, trang phục", "ex": "Each garment is checked before it leaves the factory."}, {"w": "hood", "ipa": "/hʊd/", "en": "the part of a coat that covers your head", "vn": "mũ trùm đầu", "ex": "Put your hood up, because it's raining."}, {"w": "mould (v)", "ipa": "/məʊld/", "en": "to shape something into a particular form", "vn": "định hình, đóng khuôn", "ex": "The artist moulded the clay into a bowl.", "say": "mould"}, {"w": "genuine", "ipa": "/ˈdʒenjuɪn/", "en": "real, not false", "vn": "thật", "ex": "Is this bag made of genuine leather?"}, {"w": "fascinating", "ipa": "/ˈfæsɪneɪtɪŋ/", "en": "extremely interesting", "vn": "hấp dẫn, thú vị", "ex": "I found the history of jeans fascinating."}, {"w": "quilter", "ipa": "/ˈkwɪltə(r)/", "en": "a person who makes quilts (bed covers)", "vn": "người làm chăn bông", "ex": "The quilter spent months making the bed cover."}, {"w": "embroider", "ipa": "/ɪmˈbrɔɪdə(r)/", "en": "to decorate cloth with a pattern sewn with thread", "vn": "thêu", "ex": "My grandmother embroidered flowers on my scarf."}, {"w": "vertical", "ipa": "/ˈvɜːtɪkl/", "en": "going straight up and down", "vn": "thẳng đứng", "ex": "The shirt has thin vertical stripes."}, {"w": "horizontal", "ipa": "/ˌhɒrɪˈzɒntl/", "en": "flat and level, going from side to side", "vn": "nằm ngang", "ex": "Horizontal stripes can make a person look wider."}, {"w": "stripe", "ipa": "/straɪp/", "en": "a long narrow line of colour", "vn": "(họa tiết) sọc", "ex": "I bought a blue shirt with white stripes."}, {"w": "furnishings", "ipa": "/ˈfɜːnɪʃɪŋz/", "en": "the furniture, curtains and carpets in a room", "vn": "đồ nội thất", "ex": "The hotel has beautiful furnishings."}, {"w": "ceramics", "ipa": "/səˈræmɪks/", "en": "objects made from baked clay, such as bowls and vases", "vn": "đồ gốm", "ex": "The village is known for its ceramics."}, {"w": "coincidence", "ipa": "/kəʊˈɪnsɪdəns/", "en": "when two things happen at the same time by chance", "vn": "sự trùng hợp", "ex": "It was a coincidence that we both wore the same jacket."}]]];
+const vocabularyData = [];
+groups.forEach(g => g[1].forEach(v => vocabularyData.push(v)));
+const totalCardsCount = vocabularyData.length;
+let cardQueue = [], currentCard = null, currentCardIdx = 0, isFlipped = false, hardSeen = {};
+function shuffleArray(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function byW(w) { return vocabularyData.find(v => v.w === w); }
+
+window.onload = function () {
+  renderVocabTable(); initFlashcards(); renderWriting();
+  document.getElementById('item-count').innerText = totalCardsCount + ' Items';
+  document.getElementById('flash-done-text').innerText = 'Awesome! You have reviewed all ' + totalCardsCount + ' vocabulary items.';
+};
+
+let gamesStarted = false;
+function switchTab(tabId) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+  document.querySelectorAll('.tab-btn').forEach(btn => { btn.classList.remove('bg-white', 'text-blue-700', 'shadow-sm'); btn.classList.add('text-slate-500'); });
+  document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+  const activeBtn = document.getElementById(`btn-${tabId}`);
+  if (activeBtn) { activeBtn.classList.add('bg-white', 'text-blue-700', 'shadow-sm'); activeBtn.classList.remove('text-slate-500'); }
+  if (tabId === 'game' && !gamesStarted) { gamesStarted = true; gameRound = 1; renderRound(); }
+}
+function unlockAndGo(tab) { document.getElementById(`btn-${tab}`).classList.remove('disabled-tab'); switchTab(tab); }
+
+function speakText(text) {
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text); u.lang = 'en-GB'; u.rate = 0.9;
+    window.speechSynthesis.speak(u);
+  }
+}
+function speakIdx(i, event) {
+  if (event) event.stopPropagation();
+  const item = vocabularyData[i];
+  speakText(item.say || item.w.replace(/\(.*?\)/g, '').trim());
+}
+function speakWord(w, event) { if (event) event.stopPropagation(); const v = byW(w); speakText(v && v.say ? v.say : w); }
+
+function renderVocabTable() {
+  let i = 0, html = '';
+  groups.forEach(g => {
+    html += `<tr class="grp"><td colspan="5">${g[0]}</td></tr>`;
+    g[1].forEach(item => {
+      html += `<tr class="hover:bg-blue-50/50 transition">
+        <td class="p-3.5 font-black text-blue-950"><span class="inline-flex items-center gap-2"><button class="audio-btn" onclick="speakIdx(${i})">🔊</button>${item.w}</span></td>
+        <td class="p-3.5 font-mono text-xs text-blue-700">${item.ipa}</td>
+        <td class="p-3.5 text-slate-700">${item.en}</td>
+        <td class="p-3.5 text-slate-700">${item.vn}</td>
+        <td class="p-3.5 italic text-slate-500">${item.ex}</td></tr>`;
+      i++;
+    });
+  });
+  document.getElementById('reference-table-body').innerHTML = html;
+}
+
+/* FLASHCARDS (spaced repetition) */
+function initFlashcards() { cardQueue = shuffleArray(vocabularyData.map((v, i) => i)); hardSeen = {}; updateProgressBar(); showNextCard(); }
+function resetProgress() {
+  document.getElementById('flashcard-container').classList.remove('hidden');
+  document.getElementById('flashcard-success-box').classList.add('hidden');
+  initFlashcards();
+}
+function showNextCard() {
+  if (cardQueue.length === 0) {
+    document.getElementById('flashcard-container').classList.add('hidden');
+    document.getElementById('flashcard-success-box').classList.remove('hidden');
+    return;
+  }
+  currentCardIdx = cardQueue[0]; currentCard = vocabularyData[currentCardIdx]; isFlipped = false;
+  document.getElementById('flashcard-inner').classList.remove('card-flipped');
+  document.getElementById('f-prompt').innerText = currentCard.en;
+  document.getElementById('f-vn').innerText = currentCard.vn;
+  document.getElementById('b-answer').innerText = currentCard.w;
+  document.getElementById('b-ipa').innerText = currentCard.ipa;
+  document.getElementById('b-example').innerText = `"${currentCard.ex}"`;
+  document.getElementById('queue-text').innerText = `${cardQueue.length} card${cardQueue.length > 1 ? 's' : ''}`;
+  updateProgressBar();
+}
+function flipCard() { isFlipped = !isFlipped; document.getElementById('flashcard-inner').classList.toggle('card-flipped', isFlipped); }
+function handleAnkiAction(type) {
+  if (!currentCard) return;
+  const c = cardQueue.shift();
+  if (type === 'again') { cardQueue.splice(Math.min(3, cardQueue.length), 0, c); }
+  else if (type === 'hard' && !hardSeen[c]) { hardSeen[c] = true; cardQueue.splice(Math.min(10, cardQueue.length), 0, c); }
+  showNextCard();
+}
+function updateProgressBar() {
+  const done = totalCardsCount - new Set(cardQueue).size;
+  document.getElementById('progress-bar').style.width = `${Math.round((done / totalCardsCount) * 100)}%`;
+}
+
+/* WORD GAMES */
+let gameRound = 1, r1Score = 0, r1Total = 0, r2Tries = 0, r3Score = 0;
+function renderPills() {
+  const names = ['1 Collocation Match', '2 Word Search', '3 Sort It'];
+  document.getElementById('round-pills').innerHTML = names.map((n, i) => {
+    const active = (i + 1) === gameRound, done = (i + 1) < gameRound;
+    const cls = active ? 'bg-blue-600 text-white' : (done ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-100 text-slate-500');
+    return `<span class="text-xs font-black px-3 py-1.5 rounded-full ${cls}">${done ? '✓ ' : ''}${n}</span>`;
+  }).join('');
+}
+function renderRound() {
+  renderPills();
+  document.getElementById('round-next-btn').classList.add('hidden');
+  if (gameRound === 1) initColl(); else if (gameRound === 2) initWS(); else initSort();
+}
+function finishRound(msg) {
+  document.getElementById('round-area').innerHTML = `<div class="max-w-md mx-auto text-center space-y-2 py-6"><span class="text-4xl block">🎯</span><p class="text-base font-black text-blue-950">${msg}</p></div>`;
+  const btn = document.getElementById('round-next-btn');
+  btn.innerText = gameRound === 3 ? 'Finish Games ➔' : 'Next Round ➔';
+  btn.classList.remove('hidden');
+}
+function nextRound() {
+  if (gameRound === 3) {
+    document.getElementById('round-next-btn').classList.add('hidden');
+    document.getElementById('games-summary').innerText = `Collocation Match: ${r1Score}/${r1Total} on the first try. Word Search: all ${WS_WORDS.length} words found (${r2Tries} wrong tries). Sort It: ${r3Score}/${SORT.length}.`;
+    document.getElementById('games-success-box').classList.remove('hidden');
+    return;
+  }
+  gameRound++; renderRound();
+}
+
+/* Round 1: Collocation Match */
+const COLL = [
+  [["bitter", "climate"], ["fibre", "plants"], ["quilted", "covers"], ["flared", "jeans"], ["teenage", "rebel"], ["contemporary", "fashion"]],
+  [["universal", "agreement"], ["off", "duty"], ["synonymous", "with"], ["make matters", "worse"], ["at the last", "minute"], ["be taken", "aback"]]
+];
+let cmBoard = 0, cmL = [], cmR = [], cmSelL = -1, cmSelR = -1, cmDone = 0, cmMissed = {};
+function initColl() { cmBoard = 0; r1Score = 0; r1Total = 0; newColl(); }
+function newColl() {
+  const pairs = COLL[cmBoard];
+  cmL = shuffleArray(pairs.map((p, i) => i)); cmR = shuffleArray(pairs.map((p, i) => i));
+  cmSelL = -1; cmSelR = -1; cmDone = 0; cmMissed = {};
+  document.getElementById('round-area').innerHTML = `
+    <div class="max-w-xl mx-auto space-y-4">
+      <div class="flex justify-between text-xs font-black text-blue-800"><span>Board ${cmBoard + 1} of ${COLL.length}</span><span id="cm-prog">Matched: 0 / ${pairs.length}</span></div>
+      <p class="text-xs text-slate-600 font-bold text-center">Tap a word on the left, then tap the word that goes with it on the right.</p>
+      <div class="grid grid-cols-2 gap-3">
+        <div class="space-y-2">${cmL.map(i => `<button class="cm" id="cl-${i}" onclick="cmPick('L',${i})">${pairs[i][0]} ...</button>`).join('')}</div>
+        <div class="space-y-2">${cmR.map(i => `<button class="cm" id="cr-${i}" onclick="cmPick('R',${i})">... ${pairs[i][1]}</button>`).join('')}</div>
+      </div>
+    </div>`;
+}
+function cmPick(side, i) {
+  if (side === 'L') { if (cmSelL >= 0) document.getElementById('cl-' + cmSelL).classList.remove('sel'); cmSelL = i; document.getElementById('cl-' + i).classList.add('sel'); }
+  else { if (cmSelR >= 0) document.getElementById('cr-' + cmSelR).classList.remove('sel'); cmSelR = i; document.getElementById('cr-' + i).classList.add('sel'); }
+  if (cmSelL < 0 || cmSelR < 0) return;
+  const a = cmSelL, b = cmSelR, L = document.getElementById('cl-' + a), R = document.getElementById('cr-' + b);
+  cmSelL = -1; cmSelR = -1;
+  L.classList.remove('sel'); R.classList.remove('sel');
+  if (a === b) {
+    L.classList.add('ok'); R.classList.add('ok'); cmDone++;
+    const n = COLL[cmBoard].length;
+    document.getElementById('cm-prog').innerText = `Matched: ${cmDone} / ${n}`;
+    if (cmDone === n) setTimeout(() => {
+      r1Total += n; r1Score += n - Object.keys(cmMissed).length;
+      cmBoard++;
+      if (cmBoard >= COLL.length) finishRound(`Collocations: ${r1Score} / ${r1Total} correct on the first try.`); else newColl();
+    }, 600);
+  } else {
+    cmMissed[a] = true;
+    L.classList.add('no', 'shake'); R.classList.add('no', 'shake');
+    setTimeout(() => { L.classList.remove('no', 'shake'); R.classList.remove('no', 'shake'); }, 700);
+  }
+}
+
+/* Round 2: Word Search */
+const WS_WORDS = [
+  ["fabric", "cloth used for making clothes"], ["thread", "a long thin line of cotton used for sewing"],
+  ["stripe", "a long narrow line of colour on cloth"], ["garment", "a piece of clothing"],
+  ["genuine", "real, not false"], ["bulky", "large and difficult to carry or wear"],
+  ["tropical", "hot and wet, like the weather near the equator"], ["slippery", "wet and smooth, so you can easily fall"],
+  ["loyal", "always staying faithful to someone"], ["ceramics", "objects made from baked clay, such as bowls"]
+];
+const WN = 12;
+let wsGrid = [], wsFound = {}, wsStart = null, wsCount = 0;
+function buildGrid() {
+  const dirs = [[0, 1], [1, 0], [1, 1]];
+  for (let attempt = 0; attempt < 50; attempt++) {
+    const g = Array.from({ length: WN }, () => Array(WN).fill(''));
+    let ok = true;
+    const order = [...WS_WORDS].sort((a, b) => b[0].length - a[0].length);
+    for (const [w] of order) {
+      let placed = false;
+      for (let t = 0; t < 300 && !placed; t++) {
+        const d = dirs[Math.floor(Math.random() * dirs.length)];
+        const r = Math.floor(Math.random() * WN), c = Math.floor(Math.random() * WN);
+        const er = r + d[0] * (w.length - 1), ec = c + d[1] * (w.length - 1);
+        if (er >= WN || ec >= WN) continue;
+        let fit = true;
+        for (let k = 0; k < w.length; k++) { const ch = g[r + d[0] * k][c + d[1] * k]; if (ch && ch !== w[k]) { fit = false; break; } }
+        if (!fit) continue;
+        for (let k = 0; k < w.length; k++) g[r + d[0] * k][c + d[1] * k] = w[k];
+        placed = true;
+      }
+      if (!placed) { ok = false; break; }
+    }
+    if (ok) {
+      const abc = 'abcdefghijklmnopqrstuvwxyz';
+      for (let r = 0; r < WN; r++) for (let c = 0; c < WN; c++) if (!g[r][c]) g[r][c] = abc[Math.floor(Math.random() * 26)];
+      return g;
+    }
+  }
+  return null;
+}
+function initWS() {
+  wsGrid = buildGrid(); wsFound = {}; wsStart = null; wsCount = 0; r2Tries = 0;
+  let cells = '';
+  for (let r = 0; r < WN; r++) for (let c = 0; c < WN; c++) cells += `<button class="wc" id="wc-${r}-${c}" onclick="wsClick(${r},${c})">${wsGrid[r][c]}</button>`;
+  document.getElementById('round-area').innerHTML = `
+    <div class="max-w-3xl mx-auto space-y-4">
+      <div class="flex justify-between text-xs font-black text-blue-800"><span>Words are hidden across, down or diagonally (top-left to bottom-right).</span><span id="ws-prog">Found: 0 / ${WS_WORDS.length}</span></div>
+      <p class="text-xs text-slate-600 font-bold text-center">Read a clue, find the word, then tap its first letter and its last letter.</p>
+      <div class="ws">${cells}</div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">${WS_WORDS.map((w, i) => `<div class="clue" id="clue-${i}"><b>${i + 1}.</b> ${w[1]} <span class="text-blue-500">(${w[0].length} letters)</span></div>`).join('')}</div>
+      <p id="ws-msg" class="text-sm font-black text-center min-h-[22px]"></p>
+    </div>`;
+}
+function wsClick(r, c) {
+  const msg = document.getElementById('ws-msg');
+  if (!wsStart) { wsStart = [r, c]; document.getElementById(`wc-${r}-${c}`).classList.add('st'); msg.innerText = ''; return; }
+  const [r0, c0] = wsStart;
+  document.getElementById(`wc-${r0}-${c0}`).classList.remove('st');
+  wsStart = null;
+  if (r0 === r && c0 === c) return;
+  const dr = r - r0, dc = c - c0;
+  const straight = dr === 0 || dc === 0 || Math.abs(dr) === Math.abs(dc);
+  let hit = -1, cells = [];
+  if (straight) {
+    const len = Math.max(Math.abs(dr), Math.abs(dc)) + 1, sr = Math.sign(dr), sc = Math.sign(dc);
+    let s = '';
+    for (let k = 0; k < len; k++) { const rr = r0 + sr * k, cc = c0 + sc * k; cells.push([rr, cc]); s += wsGrid[rr][cc]; }
+    const rev = s.split('').reverse().join('');
+    hit = WS_WORDS.findIndex((w, i) => !wsFound[i] && (w[0] === s || w[0] === rev));
+  }
+  if (hit >= 0) {
+    wsFound[hit] = true; wsCount++;
+    cells.forEach(([rr, cc]) => document.getElementById(`wc-${rr}-${cc}`).classList.add('fd'));
+    document.getElementById('clue-' + hit).classList.add('done');
+    document.getElementById('ws-prog').innerText = `Found: ${wsCount} / ${WS_WORDS.length}`;
+    msg.innerHTML = `<span class="text-emerald-700">✅ ${WS_WORDS[hit][0]}</span>`;
+    speakText(WS_WORDS[hit][0]);
+    if (wsCount === WS_WORDS.length) setTimeout(() => finishRound(`Word Search complete! Wrong tries: ${r2Tries}.`), 900);
+  } else {
+    r2Tries++;
+    msg.innerHTML = '<span class="text-rose-600">❌ That is not one of the words. Try again.</span>';
+  }
+}
+
+/* Round 3: Sort It */
+const CATS = ['🌦️ Weather & Nature', '👖 Clothes & Fashion', '🧵 Making & Decorating'];
+const SORT = [
+  ["crisp", 0], ["tropical", 0], ["unpredictable", 0], ["bitter climate", 0], ["slippery", 0],
+  ["hood", 1], ["waistcoat", 1], ["flared jeans", 1], ["garment", 1], ["contemporary fashion", 1],
+  ["weave (v)", 2], ["dye (v)", 2], ["embroider", 2], ["thread", 2], ["ceramics", 2]
+];
+let sortList = [], sortIdx = 0, sortAnswered = false, sortFirst = true;
+function initSort() { sortList = shuffleArray([...SORT]); sortIdx = 0; r3Score = 0; loadSort(); }
+function loadSort() {
+  if (sortIdx >= sortList.length) { finishRound(`Sort It score: ${r3Score} / ${SORT.length}`); return; }
+  sortAnswered = false; sortFirst = true;
+  const [w] = sortList[sortIdx];
+  const pct = Math.round((sortIdx / sortList.length) * 100);
+  document.getElementById('round-area').innerHTML = `
+    <div class="max-w-xl mx-auto space-y-4">
+      <div class="flex justify-between text-xs font-black text-blue-800"><span>Word ${sortIdx + 1} of ${sortList.length}</span><span>Score: ${r3Score}</span></div>
+      <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden"><div class="bg-gradient-to-r from-blue-400 to-amber-300 h-full rounded-full" style="width:${pct}%"></div></div>
+      <p class="text-[11px] font-black text-blue-700 uppercase tracking-wide text-center">Which group does this word belong to?</p>
+      <div class="text-center bg-blue-50/70 border border-blue-100 rounded-2xl p-5">
+        <span class="text-2xl font-black text-blue-950 font-heading">${w}</span>
+        <button class="audio-btn ml-2" onclick="speakWord('${w}')">🔊</button>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">${CATS.map((c, k) => `<button class="cat" id="ct-${k}" onclick="answerSort(${k})">${c}</button>`).join('')}</div>
+      <p id="st-msg" class="text-sm font-black text-center min-h-[40px]"></p>
+      <div id="st-next" class="text-center"></div>
+    </div>`;
+}
+function answerSort(k) {
+  if (sortAnswered) return;
+  const [w, a] = sortList[sortIdx];
+  const btn = document.getElementById('ct-' + k);
+  if (k === a) {
+    sortAnswered = true; btn.classList.add('right');
+    if (sortFirst) r3Score++;
+    const v = byW(w);
+    document.getElementById('st-msg').innerHTML = `<span class="text-emerald-700">✅ Correct!</span> <span class="text-slate-600 font-medium">${v ? v.en : ''}</span>`;
+    document.getElementById('st-next').innerHTML = `<button onclick="sortIdx++;loadSort()" class="px-6 py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-black rounded-xl text-xs cursor-pointer">${sortIdx === sortList.length - 1 ? 'See result ➔' : 'Next ➔'}</button>`;
+  } else {
+    sortFirst = false; btn.classList.add('bad', 'shake');
+    document.getElementById('st-msg').innerHTML = '<span class="text-rose-600">❌ Not that group. Try another one.</span>';
+    setTimeout(() => btn.classList.remove('shake'), 500);
+  }
+}
+
+/* SPEAK AND WRITE */
+const writingTasks = [
+  { title: "Task 1. Part 1: upgrade the plain answer",
+    note: "Question: What kind of clothes do you wear in different weather?",
+    plain: "I wear thick clothes when it is cold. I wear a coat and a hat. When it rains, I wear a raincoat. In summer, I wear thin clothes because it is hot.",
+    fields: [{ q: "Rewrite the answer. Make it longer and more natural. Use at least 4 of the chips.", min: 35,
+      chips: [["hood", /hood/i], ["fabric", /fabric/i], ["hard-wearing", /hard-wearing|hard wearing/i], ["bulky", /bulky/i], ["soak", /soak/i], ["tropical", /tropical/i], ["crisp", /crisp/i], ["unpredictable", /unpredictable/i]] }] },
+  { title: "Task 2. Part 2: a piece of clothing you like",
+    note: "Describe a piece of clothing that you like to wear. You should say: what it is, when and where you wear it, what it looks like, and explain why you like it.",
+    fields: [{ q: "Write your notes as a short talk (about 1 minute).", min: 50,
+      chips: [["garment", /garment/i], ["fabric", /fabric/i], ["hard-wearing", /hard-wearing|hard wearing/i], ["stripe", /stripe/i], ["genuine", /genuine/i], ["stitching", /stitching/i], ["embroider", /embroider/i], ["fascinating", /fascinating/i], ["off duty", /off duty/i], ["flared jeans", /flared/i]] }] },
+  { title: "Task 3. Part 3: fashion",
+    note: "Give an opinion, a reason and an example (3 to 4 sentences).",
+    fields: [
+      { q: "How has fashion changed over the years?", min: 30, chips: [["evolve", /evolv/i], ["enormously", /enormous/i], ["purely", /purely/i], ["contemporary fashion", /contemporary/i], ["synonymous with", /synonymous/i], ["teenage rebel", /teenage rebel/i]] },
+      { q: "Is it important to follow fashion? Why or why not?", min: 30, chips: [["universal agreement", /universal agreement/i], ["fabric", /fabric/i], ["hard-wearing", /hard-wearing|hard wearing/i], ["genuine", /genuine/i], ["contemporary fashion", /contemporary/i], ["coincidence", /coincidence/i]] }
+    ] }
+];
+const writingModels = [
+  ["In winter in Hanoi, the mornings are crisp and cold, so I wear a bulky coat with a hood. I prefer hard-wearing fabric because it lasts for years. In summer, the weather is tropical and sweltering, so I choose light clothes. Because the weather is so unpredictable, I always carry a raincoat, or I will get soaked."],
+  ["I'd like to talk about my favourite pair of jeans. I wear them whenever I'm off duty, which means at weekends and in the evening. They are a classic blue pair, and the fabric is hard-wearing, so they have lasted for four years. The stitching is still neat, and there are small metal rivets on the pockets. I bought them in a small shop in Hanoi, and the shop assistant said they were made of genuine denim. What I like most is that they are comfortable and go with everything. I find it fascinating that jeans, which were once work clothes, have evolved into such a popular garment all over the world."],
+  ["Fashion has changed enormously. A few decades ago, people often wore clothes purely for practical reasons, but contemporary fashion is more about self-expression. For example, jeans started as work clothes, became synonymous with the teenage rebel in the 1950s, and flared jeans were everywhere in the 1970s. Styles evolve quickly, and social media makes trends spread even faster.",
+   "There is no universal agreement on this. Some people think it is important because clothes show your personality. Others, like me, prefer to wear comfortable, hard-wearing garments that never go out of style. I'd say it is fine to follow trends, as long as you do not spend too much money on them."]
+];
+function wordCount(t) { const m = t.trim().match(/\S+/g); return m ? m.length : 0; }
+function renderWriting() {
+  document.getElementById('writing-container').innerHTML = writingTasks.map((t, ti) => `
+    <div class="bg-white p-5 rounded-2xl border border-blue-100 shadow-sm space-y-4">
+      <h4 class="text-sm font-black text-blue-900">${t.title}</h4>
+      <p class="text-xs text-slate-600 font-bold">${t.note}</p>
+      ${t.plain ? `<p class="text-xs bg-amber-50 border border-amber-200 rounded-xl p-3 text-slate-700 font-medium"><b>Plain answer:</b> ${t.plain}</p>` : ''}
+      ${t.fields.map((f, fi) => `
+        <div class="space-y-2">
+          <p class="text-xs md:text-sm font-black text-slate-700">${f.q}</p>
+          <div>${f.chips.map((c, k) => `<span id="wchip-${ti}-${fi}-${k}" class="chip">${c[0]}</span>`).join('')}</div>
+          <textarea id="w-${ti}-${fi}" oninput="onWritingInput(${ti},${fi})" rows="4" placeholder="Write here..." class="w-full p-3 bg-blue-50/40 border border-blue-200 rounded-xl text-sm outline-none focus:border-blue-400 font-medium"></textarea>
+          <p id="wc-${ti}-${fi}" class="text-xs font-black text-slate-500">0 words (minimum ${f.min})</p>
+        </div>`).join('')}
+    </div>`).join('');
+}
+function allWritten() {
+  return writingTasks.every((t, ti) => t.fields.every((f, fi) => wordCount(document.getElementById(`w-${ti}-${fi}`).value) >= f.min));
+}
+function onWritingInput(ti, fi) {
+  const f = writingTasks[ti].fields[fi];
+  const text = document.getElementById(`w-${ti}-${fi}`).value;
+  f.chips.forEach((c, k) => document.getElementById(`wchip-${ti}-${fi}-${k}`).classList.toggle('on', c[1].test(text)));
+  const n = wordCount(text), el = document.getElementById(`wc-${ti}-${fi}`);
+  el.innerText = `${n} words (minimum ${f.min})`;
+  el.className = n >= f.min ? 'text-xs font-black text-emerald-600' : 'text-xs font-black text-slate-500';
+  const btn = document.getElementById('writing-model-btn'), ok = allWritten();
+  btn.disabled = !ok;
+  btn.className = ok ? 'text-xs text-blue-600 hover:underline font-black cursor-pointer' : 'text-xs text-slate-400 font-black cursor-not-allowed';
+  btn.innerText = ok ? '👁️ Show suggested answers' : '👁️ Finish all boxes first to unlock suggested answers';
+}
+function toggleWritingModel() {
+  if (!allWritten()) return;
+  const box = document.getElementById('writing-model-box');
+  if (box.classList.contains('hidden')) {
+    box.innerHTML = writingTasks.map((t, ti) => `<div><b>${t.title}</b>${writingModels[ti].map((m, i) => `<p class="mt-1">${t.fields.length > 1 ? `<i>${t.fields[i].q}</i><br>` : ''}${m}</p>`).join('')}</div>`).join('');
+  }
+  box.classList.toggle('hidden');
+}
+</script>
+</body>
+</html>
